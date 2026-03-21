@@ -1,0 +1,29 @@
+info:
+  name: singup
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:5000/api/auth/signup
+  body:
+    type: json
+    data: |-
+      {
+        "firstName": "Amen",
+        "lastName": "Development",
+        "email": "amen@example.com",
+        "password": "SecurePassword123",
+        "role": "Student",
+        "phoneNumber": "+1-555-0000",
+        "industry": "Technology",
+        "yearsOfExperience": 5,
+        "skills": ["React", "Node.js", "MongoDB"]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
