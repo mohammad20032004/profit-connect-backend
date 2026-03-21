@@ -7,6 +7,8 @@ const morgan = require('morgan');
 // استدعاء دالة الاتصال بقاعدة البيانات
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes'); // 👈 استدعاء مسار المستخدم الجديد  
+const postRoutes = require('./routes/postRoutes'); // 👈 استدعاء مسار المنشورات   
 // تحميل متغيرات البيئة من ملف .env
 dotenv.config();
 
@@ -20,7 +22,11 @@ const app = express();
 app.use(helmet()); // لحماية الترويسات (Headers)
 app.use(cors()); // للسماح للواجهة الأمامية بالاتصال
 app.use(express.json()); // لكي يتمكن السيرفر من قراءة البيانات بصيغة JSON
+app.use('/api/auth', authRoutes); 
+app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/posts', postRoutes);
 // تسجيل الطلبات في موجه الأوامر أثناء التطوير
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));

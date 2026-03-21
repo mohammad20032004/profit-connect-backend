@@ -12,7 +12,7 @@ http:
       {
         "firstName": "Amen",
         "lastName": "Development",
-        "email": "amen@example.com",
+        "email": "amen123@example.com",
         "password": "SecurePassword123",
         "role": "Student",
         "phoneNumber": "+1-555-0000",

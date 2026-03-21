@@ -1,0 +1,20 @@
+info:
+  name: DELETE Profile Data copy
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: http://localhost:5000/api/user/profile
+  headers:
+    - name: ""
+      value: Authorization
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmViYzkzZWVmYTExNTI5YzYyMjQzYSIsImlhdCI6MTc3NDEwNzc5NiwiZXhwIjoxNzc0NzEyNTk2fQ.KJMui7wdKkmPFDtk97fg18w1tbv3IJOJF9vPb1F6Ruo
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
