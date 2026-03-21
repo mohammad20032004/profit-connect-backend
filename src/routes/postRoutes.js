@@ -1,28 +1,35 @@
 const express = require('express');
 const router = express.Router();
 
-// استدعاء جميع دوال المنشورات (بما فيها الدوال الجديدة)
 const { 
   createPost, 
   getPosts, 
   toggleLike, 
-  addComment 
+  addComment,
+  updatePost,    // 👈 الدوال الجديدة
+  deletePost,    // 👈
+  deleteComment  // 👈
 } = require('../controllers/postController');
 
 const { protect } = require('../middleware/authMiddleware');
 
-// تطبيق الحماية على جميع المسارات
-router.use(protect);
+router.use(protect); // حماية جميع المسارات
 
-// مسارات المنشورات الأساسية
+// مسار المنشورات العام
 router.route('/')
   .post(createPost)
   .get(getPosts);
 
-// مسار الإعجاب (يحتاج لمعرّف المنشور postId)
-router.post('/:postId/like', toggleLike);
+// مسار لمنشور محدد (تعديل وحذف)
+router.route('/:postId')
+  .put(updatePost)
+  .delete(deletePost);
 
-// مسار التعليقات
+// مسار التفاعلات (الإعجاب والتعليق)
+router.post('/:postId/like', toggleLike);
 router.post('/:postId/comments', addComment);
+
+// مسار حذف تعليق محدد
+router.delete('/:postId/comments/:commentId', deleteComment);
 
 module.exports = router;

@@ -1,0 +1,87 @@
+const mongoose = require('mongoose');
+
+const companySchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'اسم الشركة مطلوب'],
+      unique: true,
+      trim: true
+    },
+    description: {
+      type: String,
+      required: [true, 'وصف الشركة مطلوب']
+      // يمكنك إضافة maxlength هنا إذا أردت الحد من طول الوصف
+    },
+    industry: {
+      type: String,
+      required: [true, 'مجال الشركة مطلوب (مثال: تكنولوجيا، صحة، إلخ)']
+    },
+    location: {
+      type: String,
+      required: [true, 'موقع الشركة أو مقرها الرئيسي مطلوب']
+    },
+    companySize: {
+      type: String,
+      enum: ['1-10', '11-50', '51-200', '201-500', '501-1000', '1000+'],
+      default: '1-10'
+    },
+    foundedYear: {
+      type: Number // إضافة سنة التأسيس
+    },
+    logo: {
+      type: String,
+      default: 'default-company-logo.png'
+    },
+    coverPhoto: {
+      type: String,
+      default: 'default-company-cover.png' // صورة الغلاف
+    },
+    website: {
+      type: String,
+      trim: true
+    },
+    socialLinks: { // روابط حسابات الشركة
+      linkedin: { type: String, trim: true, default: '' },
+      twitter: { type: String, trim: true, default: '' }
+    },
+    contactEmail: { // بريد التواصل العام للشركة (قد يختلف عن بريد المالك)
+      type: String,
+      trim: true,
+      lowercase: true
+    },
+    isVerified: {
+      type: Boolean,
+      default: false // يتغير إلى true عندما تتحقق الإدارة من أوراق الشركة
+    },
+    status: {
+      type: String,
+      enum: ['Pending', 'Approved', 'Rejected'],
+      default: 'Pending' // 👈 أي شركة جديدة تكون معلقة تلقائياً وتنتظر فريق الدعم
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    admins: [ // قائمة المدراء الإضافيين (اختياري للمستقبل)
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ],
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ],
+    followersCount: { // لحل مشكلة الأداء عند عرض عدد المتابعين
+      type: Number,
+      default: 0
+    }
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('Company', companySchema);

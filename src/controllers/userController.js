@@ -98,3 +98,30 @@ exports.deleteUserProfile = async (req, res) => {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء حذف الحساب' });
   }
 };
+
+
+// @desc    الحصول على بيانات مستخدم آخر بواسطة الـ ID
+// @route   GET /api/user/:userId
+// @access  Private (يحتاج توكن)
+exports.getUserById = async (req, res) => {
+  try {
+    // نجلب المستخدم ونستبعد كلمة المرور
+    const user = await User.findById(req.params.userId).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: user
+    });
+  } catch (error) {
+    console.error('Get User By Id Error:', error.message);
+    // معالجة خطأ كتابة ID بصيغة غير صحيحة
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    }
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};

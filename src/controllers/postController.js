@@ -147,3 +147,96 @@ exports.addComment = async (req, res) => {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إضافة التعليق' });
   }
 };
+// @desc    تعديل منشور
+// @route   PUT /api/posts/:postId
+// @access  Private
+exports.updatePost = async (req, res) => {
+  try {
+    let post = await Post.findById(req.params.postId);
+
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+    }
+
+    // 🔒 التأكد من أن المستخدم الحالي هو نفسه صاحب المنشور
+    if (post.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بتعديل هذا المنشور' });
+    }
+
+    // تحديث المنشور
+    post = await Post.findByIdAndUpdate(
+      req.params.postId,
+      { $set: { content: req.body.content, image: req.body.image, visibility: req.body.visibility } },
+      { new: true, runValidators: true } // new: true لكي يرجع المنشور بعد التحديث
+    ).populate('user', 'profile.firstName profile.lastName profile.avatar');
+
+    res.status(200).json({ success: true, data: post });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تعديل المنشور' });
+  }
+};
+
+// @desc    حذف منشور
+// @route   DELETE /api/posts/:postId
+// @access  Private
+exports.deletePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+    }
+
+    // 🔒 التأكد من أن المستخدم الحالي هو صاحب المنشور
+    if (post.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بحذف هذا المنشور' });
+    }
+
+    await post.deleteOne();
+
+    res.status(200).json({ success: true, message: 'تم حذف المنشور بنجاح' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء حذف المنشور' });
+  }
+};
+
+// @desc    حذف تعليق
+// @route   DELETE /api/posts/:postId/comments/:commentId
+// @access  Private
+exports.deleteComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+    }
+
+    // البحث عن التعليق داخل مصفوفة التعليقات
+    const comment = post.comments.find(c => c._id.toString() === req.params.commentId);
+
+    if (!comment) {
+      return res.status(404).json({ success: false, message: 'التعليق غير موجود' });
+    }
+
+    // 🔒 التحقق من الصلاحيات: يُسمح بحذف التعليق إذا كان المستخدم هو (صاحب التعليق) أو (صاحب المنشور نفسه)
+    if (
+      comment.user.toString() !== req.user._id.toString() && 
+      post.user.toString() !== req.user._id.toString()
+    ) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بحذف هذا التعليق' });
+    }
+
+    // إزالة التعليق من المصفوفة باستخدام دالة filter
+    post.comments = post.comments.filter(c => c._id.toString() !== req.params.commentId);
+
+    await post.save();
+
+    res.status(200).json({ 
+      success: true, 
+      message: 'تم حذف التعليق بنجاح', 
+      commentsCount: post.comments.length 
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء حذف التعليق' });
+  }
+};

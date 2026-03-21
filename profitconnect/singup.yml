@@ -10,15 +10,14 @@ http:
     type: json
     data: |-
       {
-        "firstName": "Amen",
+        "firstName": "Amen1",
         "lastName": "Development",
-        "email": "amen123@example.com",
-        "password": "SecurePassword123",
+        "email": "amen121231@example.com",
+        "password": "SecurePassword12315",
         "role": "Student",
         "phoneNumber": "+1-555-0000",
         "industry": "Technology",
-        "yearsOfExperience": 5,
-        "skills": ["React", "Node.js", "MongoDB"]
+        "yearsOfExperience": 5
       }
   auth: inherit
 

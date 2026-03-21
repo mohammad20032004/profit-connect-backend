@@ -47,3 +47,15 @@ exports.protect = async (req, res, next) => {
     });
   }
 };
+// حارس بوابة مخصص للمديرين (Admins) فقط
+exports.admin = (req, res, next) => {
+  // نتأكد أن المستخدم موجود وأن دوره هو 'Admin'
+  if (req.user && req.user.role === 'Admin') {
+    next(); // تفضل بالدخول
+  } else {
+    return res.status(403).json({ 
+      success: false, 
+      message: 'غير مصرح لك! هذا الإجراء مخصص لفريق دعم Profit Connect فقط' 
+    });
+  }
+};

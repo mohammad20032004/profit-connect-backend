@@ -1,0 +1,27 @@
+info:
+  name: PUT Post
+  type: http
+  seq: 11
+
+http:
+  method: PUT
+  url: http://localhost:5000/api/posts/69bec5d628f37873b37eb788
+  headers:
+    - name: ""
+      value: Authorization
+  body:
+    type: json
+    data: |-
+      {
+        "content": "لقد قمت بتعديل هذا المنشور للتو! 🚀",
+        "visibility": "connections"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVjNGY1MjhmMzc4NzNiMzdlYjc3OSIsImlhdCI6MTc3NDEwOTk0MSwiZXhwIjoxNzc0NzE0NzQxfQ.37jJlRGr8meH0xs88LScaBwopPLmN-3SasL3CeYmI9s
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
