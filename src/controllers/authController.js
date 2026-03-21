@@ -58,3 +58,61 @@ exports.signup = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// @desc    تسجيل دخول المستخدم (Login)
+// @route   POST /api/auth/login
+// @access  Public
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // 1. التحقق من إرسال البريد الإلكتروني وكلمة المرور في الطلب
+    if (!email || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'يرجى إدخال البريد الإلكتروني وكلمة المرور' 
+      });
+    }
+
+    // 2. البحث عن المستخدم في قاعدة البيانات
+    // ملاحظة: استخدمنا .select('+password') لأننا في نموذج المستخدم (Schema) 
+    // قمنا بضبط select: false لكلمة المرور لحمايتها، وهنا نحتاج جلبها للمقارنة
+    const user = await User.findOne({ email }).select('+password');
+    
+    if (!user) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'بيانات الدخول غير صحيحة' // نستخدم رسالة مبهمة لدواعي أمنية
+      });
+    }
+
+    // 3. التحقق من تطابق كلمة المرور باستخدام الدالة التي أنشأناها في المودل
+    const isMatch = await user.matchPassword(password);
+    
+    if (!isMatch) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'بيانات الدخول غير صحيحة' 
+      });
+    }
+
+    // 4. إنشاء التوكن (Token)
+    const token = generateToken(user._id);
+
+    // 5. إرجاع الاستجابة المطلوبة للـ Frontend
+    res.status(200).json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+        profile: user.profile
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
