@@ -1,0 +1,2839 @@
+title,category,country,experienceLevel,minSalaryUSD,maxSalaryUSD,medianSalaryUSD
+Frontend Developer,Engineering,USA,Entry,70000,95000,82000
+Frontend Developer,Engineering,USA,Mid,100000,135000,115000
+Frontend Developer,Engineering,USA,Senior,140000,190000,160000
+Frontend Developer,Engineering,Canada,Entry,55000,75000,65000
+Frontend Developer,Engineering,Canada,Mid,80000,110000,95000
+Frontend Developer,Engineering,Canada,Senior,115000,150000,130000
+Frontend Developer,Engineering,UK,Entry,35000,50000,42000
+Frontend Developer,Engineering,UK,Mid,55000,80000,65000
+Frontend Developer,Engineering,UK,Senior,85000,120000,100000
+Frontend Developer,Engineering,Germany,Entry,45000,60000,52000
+Frontend Developer,Engineering,Germany,Mid,65000,85000,75000
+Frontend Developer,Engineering,Germany,Senior,90000,120000,105000
+Frontend Developer,Engineering,Netherlands,Entry,40000,55000,48000
+Frontend Developer,Engineering,Netherlands,Mid,60000,80000,70000
+Frontend Developer,Engineering,Netherlands,Senior,85000,115000,100000
+Frontend Developer,Engineering,Switzerland,Entry,85000,110000,95000
+Frontend Developer,Engineering,Switzerland,Mid,115000,140000,125000
+Frontend Developer,Engineering,Switzerland,Senior,145000,180000,160000
+Frontend Developer,Engineering,Saudi Arabia,Entry,18000,28000,24000
+Frontend Developer,Engineering,Saudi Arabia,Mid,30000,55000,42000
+Frontend Developer,Engineering,Saudi Arabia,Senior,60000,90000,75000
+Frontend Developer,Engineering,UAE,Entry,25000,35000,30000
+Frontend Developer,Engineering,UAE,Mid,40000,65000,50000
+Frontend Developer,Engineering,UAE,Senior,70000,110000,90000
+Frontend Developer,Engineering,Qatar,Entry,22000,32000,27000
+Frontend Developer,Engineering,Qatar,Mid,35000,60000,48000
+Frontend Developer,Engineering,Qatar,Senior,65000,100000,85000
+Frontend Developer,Engineering,Egypt,Entry,3000,6000,4500
+Frontend Developer,Engineering,Egypt,Mid,7000,12000,9000
+Frontend Developer,Engineering,Egypt,Senior,14000,25000,18000
+Frontend Developer,Engineering,Syria,Entry,1500,3000,2200
+Frontend Developer,Engineering,Syria,Mid,3500,6000,4800
+Frontend Developer,Engineering,Syria,Senior,7000,12000,9000
+Frontend Developer,Engineering,Palestine,Entry,6000,10000,8000
+Frontend Developer,Engineering,Palestine,Mid,12000,24000,18000
+Frontend Developer,Engineering,Palestine,Senior,25000,45000,35000
+Frontend Developer,Engineering,Jordan,Entry,7000,11000,9000
+Frontend Developer,Engineering,Jordan,Mid,12000,22000,16000
+Frontend Developer,Engineering,Jordan,Senior,24000,40000,30000
+Frontend Developer,Engineering,Morocco,Entry,5000,9000,7000
+Frontend Developer,Engineering,Morocco,Mid,10000,18000,14000
+Frontend Developer,Engineering,Morocco,Senior,20000,35000,28000
+Frontend Developer,Engineering,India,Entry,4000,8000,6000
+Frontend Developer,Engineering,India,Mid,10000,20000,15000
+Frontend Developer,Engineering,India,Senior,25000,45000,35000
+Frontend Developer,Engineering,Pakistan,Entry,3000,6000,4500
+Frontend Developer,Engineering,Pakistan,Mid,7000,15000,10000
+Frontend Developer,Engineering,Pakistan,Senior,18000,30000,24000
+Frontend Developer,Engineering,Singapore,Entry,45000,65000,55000
+Frontend Developer,Engineering,Singapore,Mid,70000,100000,85000
+Frontend Developer,Engineering,Singapore,Senior,110000,150000,130000
+Frontend Developer,Engineering,Japan,Entry,35000,50000,42000
+Frontend Developer,Engineering,Japan,Mid,55000,75000,65000
+Frontend Developer,Engineering,Japan,Senior,80000,110000,95000
+Frontend Developer,Engineering,Australia,Entry,50000,70000,60000
+Frontend Developer,Engineering,Australia,Mid,75000,105000,90000
+Frontend Developer,Engineering,Australia,Senior,110000,145000,125000
+Frontend Developer,Engineering,Brazil,Entry,8000,14000,11000
+Frontend Developer,Engineering,Brazil,Mid,16000,28000,22000
+Frontend Developer,Engineering,Brazil,Senior,30000,50000,40000
+Frontend Developer,Engineering,South Africa,Entry,12000,20000,16000
+Frontend Developer,Engineering,South Africa,Mid,25000,40000,32000
+Frontend Developer,Engineering,South Africa,Senior,45000,70000,55000
+Frontend Developer,Engineering,Nigeria,Entry,4000,8000,6000
+Frontend Developer,Engineering,Nigeria,Mid,10000,18000,14000
+Frontend Developer,Engineering,Nigeria,Senior,22000,35000,28000
+Backend Developer,Engineering,USA,Entry,75000,100000,85000
+Backend Developer,Engineering,USA,Mid,105000,140000,120000
+Backend Developer,Engineering,USA,Senior,145000,195000,165000
+Backend Developer,Engineering,Canada,Entry,60000,80000,70000
+Backend Developer,Engineering,Canada,Mid,85000,115000,100000
+Backend Developer,Engineering,Canada,Senior,120000,155000,135000
+Backend Developer,Engineering,UK,Entry,40000,55000,47000
+Backend Developer,Engineering,UK,Mid,60000,85000,70000
+Backend Developer,Engineering,UK,Senior,90000,125000,105000
+Backend Developer,Engineering,Germany,Entry,50000,65000,57000
+Backend Developer,Engineering,Germany,Mid,70000,90000,80000
+Backend Developer,Engineering,Germany,Senior,95000,125000,110000
+Backend Developer,Engineering,Netherlands,Entry,45000,60000,52000
+Backend Developer,Engineering,Netherlands,Mid,65000,85000,75000
+Backend Developer,Engineering,Netherlands,Senior,90000,120000,105000
+Backend Developer,Engineering,Switzerland,Entry,90000,115000,100000
+Backend Developer,Engineering,Switzerland,Mid,120000,145000,130000
+Backend Developer,Engineering,Switzerland,Senior,150000,185000,165000
+Backend Developer,Engineering,Saudi Arabia,Entry,20000,30000,25000
+Backend Developer,Engineering,Saudi Arabia,Mid,35000,60000,45000
+Backend Developer,Engineering,Saudi Arabia,Senior,65000,95000,80000
+Backend Developer,Engineering,UAE,Entry,28000,38000,32000
+Backend Developer,Engineering,UAE,Mid,45000,70000,55000
+Backend Developer,Engineering,UAE,Senior,75000,120000,95000
+Backend Developer,Engineering,Qatar,Entry,25000,35000,30000
+Backend Developer,Engineering,Qatar,Mid,40000,65000,52000
+Backend Developer,Engineering,Qatar,Senior,70000,105000,90000
+Backend Developer,Engineering,Egypt,Entry,3500,6500,5000
+Backend Developer,Engineering,Egypt,Mid,7500,13000,9500
+Backend Developer,Engineering,Egypt,Senior,15000,27000,20000
+Backend Developer,Engineering,Syria,Entry,1800,3500,2500
+Backend Developer,Engineering,Syria,Mid,4000,7000,5500
+Backend Developer,Engineering,Syria,Senior,7500,13000,10000
+Backend Developer,Engineering,Palestine,Entry,6500,11000,8500
+Backend Developer,Engineering,Palestine,Mid,13000,25000,19000
+Backend Developer,Engineering,Palestine,Senior,26000,48000,37000
+Backend Developer,Engineering,Jordan,Entry,7500,12000,9500
+Backend Developer,Engineering,Jordan,Mid,13000,24000,18000
+Backend Developer,Engineering,Jordan,Senior,26000,42000,33000
+Backend Developer,Engineering,Morocco,Entry,5500,9500,7500
+Backend Developer,Engineering,Morocco,Mid,11000,19000,15000
+Backend Developer,Engineering,Morocco,Senior,22000,37000,30000
+Backend Developer,Engineering,India,Entry,4500,9000,6500
+Backend Developer,Engineering,India,Mid,11000,22000,16500
+Backend Developer,Engineering,India,Senior,27000,48000,38000
+Backend Developer,Engineering,Pakistan,Entry,3500,6500,5000
+Backend Developer,Engineering,Pakistan,Mid,8000,16000,11000
+Backend Developer,Engineering,Pakistan,Senior,20000,33000,26000
+Backend Developer,Engineering,Singapore,Entry,50000,70000,60000
+Backend Developer,Engineering,Singapore,Mid,75000,105000,90000
+Backend Developer,Engineering,Singapore,Senior,115000,155000,135000
+Backend Developer,Engineering,Japan,Entry,40000,55000,47000
+Backend Developer,Engineering,Japan,Mid,60000,80000,70000
+Backend Developer,Engineering,Japan,Senior,85000,115000,100000
+Backend Developer,Engineering,Australia,Entry,55000,75000,65000
+Backend Developer,Engineering,Australia,Mid,80000,110000,95000
+Backend Developer,Engineering,Australia,Senior,115000,150000,130000
+Backend Developer,Engineering,Brazil,Entry,8500,15000,11500
+Backend Developer,Engineering,Brazil,Mid,17000,30000,23500
+Backend Developer,Engineering,Brazil,Senior,32000,53000,42000
+Backend Developer,Engineering,South Africa,Entry,13000,22000,17500
+Backend Developer,Engineering,South Africa,Mid,27000,43000,35000
+Backend Developer,Engineering,South Africa,Senior,48000,75000,60000
+Backend Developer,Engineering,Nigeria,Entry,4500,8500,6500
+Backend Developer,Engineering,Nigeria,Mid,11000,19000,15000
+Backend Developer,Engineering,Nigeria,Senior,24000,38000,31000
+UI/UX Designer,Design,USA,Entry,60000,80000,70000
+UI/UX Designer,Design,USA,Mid,85000,115000,95000
+UI/UX Designer,Design,USA,Senior,120000,160000,135000
+UI/UX Designer,Design,Canada,Entry,50000,70000,60000
+UI/UX Designer,Design,Canada,Mid,75000,100000,85000
+UI/UX Designer,Design,Canada,Senior,105000,140000,120000
+UI/UX Designer,Design,UK,Entry,30000,45000,38000
+UI/UX Designer,Design,UK,Mid,50000,75000,60000
+UI/UX Designer,Design,UK,Senior,80000,110000,95000
+UI/UX Designer,Design,Germany,Entry,40000,55000,48000
+UI/UX Designer,Design,Germany,Mid,60000,80000,70000
+UI/UX Designer,Design,Germany,Senior,85000,115000,100000
+UI/UX Designer,Design,Netherlands,Entry,35000,50000,42000
+UI/UX Designer,Design,Netherlands,Mid,55000,75000,65000
+UI/UX Designer,Design,Netherlands,Senior,80000,110000,95000
+UI/UX Designer,Design,Switzerland,Entry,80000,100000,90000
+UI/UX Designer,Design,Switzerland,Mid,105000,130000,115000
+UI/UX Designer,Design,Switzerland,Senior,135000,170000,150000
+UI/UX Designer,Design,Saudi Arabia,Entry,15000,25000,20000
+UI/UX Designer,Design,Saudi Arabia,Mid,28000,48000,38000
+UI/UX Designer,Design,Saudi Arabia,Senior,50000,80000,65000
+UI/UX Designer,Design,UAE,Entry,20000,30000,25000
+UI/UX Designer,Design,UAE,Mid,35000,55000,45000
+UI/UX Designer,Design,UAE,Senior,60000,90000,75000
+UI/UX Designer,Design,Qatar,Entry,18000,28000,23000
+UI/UX Designer,Design,Qatar,Mid,32000,52000,42000
+UI/UX Designer,Design,Qatar,Senior,55000,85000,70000
+UI/UX Designer,Design,Egypt,Entry,2500,5000,3500
+UI/UX Designer,Design,Egypt,Mid,6000,10000,7500
+UI/UX Designer,Design,Egypt,Senior,12000,20000,15000
+UI/UX Designer,Design,Syria,Entry,1200,2500,1800
+UI/UX Designer,Design,Syria,Mid,3000,5000,4000
+UI/UX Designer,Design,Syria,Senior,6000,10000,8000
+UI/UX Designer,Design,Palestine,Entry,5000,9000,7000
+UI/UX Designer,Design,Palestine,Mid,10000,20000,15000
+UI/UX Designer,Design,Palestine,Senior,20000,35000,28000
+UI/UX Designer,Design,Jordan,Entry,6000,10000,8000
+UI/UX Designer,Design,Jordan,Mid,11000,20000,15000
+UI/UX Designer,Design,Jordan,Senior,22000,35000,28000
+UI/UX Designer,Design,Morocco,Entry,4000,8000,6000
+UI/UX Designer,Design,Morocco,Mid,9000,16000,12000
+UI/UX Designer,Design,Morocco,Senior,18000,30000,24000
+UI/UX Designer,Design,India,Entry,3000,7000,5000
+UI/UX Designer,Design,India,Mid,8000,16000,12000
+UI/UX Designer,Design,India,Senior,20000,35000,28000
+UI/UX Designer,Design,Pakistan,Entry,2500,5500,4000
+UI/UX Designer,Design,Pakistan,Mid,6000,12000,9000
+UI/UX Designer,Design,Pakistan,Senior,15000,25000,20000
+UI/UX Designer,Design,Singapore,Entry,40000,60000,50000
+UI/UX Designer,Design,Singapore,Mid,65000,90000,75000
+UI/UX Designer,Design,Singapore,Senior,100000,140000,120000
+UI/UX Designer,Design,Japan,Entry,30000,45000,38000
+UI/UX Designer,Design,Japan,Mid,50000,70000,60000
+UI/UX Designer,Design,Japan,Senior,75000,105000,90000
+UI/UX Designer,Design,Australia,Entry,45000,65000,55000
+UI/UX Designer,Design,Australia,Mid,70000,100000,85000
+UI/UX Designer,Design,Australia,Senior,105000,140000,120000
+UI/UX Designer,Design,Brazil,Entry,7000,12000,9500
+UI/UX Designer,Design,Brazil,Mid,14000,25000,19000
+UI/UX Designer,Design,Brazil,Senior,28000,45000,36000
+UI/UX Designer,Design,South Africa,Entry,10000,18000,14000
+UI/UX Designer,Design,South Africa,Mid,22000,36000,29000
+UI/UX Designer,Design,South Africa,Senior,40000,65000,52000
+UI/UX Designer,Design,Nigeria,Entry,3000,7000,5000
+UI/UX Designer,Design,Nigeria,Mid,9000,16000,12000
+UI/UX Designer,Design,Nigeria,Senior,20000,30000,25000
+Full Stack Developer,Engineering,USA,Entry,80000,105000,92000
+Full Stack Developer,Engineering,USA,Mid,115000,150000,130000
+Full Stack Developer,Engineering,USA,Senior,150000,200000,175000
+Full Stack Developer,Engineering,Canada,Entry,65000,85000,75000
+Full Stack Developer,Engineering,Canada,Mid,90000,125000,105000
+Full Stack Developer,Engineering,Canada,Senior,125000,165000,145000
+Full Stack Developer,Engineering,UK,Entry,45000,60000,52000
+Full Stack Developer,Engineering,UK,Mid,65000,95000,78000
+Full Stack Developer,Engineering,UK,Senior,95000,135000,115000
+Full Stack Developer,Engineering,Germany,Entry,55000,70000,62000
+Full Stack Developer,Engineering,Germany,Mid,75000,95000,85000
+Full Stack Developer,Engineering,Germany,Senior,100000,135000,115000
+Full Stack Developer,Engineering,Netherlands,Entry,50000,65000,57000
+Full Stack Developer,Engineering,Netherlands,Mid,70000,90000,80000
+Full Stack Developer,Engineering,Netherlands,Senior,95000,125000,110000
+Full Stack Developer,Engineering,Switzerland,Entry,95000,120000,107000
+Full Stack Developer,Engineering,Switzerland,Mid,125000,155000,140000
+Full Stack Developer,Engineering,Switzerland,Senior,160000,195000,175000
+Full Stack Developer,Engineering,Saudi Arabia,Entry,22000,32000,27000
+Full Stack Developer,Engineering,Saudi Arabia,Mid,38000,65000,50000
+Full Stack Developer,Engineering,Saudi Arabia,Senior,70000,105000,85000
+Full Stack Developer,Engineering,UAE,Entry,30000,40000,35000
+Full Stack Developer,Engineering,UAE,Mid,48000,75000,60000
+Full Stack Developer,Engineering,UAE,Senior,80000,130000,105000
+Full Stack Developer,Engineering,Qatar,Entry,27000,38000,32000
+Full Stack Developer,Engineering,Qatar,Mid,42000,68000,55000
+Full Stack Developer,Engineering,Qatar,Senior,75000,115000,95000
+Full Stack Developer,Engineering,Egypt,Entry,4000,7000,5500
+Full Stack Developer,Engineering,Egypt,Mid,8000,15000,11000
+Full Stack Developer,Engineering,Egypt,Senior,16000,30000,22000
+Full Stack Developer,Engineering,Syria,Entry,2000,4000,3000
+Full Stack Developer,Engineering,Syria,Mid,4500,8000,6000
+Full Stack Developer,Engineering,Syria,Senior,8500,15000,11500
+Full Stack Developer,Engineering,Palestine,Entry,7000,12000,9500
+Full Stack Developer,Engineering,Palestine,Mid,14000,28000,21000
+Full Stack Developer,Engineering,Palestine,Senior,28000,52000,40000
+Full Stack Developer,Engineering,Jordan,Entry,8000,13000,10500
+Full Stack Developer,Engineering,Jordan,Mid,14000,26000,20000
+Full Stack Developer,Engineering,Jordan,Senior,28000,46000,37000
+Full Stack Developer,Engineering,Morocco,Entry,6000,10000,8000
+Full Stack Developer,Engineering,Morocco,Mid,12000,21000,16500
+Full Stack Developer,Engineering,Morocco,Senior,24000,40000,32000
+Full Stack Developer,Engineering,India,Entry,5000,10000,7500
+Full Stack Developer,Engineering,India,Mid,12000,24000,18000
+Full Stack Developer,Engineering,India,Senior,28000,52000,40000
+Full Stack Developer,Engineering,Pakistan,Entry,4000,7500,5500
+Full Stack Developer,Engineering,Pakistan,Mid,9000,18000,13000
+Full Stack Developer,Engineering,Pakistan,Senior,22000,36000,28000
+Full Stack Developer,Engineering,Singapore,Entry,55000,75000,65000
+Full Stack Developer,Engineering,Singapore,Mid,80000,115000,97000
+Full Stack Developer,Engineering,Singapore,Senior,125000,165000,145000
+Full Stack Developer,Engineering,Japan,Entry,45000,60000,52000
+Full Stack Developer,Engineering,Japan,Mid,65000,85000,75000
+Full Stack Developer,Engineering,Japan,Senior,90000,125000,107000
+Full Stack Developer,Engineering,Australia,Entry,60000,80000,70000
+Full Stack Developer,Engineering,Australia,Mid,85000,120000,102000
+Full Stack Developer,Engineering,Australia,Senior,125000,160000,142000
+Full Stack Developer,Engineering,Brazil,Entry,9000,16000,12500
+Full Stack Developer,Engineering,Brazil,Mid,18000,32000,25000
+Full Stack Developer,Engineering,Brazil,Senior,34000,58000,46000
+Full Stack Developer,Engineering,South Africa,Entry,14000,24000,19000
+Full Stack Developer,Engineering,South Africa,Mid,29000,46000,37500
+Full Stack Developer,Engineering,South Africa,Senior,52000,80000,66000
+Full Stack Developer,Engineering,Nigeria,Entry,5000,9500,7000
+Full Stack Developer,Engineering,Nigeria,Mid,12000,21000,16500
+Full Stack Developer,Engineering,Nigeria,Senior,26000,42000,34000
+Mobile Developer,Engineering,USA,Entry,72000,98000,85000
+Mobile Developer,Engineering,USA,Mid,102000,138000,118000
+Mobile Developer,Engineering,USA,Senior,142000,192000,162000
+Mobile Developer,Engineering,Canada,Entry,58000,78000,68000
+Mobile Developer,Engineering,Canada,Mid,82000,112000,98000
+Mobile Developer,Engineering,Canada,Senior,118000,152000,132000
+Mobile Developer,Engineering,UK,Entry,38000,52000,45000
+Mobile Developer,Engineering,UK,Mid,58000,82000,68000
+Mobile Developer,Engineering,UK,Senior,88000,122000,102000
+Mobile Developer,Engineering,Germany,Entry,48000,62000,55000
+Mobile Developer,Engineering,Germany,Mid,68000,88000,78000
+Mobile Developer,Engineering,Germany,Senior,92000,122000,108000
+Mobile Developer,Engineering,Netherlands,Entry,42000,58000,50000
+Mobile Developer,Engineering,Netherlands,Mid,62000,82000,72000
+Mobile Developer,Engineering,Netherlands,Senior,88000,118000,102000
+Mobile Developer,Engineering,Switzerland,Entry,88000,112000,98000
+Mobile Developer,Engineering,Switzerland,Mid,118000,142000,128000
+Mobile Developer,Engineering,Switzerland,Senior,148000,182000,162000
+Mobile Developer,Engineering,Saudi Arabia,Entry,19000,29000,24500
+Mobile Developer,Engineering,Saudi Arabia,Mid,32000,58000,43500
+Mobile Developer,Engineering,Saudi Arabia,Senior,62000,92000,78000
+Mobile Developer,Engineering,UAE,Entry,26000,36000,31000
+Mobile Developer,Engineering,UAE,Mid,42000,68000,52000
+Mobile Developer,Engineering,UAE,Senior,72000,115000,92000
+Mobile Developer,Engineering,Qatar,Entry,23000,33000,28000
+Mobile Developer,Engineering,Qatar,Mid,38000,62000,50000
+Mobile Developer,Engineering,Qatar,Senior,68000,102000,88000
+Mobile Developer,Engineering,Egypt,Entry,3200,6200,4800
+Mobile Developer,Engineering,Egypt,Mid,7200,12500,9200
+Mobile Developer,Engineering,Egypt,Senior,14500,26000,19000
+Mobile Developer,Engineering,Syria,Entry,1600,3200,2300
+Mobile Developer,Engineering,Syria,Mid,3800,6500,5200
+Mobile Developer,Engineering,Syria,Senior,7200,12500,9500
+Mobile Developer,Engineering,Palestine,Entry,6200,10500,8200
+Mobile Developer,Engineering,Palestine,Mid,12500,24500,18500
+Mobile Developer,Engineering,Palestine,Senior,25500,46000,36000
+Mobile Developer,Engineering,Jordan,Entry,7200,11500,9200
+Mobile Developer,Engineering,Jordan,Mid,12500,23000,17000
+Mobile Developer,Engineering,Jordan,Senior,25000,41000,31000
+Mobile Developer,Engineering,Morocco,Entry,5200,9200,7200
+Mobile Developer,Engineering,Morocco,Mid,10500,18500,14500
+Mobile Developer,Engineering,Morocco,Senior,21000,36000,29000
+Mobile Developer,Engineering,India,Entry,4200,8500,6200
+Mobile Developer,Engineering,India,Mid,10500,21000,16000
+Mobile Developer,Engineering,India,Senior,26000,46000,36000
+Mobile Developer,Engineering,Pakistan,Entry,3200,6200,4800
+Mobile Developer,Engineering,Pakistan,Mid,7500,15500,10500
+Mobile Developer,Engineering,Pakistan,Senior,19000,31000,25000
+Mobile Developer,Engineering,Singapore,Entry,48000,68000,58000
+Mobile Developer,Engineering,Singapore,Mid,72000,102000,88000
+Mobile Developer,Engineering,Singapore,Senior,112000,152000,132000
+Mobile Developer,Engineering,Japan,Entry,38000,52000,45000
+Mobile Developer,Engineering,Japan,Mid,58000,78000,68000
+Mobile Developer,Engineering,Japan,Senior,82000,112000,98000
+Mobile Developer,Engineering,Australia,Entry,52000,72000,62000
+Mobile Developer,Engineering,Australia,Mid,78000,108000,92000
+Mobile Developer,Engineering,Australia,Senior,112000,148000,128000
+Mobile Developer,Engineering,Brazil,Entry,8200,14500,11200
+Mobile Developer,Engineering,Brazil,Mid,16500,29000,22500
+Mobile Developer,Engineering,Brazil,Senior,31000,51000,41000
+Mobile Developer,Engineering,South Africa,Entry,12500,21000,16500
+Mobile Developer,Engineering,South Africa,Mid,26000,42000,34000
+Mobile Developer,Engineering,South Africa,Senior,46000,72000,58000
+Mobile Developer,Engineering,Nigeria,Entry,4200,8200,6200
+Mobile Developer,Engineering,Nigeria,Mid,10500,18500,14500
+Mobile Developer,Engineering,Nigeria,Senior,23000,36000,29000
+Mobile Developer,Engineering,USA,Entry,72000,98000,85000
+Mobile Developer,Engineering,USA,Mid,102000,138000,118000
+Mobile Developer,Engineering,USA,Senior,142000,192000,162000
+Mobile Developer,Engineering,Canada,Entry,58000,78000,68000
+Mobile Developer,Engineering,Canada,Mid,82000,112000,98000
+Mobile Developer,Engineering,Canada,Senior,118000,152000,132000
+Mobile Developer,Engineering,UK,Entry,38000,52000,45000
+Mobile Developer,Engineering,UK,Mid,58000,82000,68000
+Mobile Developer,Engineering,UK,Senior,88000,122000,102000
+Mobile Developer,Engineering,Germany,Entry,48000,62000,55000
+Mobile Developer,Engineering,Germany,Mid,68000,88000,78000
+Mobile Developer,Engineering,Germany,Senior,92000,122000,108000
+Mobile Developer,Engineering,Netherlands,Entry,42000,58000,50000
+Mobile Developer,Engineering,Netherlands,Mid,62000,82000,72000
+Mobile Developer,Engineering,Netherlands,Senior,88000,118000,102000
+Mobile Developer,Engineering,Switzerland,Entry,88000,112000,98000
+Mobile Developer,Engineering,Switzerland,Mid,118000,142000,128000
+Mobile Developer,Engineering,Switzerland,Senior,148000,182000,162000
+Mobile Developer,Engineering,Saudi Arabia,Entry,19000,29000,24500
+Mobile Developer,Engineering,Saudi Arabia,Mid,32000,58000,43500
+Mobile Developer,Engineering,Saudi Arabia,Senior,62000,92000,78000
+Mobile Developer,Engineering,UAE,Entry,26000,36000,31000
+Mobile Developer,Engineering,UAE,Mid,42000,68000,52000
+Mobile Developer,Engineering,UAE,Senior,72000,115000,92000
+Mobile Developer,Engineering,Qatar,Entry,23000,33000,28000
+Mobile Developer,Engineering,Qatar,Mid,38000,62000,50000
+Mobile Developer,Engineering,Qatar,Senior,68000,102000,88000
+Mobile Developer,Engineering,Egypt,Entry,3200,6200,4800
+Mobile Developer,Engineering,Egypt,Mid,7200,12500,9200
+Mobile Developer,Engineering,Egypt,Senior,14500,26000,19000
+Mobile Developer,Engineering,Syria,Entry,1600,3200,2300
+Mobile Developer,Engineering,Syria,Mid,3800,6500,5200
+Mobile Developer,Engineering,Syria,Senior,7200,12500,9500
+Mobile Developer,Engineering,Palestine,Entry,6200,10500,8200
+Mobile Developer,Engineering,Palestine,Mid,12500,24500,18500
+Mobile Developer,Engineering,Palestine,Senior,25500,46000,36000
+Mobile Developer,Engineering,Jordan,Entry,7200,11500,9200
+Mobile Developer,Engineering,Jordan,Mid,12500,23000,17000
+Mobile Developer,Engineering,Jordan,Senior,25000,41000,31000
+Mobile Developer,Engineering,Morocco,Entry,5200,9200,7200
+Mobile Developer,Engineering,Morocco,Mid,10500,18500,14500
+Mobile Developer,Engineering,Morocco,Senior,21000,36000,29000
+Mobile Developer,Engineering,India,Entry,4200,8500,6200
+Mobile Developer,Engineering,India,Mid,10500,21000,16000
+Mobile Developer,Engineering,India,Senior,26000,46000,36000
+Mobile Developer,Engineering,Pakistan,Entry,3200,6200,4800
+Mobile Developer,Engineering,Pakistan,Mid,7500,15500,10500
+Mobile Developer,Engineering,Pakistan,Senior,19000,31000,25000
+Mobile Developer,Engineering,Singapore,Entry,48000,68000,58000
+Mobile Developer,Engineering,Singapore,Mid,72000,102000,88000
+Mobile Developer,Engineering,Singapore,Senior,112000,152000,132000
+Mobile Developer,Engineering,Japan,Entry,38000,52000,45000
+Mobile Developer,Engineering,Japan,Mid,58000,78000,68000
+Mobile Developer,Engineering,Japan,Senior,82000,112000,98000
+Mobile Developer,Engineering,Australia,Entry,52000,72000,62000
+Mobile Developer,Engineering,Australia,Mid,78000,108000,92000
+Mobile Developer,Engineering,Australia,Senior,112000,148000,128000
+Mobile Developer,Engineering,Brazil,Entry,8200,14500,11200
+Mobile Developer,Engineering,Brazil,Mid,16500,29000,22500
+Mobile Developer,Engineering,Brazil,Senior,31000,51000,41000
+Mobile Developer,Engineering,South Africa,Entry,12500,21000,16500
+Mobile Developer,Engineering,South Africa,Mid,26000,42000,34000
+Mobile Developer,Engineering,South Africa,Senior,46000,72000,58000
+Mobile Developer,Engineering,Nigeria,Entry,4200,8200,6200
+Mobile Developer,Engineering,Nigeria,Mid,10500,18500,14500
+Mobile Developer,Engineering,Nigeria,Senior,23000,36000,29000
+Data Scientist,Data,USA,Entry,85000,115000,100000
+Data Scientist,Data,USA,Mid,120000,160000,140000
+Data Scientist,Data,USA,Senior,160000,220000,190000
+Data Scientist,Data,Canada,Entry,70000,90000,80000
+Data Scientist,Data,Canada,Mid,95000,130000,110000
+Data Scientist,Data,Canada,Senior,135000,175000,155000
+Data Scientist,Data,UK,Entry,45000,65000,55000
+Data Scientist,Data,UK,Mid,70000,100000,85000
+Data Scientist,Data,UK,Senior,100000,145000,125000
+Data Scientist,Data,Germany,Entry,55000,75000,65000
+Data Scientist,Data,Germany,Mid,80000,105000,92000
+Data Scientist,Data,Germany,Senior,110000,145000,125000
+Data Scientist,Data,Netherlands,Entry,50000,70000,60000
+Data Scientist,Data,Netherlands,Mid,75000,100000,87000
+Data Scientist,Data,Netherlands,Senior,105000,140000,120000
+Data Scientist,Data,Switzerland,Entry,100000,130000,115000
+Data Scientist,Data,Switzerland,Mid,135000,165000,150000
+Data Scientist,Data,Switzerland,Senior,170000,210000,190000
+Data Scientist,Data,Saudi Arabia,Entry,25000,35000,30000
+Data Scientist,Data,Saudi Arabia,Mid,40000,70000,55000
+Data Scientist,Data,Saudi Arabia,Senior,75000,115000,95000
+Data Scientist,Data,UAE,Entry,32000,42000,37000
+Data Scientist,Data,UAE,Mid,50000,80000,65000
+Data Scientist,Data,UAE,Senior,85000,140000,115000
+Data Scientist,Data,Qatar,Entry,28000,40000,34000
+Data Scientist,Data,Qatar,Mid,45000,75000,60000
+Data Scientist,Data,Qatar,Senior,80000,125000,105000
+Data Scientist,Data,Egypt,Entry,4500,8000,6000
+Data Scientist,Data,Egypt,Mid,9000,16000,12000
+Data Scientist,Data,Egypt,Senior,18000,35000,25000
+Data Scientist,Data,Syria,Entry,2500,4500,3500
+Data Scientist,Data,Syria,Mid,5000,9000,7000
+Data Scientist,Data,Syria,Senior,9500,16000,12500
+Data Scientist,Data,Palestine,Entry,7500,13000,10000
+Data Scientist,Data,Palestine,Mid,15000,30000,22000
+Data Scientist,Data,Palestine,Senior,30000,58000,44000
+Data Scientist,Data,Jordan,Entry,8500,14000,11000
+Data Scientist,Data,Jordan,Mid,15000,28000,21000
+Data Scientist,Data,Jordan,Senior,30000,52000,41000
+Data Scientist,Data,Morocco,Entry,6500,11000,8500
+Data Scientist,Data,Morocco,Mid,13000,23000,18000
+Data Scientist,Data,Morocco,Senior,26000,44000,35000
+Data Scientist,Data,India,Entry,6000,12000,9000
+Data Scientist,Data,India,Mid,14000,28000,21000
+Data Scientist,Data,India,Senior,32000,60000,45000
+Data Scientist,Data,Pakistan,Entry,4500,9000,6500
+Data Scientist,Data,Pakistan,Mid,10000,22000,15000
+Data Scientist,Data,Pakistan,Senior,25000,45000,34000
+Data Scientist,Data,Singapore,Entry,60000,85000,72000
+Data Scientist,Data,Singapore,Mid,90000,125000,105000
+Data Scientist,Data,Singapore,Senior,135000,180000,155000
+Data Scientist,Data,Japan,Entry,50000,70000,60000
+Data Scientist,Data,Japan,Mid,75000,95000,85000
+Data Scientist,Data,Japan,Senior,100000,140000,120000
+Data Scientist,Data,Australia,Entry,65000,85000,75000
+Data Scientist,Data,Australia,Mid,90000,130000,110000
+Data Scientist,Data,Australia,Senior,135000,180000,160000
+Data Scientist,Data,Brazil,Entry,10000,18000,14000
+Data Scientist,Data,Brazil,Mid,20000,35000,27000
+Data Scientist,Data,Brazil,Senior,38000,65000,50000
+Data Scientist,Data,South Africa,Entry,15000,26000,20000
+Data Scientist,Data,South Africa,Mid,30000,55000,42000
+Data Scientist,Data,South Africa,Senior,60000,90000,75000
+Data Scientist,Data,Nigeria,Entry,6000,11000,8000
+Data Scientist,Data,Nigeria,Mid,14000,25000,19000
+Data Scientist,Data,Nigeria,Senior,30000,48000,38000
+Product Manager,Product,USA,Entry,75000,105000,90000
+Product Manager,Product,USA,Mid,115000,155000,135000
+Product Manager,Product,USA,Senior,160000,230000,185000
+Product Manager,Product,Canada,Entry,60000,85000,72000
+Product Manager,Product,Canada,Mid,90000,125000,108000
+Product Manager,Product,Canada,Senior,130000,170000,150000
+Product Manager,Product,UK,Entry,42000,62000,52000
+Product Manager,Product,UK,Mid,68000,98000,82000
+Product Manager,Product,UK,Senior,105000,150000,125000
+Product Manager,Product,Germany,Entry,52000,72000,62000
+Product Manager,Product,Germany,Mid,78000,105000,90000
+Product Manager,Product,Germany,Senior,115000,155000,130000
+Product Manager,Product,Netherlands,Entry,48000,68000,58000
+Product Manager,Product,Netherlands,Mid,72000,98000,85000
+Product Manager,Product,Netherlands,Senior,105000,145000,125000
+Product Manager,Product,Switzerland,Entry,95000,125000,110000
+Product Manager,Product,Switzerland,Mid,130000,165000,148000
+Product Manager,Product,Switzerland,Senior,175000,220000,195000
+Product Manager,Product,Saudi Arabia,Entry,24000,36000,30000
+Product Manager,Product,Saudi Arabia,Mid,42000,75000,58000
+Product Manager,Product,Saudi Arabia,Senior,80000,130000,105000
+Product Manager,Product,UAE,Entry,30000,45000,38000
+Product Manager,Product,UAE,Mid,55000,90000,72000
+Product Manager,Product,UAE,Senior,95000,150000,120000
+Product Manager,Product,Qatar,Entry,26000,42000,34000
+Product Manager,Product,Qatar,Mid,50000,80000,65000
+Product Manager,Product,Qatar,Senior,85000,135000,110000
+Product Manager,Product,Egypt,Entry,4000,7500,5500
+Product Manager,Product,Egypt,Mid,8500,16000,12000
+Product Manager,Product,Egypt,Senior,18000,35000,25000
+Product Manager,Product,Syria,Entry,2000,4000,3000
+Product Manager,Product,Syria,Mid,4500,8500,6500
+Product Manager,Product,Syria,Senior,9000,16000,12500
+Product Manager,Product,Palestine,Entry,7000,12000,9500
+Product Manager,Product,Palestine,Mid,14000,28000,21000
+Product Manager,Product,Palestine,Senior,30000,55000,42000
+Product Manager,Product,Jordan,Entry,8000,13000,10500
+Product Manager,Product,Jordan,Mid,15000,28000,21000
+Product Manager,Product,Jordan,Senior,30000,55000,42000
+Product Manager,Product,Morocco,Entry,6000,11000,8500
+Product Manager,Product,Morocco,Mid,12000,22000,17000
+Product Manager,Product,Morocco,Senior,25000,45000,35000
+Product Manager,Product,India,Entry,5500,11000,8000
+Product Manager,Product,India,Mid,13000,28000,20000
+Product Manager,Product,India,Senior,32000,65000,48000
+Product Manager,Product,Pakistan,Entry,4000,8500,6000
+Product Manager,Product,Pakistan,Mid,9500,20000,14500
+Product Manager,Product,Pakistan,Senior,24000,45000,34000
+Product Manager,Product,Singapore,Entry,55000,80000,68000
+Product Manager,Product,Singapore,Mid,85000,125000,105000
+Product Manager,Product,Singapore,Senior,135000,190000,160000
+Product Manager,Product,Japan,Entry,45000,65000,55000
+Product Manager,Product,Japan,Mid,70000,95000,82000
+Product Manager,Product,Japan,Senior,105000,145000,125000
+Product Manager,Product,Australia,Entry,60000,85000,72000
+Product Manager,Product,Australia,Mid,90000,135000,112000
+Product Manager,Product,Australia,Senior,140000,190000,165000
+Product Manager,Product,Brazil,Entry,9000,17000,13000
+Product Manager,Product,Brazil,Mid,19000,35000,27000
+Product Manager,Product,Brazil,Senior,38000,65000,50000
+Product Manager,Product,South Africa,Entry,14000,25000,19500
+Product Manager,Product,South Africa,Mid,30000,55000,42000
+Product Manager,Product,South Africa,Senior,60000,95000,75000
+Product Manager,Product,Nigeria,Entry,5500,10500,8000
+Product Manager,Product,Nigeria,Mid,13000,24000,18500
+Product Manager,Product,Nigeria,Senior,28000,48000,38000
+QA Engineer,Engineering,USA,Entry,60000,85000,70000
+QA Engineer,Engineering,USA,Mid,85000,115000,100000
+QA Engineer,Engineering,USA,Senior,115000,150000,130000
+QA Engineer,Engineering,Canada,Entry,50000,70000,60000
+QA Engineer,Engineering,Canada,Mid,70000,95000,82000
+QA Engineer,Engineering,Canada,Senior,95000,130000,110000
+QA Engineer,Engineering,UK,Entry,32000,45000,38000
+QA Engineer,Engineering,UK,Mid,45000,70000,55000
+QA Engineer,Engineering,UK,Senior,70000,100000,85000
+QA Engineer,Engineering,Germany,Entry,42000,55000,48000
+QA Engineer,Engineering,Germany,Mid,55000,78000,65000
+QA Engineer,Engineering,Germany,Senior,78000,105000,90000
+QA Engineer,Engineering,Netherlands,Entry,38000,52000,45000
+QA Engineer,Engineering,Netherlands,Mid,52000,75000,62000
+QA Engineer,Engineering,Netherlands,Senior,75000,100000,88000
+QA Engineer,Engineering,Switzerland,Entry,80000,105000,92000
+QA Engineer,Engineering,Switzerland,Mid,105000,135000,120000
+QA Engineer,Engineering,Switzerland,Senior,135000,170000,150000
+QA Engineer,Engineering,Saudi Arabia,Entry,15000,25000,20000
+QA Engineer,Engineering,Saudi Arabia,Mid,25000,45000,35000
+QA Engineer,Engineering,Saudi Arabia,Senior,45000,75000,60000
+QA Engineer,Engineering,UAE,Entry,20000,30000,25000
+QA Engineer,Engineering,UAE,Mid,30000,55000,42000
+QA Engineer,Engineering,UAE,Senior,55000,90000,72000
+QA Engineer,Engineering,Qatar,Entry,18000,28000,23000
+QA Engineer,Engineering,Qatar,Mid,28000,52000,40000
+QA Engineer,Engineering,Qatar,Senior,52000,85000,68000
+QA Engineer,Engineering,Egypt,Entry,2500,5000,3500
+QA Engineer,Engineering,Egypt,Mid,5000,9000,7000
+QA Engineer,Engineering,Egypt,Senior,9000,18000,13500
+QA Engineer,Engineering,Syria,Entry,1200,2500,1800
+QA Engineer,Engineering,Syria,Mid,2500,4500,3500
+QA Engineer,Engineering,Syria,Senior,4500,8000,6000
+QA Engineer,Engineering,Palestine,Entry,4500,8000,6000
+QA Engineer,Engineering,Palestine,Mid,8000,16000,12000
+QA Engineer,Engineering,Palestine,Senior,16000,30000,23000
+QA Engineer,Engineering,Jordan,Entry,5000,9000,7000
+QA Engineer,Engineering,Jordan,Mid,9000,18000,13500
+QA Engineer,Engineering,Jordan,Senior,18000,32000,25000
+QA Engineer,Engineering,Morocco,Entry,4000,7500,5500
+QA Engineer,Engineering,Morocco,Mid,7500,14000,10500
+QA Engineer,Engineering,Morocco,Senior,14000,26000,20000
+QA Engineer,Engineering,India,Entry,3500,7000,5000
+QA Engineer,Engineering,India,Mid,7000,15000,11000
+QA Engineer,Engineering,India,Senior,15000,32000,23000
+QA Engineer,Engineering,Pakistan,Entry,2500,5500,4000
+QA Engineer,Engineering,Pakistan,Mid,5500,11000,8000
+QA Engineer,Engineering,Pakistan,Senior,11000,22000,16000
+QA Engineer,Engineering,Singapore,Entry,42000,62000,52000
+QA Engineer,Engineering,Singapore,Mid,62000,92000,75000
+QA Engineer,Engineering,Singapore,Senior,92000,135000,112000
+QA Engineer,Engineering,Japan,Entry,35000,50000,42000
+QA Engineer,Engineering,Japan,Mid,50000,75000,62000
+QA Engineer,Engineering,Japan,Senior,75000,105000,90000
+QA Engineer,Engineering,Australia,Entry,45000,65000,55000
+QA Engineer,Engineering,Australia,Mid,65000,95000,80000
+QA Engineer,Engineering,Australia,Senior,95000,135000,115000
+QA Engineer,Engineering,Brazil,Entry,6000,11000,8500
+QA Engineer,Engineering,Brazil,Mid,11000,22000,16000
+QA Engineer,Engineering,Brazil,Senior,22000,40000,30000
+QA Engineer,Engineering,South Africa,Entry,10000,18000,14000
+QA Engineer,Engineering,South Africa,Mid,18000,32000,25000
+QA Engineer,Engineering,South Africa,Senior,32000,55000,42000
+QA Engineer,Engineering,Nigeria,Entry,3500,6500,5000
+QA Engineer,Engineering,Nigeria,Mid,6500,12000,9000
+QA Engineer,Engineering,Nigeria,Senior,12000,24000,18000
+Cybersecurity Engineer,Security,USA,Entry,75000,100000,88000
+Cybersecurity Engineer,Security,USA,Mid,105000,145000,125000
+Cybersecurity Engineer,Security,USA,Senior,150000,200000,175000
+Cybersecurity Engineer,Security,Canada,Entry,60000,80000,70000
+Cybersecurity Engineer,Security,Canada,Mid,85000,115000,100000
+Cybersecurity Engineer,Security,Canada,Senior,120000,160000,140000
+Cybersecurity Engineer,Security,UK,Entry,40000,55000,48000
+Cybersecurity Engineer,Security,UK,Mid,60000,85000,72000
+Cybersecurity Engineer,Security,UK,Senior,90000,130000,110000
+Cybersecurity Engineer,Security,Germany,Entry,50000,65000,58000
+Cybersecurity Engineer,Security,Germany,Mid,70000,95000,82000
+Cybersecurity Engineer,Security,Germany,Senior,100000,140000,120000
+Cybersecurity Engineer,Security,Netherlands,Entry,45000,60000,52000
+Cybersecurity Engineer,Security,Netherlands,Mid,65000,90000,78000
+Cybersecurity Engineer,Security,Netherlands,Senior,95000,130000,112000
+Cybersecurity Engineer,Security,Switzerland,Entry,95000,120000,108000
+Cybersecurity Engineer,Security,Switzerland,Mid,125000,155000,140000
+Cybersecurity Engineer,Security,Switzerland,Senior,160000,200000,180000
+Cybersecurity Engineer,Security,Saudi Arabia,Entry,22000,32000,27000
+Cybersecurity Engineer,Security,Saudi Arabia,Mid,38000,65000,52000
+Cybersecurity Engineer,Security,Saudi Arabia,Senior,70000,110000,90000
+Cybersecurity Engineer,Security,UAE,Entry,28000,38000,33000
+Cybersecurity Engineer,Security,UAE,Mid,45000,75000,60000
+Cybersecurity Engineer,Security,UAE,Senior,80000,130000,105000
+Cybersecurity Engineer,Security,Qatar,Entry,25000,35000,30000
+Cybersecurity Engineer,Security,Qatar,Mid,42000,70000,56000
+Cybersecurity Engineer,Security,Qatar,Senior,75000,120000,98000
+Cybersecurity Engineer,Security,Egypt,Entry,4000,7500,5800
+Cybersecurity Engineer,Security,Egypt,Mid,8000,15000,11500
+Cybersecurity Engineer,Security,Egypt,Senior,16000,30000,23000
+Cybersecurity Engineer,Security,Syria,Entry,2000,4000,3000
+Cybersecurity Engineer,Security,Syria,Mid,4500,8000,6200
+Cybersecurity Engineer,Security,Syria,Senior,8500,15000,11800
+Cybersecurity Engineer,Security,Palestine,Entry,6500,11000,8800
+Cybersecurity Engineer,Security,Palestine,Mid,12000,24000,18000
+Cybersecurity Engineer,Security,Palestine,Senior,26000,48000,37000
+Cybersecurity Engineer,Security,Jordan,Entry,7500,12000,9800
+Cybersecurity Engineer,Security,Jordan,Mid,13000,25000,19000
+Cybersecurity Engineer,Security,Jordan,Senior,28000,48000,38000
+Cybersecurity Engineer,Security,Morocco,Entry,6000,10000,8000
+Cybersecurity Engineer,Security,Morocco,Mid,11000,20000,15500
+Cybersecurity Engineer,Security,Morocco,Senior,22000,38000,30000
+Cybersecurity Engineer,Security,India,Entry,5000,10000,7500
+Cybersecurity Engineer,Security,India,Mid,12000,24000,18000
+Cybersecurity Engineer,Security,India,Senior,26000,50000,38000
+Cybersecurity Engineer,Security,Pakistan,Entry,4000,8000,6000
+Cybersecurity Engineer,Security,Pakistan,Mid,9000,18000,13500
+Cybersecurity Engineer,Security,Pakistan,Senior,20000,38000,29000
+Cybersecurity Engineer,Security,Singapore,Entry,55000,75000,65000
+Cybersecurity Engineer,Security,Singapore,Mid,80000,115000,98000
+Cybersecurity Engineer,Security,Singapore,Senior,120000,165000,142000
+Cybersecurity Engineer,Security,Japan,Entry,45000,60000,52000
+Cybersecurity Engineer,Security,Japan,Mid,65000,90000,78000
+Cybersecurity Engineer,Security,Japan,Senior,95000,135000,115000
+Cybersecurity Engineer,Security,Australia,Entry,60000,80000,70000
+Cybersecurity Engineer,Security,Australia,Mid,85000,120000,102000
+Cybersecurity Engineer,Security,Australia,Senior,125000,170000,148000
+Cybersecurity Engineer,Security,Brazil,Entry,8500,15000,11800
+Cybersecurity Engineer,Security,Brazil,Mid,17000,30000,23500
+Cybersecurity Engineer,Security,Brazil,Senior,32000,55000,43500
+Cybersecurity Engineer,Security,South Africa,Entry,13000,22000,17500
+Cybersecurity Engineer,Security,South Africa,Mid,25000,42000,33500
+Cybersecurity Engineer,Security,South Africa,Senior,45000,75000,60000
+Cybersecurity Engineer,Security,Nigeria,Entry,4500,9000,6800
+Cybersecurity Engineer,Security,Nigeria,Mid,10000,18000,14000
+Cybersecurity Engineer,Security,Nigeria,Senior,20000,35000,27500
+Machine Learning Engineer,AI/ML,USA,Entry,90000,125000,107500
+Machine Learning Engineer,AI/ML,USA,Mid,130000,175000,152500
+Machine Learning Engineer,AI/ML,USA,Senior,175000,240000,207500
+Machine Learning Engineer,AI/ML,Canada,Entry,75000,100000,87500
+Machine Learning Engineer,AI/ML,Canada,Mid,105000,140000,122500
+Machine Learning Engineer,AI/ML,Canada,Senior,140000,190000,165000
+Machine Learning Engineer,AI/ML,UK,Entry,50000,70000,60000
+Machine Learning Engineer,AI/ML,UK,Mid,75000,110000,92500
+Machine Learning Engineer,AI/ML,UK,Senior,110000,160000,135000
+Machine Learning Engineer,AI/ML,Germany,Entry,60000,80000,70000
+Machine Learning Engineer,AI/ML,Germany,Mid,85000,115000,100000
+Machine Learning Engineer,AI/ML,Germany,Senior,120000,160000,140000
+Machine Learning Engineer,AI/ML,Netherlands,Entry,55000,75000,65000
+Machine Learning Engineer,AI/ML,Netherlands,Mid,80000,110000,95000
+Machine Learning Engineer,AI/ML,Netherlands,Senior,115000,150000,132500
+Machine Learning Engineer,AI/ML,Switzerland,Entry,105000,140000,122500
+Machine Learning Engineer,AI/ML,Switzerland,Mid,145000,180000,162500
+Machine Learning Engineer,AI/ML,Switzerland,Senior,185000,230000,207500
+Machine Learning Engineer,AI/ML,Saudi Arabia,Entry,28000,40000,34000
+Machine Learning Engineer,AI/ML,Saudi Arabia,Mid,45000,80000,62500
+Machine Learning Engineer,AI/ML,Saudi Arabia,Senior,85000,130000,107500
+Machine Learning Engineer,AI/ML,UAE,Entry,35000,48000,41500
+Machine Learning Engineer,AI/ML,UAE,Mid,55000,90000,72500
+Machine Learning Engineer,AI/ML,UAE,Senior,95000,150000,122500
+Machine Learning Engineer,AI/ML,Qatar,Entry,30000,45000,37500
+Machine Learning Engineer,AI/ML,Qatar,Mid,50000,85000,67500
+Machine Learning Engineer,AI/ML,Qatar,Senior,90000,140000,115000
+Machine Learning Engineer,AI/ML,Egypt,Entry,5000,9000,7000
+Machine Learning Engineer,AI/ML,Egypt,Mid,10000,18000,14000
+Machine Learning Engineer,AI/ML,Egypt,Senior,20000,38000,29000
+Machine Learning Engineer,AI/ML,Syria,Entry,3000,5000,4000
+Machine Learning Engineer,AI/ML,Syria,Mid,5500,10000,7750
+Machine Learning Engineer,AI/ML,Syria,Senior,10500,18000,14250
+Machine Learning Engineer,AI/ML,Palestine,Entry,8000,14000,11000
+Machine Learning Engineer,AI/ML,Palestine,Mid,16000,32000,24000
+Machine Learning Engineer,AI/ML,Palestine,Senior,32000,62000,47000
+Machine Learning Engineer,AI/ML,Jordan,Entry,9000,15000,12000
+Machine Learning Engineer,AI/ML,Jordan,Mid,16000,30000,23000
+Machine Learning Engineer,AI/ML,Jordan,Senior,32000,55000,43500
+Machine Learning Engineer,AI/ML,Morocco,Entry,7000,12000,9500
+Machine Learning Engineer,AI/ML,Morocco,Mid,14000,25000,19500
+Machine Learning Engineer,AI/ML,Morocco,Senior,28000,48000,38000
+Machine Learning Engineer,AI/ML,India,Entry,7000,14000,10500
+Machine Learning Engineer,AI/ML,India,Mid,16000,32000,24000
+Machine Learning Engineer,AI/ML,India,Senior,35000,68000,51500
+Machine Learning Engineer,AI/ML,Pakistan,Entry,5000,10000,7500
+Machine Learning Engineer,AI/ML,Pakistan,Mid,11000,24000,17500
+Machine Learning Engineer,AI/ML,Pakistan,Senior,28000,50000,39000
+Machine Learning Engineer,AI/ML,Singapore,Entry,65000,90000,77500
+Machine Learning Engineer,AI/ML,Singapore,Mid,95000,135000,115000
+Machine Learning Engineer,AI/ML,Singapore,Senior,145000,195000,170000
+Machine Learning Engineer,AI/ML,Japan,Entry,55000,75000,65000
+Machine Learning Engineer,AI/ML,Japan,Mid,80000,105000,92500
+Machine Learning Engineer,AI/ML,Japan,Senior,110000,155000,132500
+Machine Learning Engineer,AI/ML,Australia,Entry,70000,95000,82500
+Machine Learning Engineer,AI/ML,Australia,Mid,100000,140000,120000
+Machine Learning Engineer,AI/ML,Australia,Senior,145000,195000,170000
+Machine Learning Engineer,AI/ML,Brazil,Entry,11000,20000,15500
+Machine Learning Engineer,AI/ML,Brazil,Mid,22000,40000,31000
+Machine Learning Engineer,AI/ML,Brazil,Senior,42000,72000,57000
+Machine Learning Engineer,AI/ML,South Africa,Entry,16000,28000,22000
+Machine Learning Engineer,AI/ML,South Africa,Mid,32000,60000,46000
+Machine Learning Engineer,AI/ML,South Africa,Senior,65000,100000,82500
+Machine Learning Engineer,AI/ML,Nigeria,Entry,6500,12000,9250
+Machine Learning Engineer,AI/ML,Nigeria,Mid,15000,28000,21500
+Machine Learning Engineer,AI/ML,Nigeria,Senior,32000,55000,43500
+Cloud Architect,Engineering,USA,Entry,95000,130000,112000
+Cloud Architect,Engineering,USA,Mid,140000,185000,162000
+Cloud Architect,Engineering,USA,Senior,180000,250000,215000
+Cloud Architect,Engineering,Canada,Entry,80000,105000,92000
+Cloud Architect,Engineering,Canada,Mid,115000,150000,132000
+Cloud Architect,Engineering,Canada,Senior,155000,200000,175000
+Cloud Architect,Engineering,UK,Entry,55000,75000,65000
+Cloud Architect,Engineering,UK,Mid,85000,120000,102000
+Cloud Architect,Engineering,UK,Senior,125000,175000,150000
+Cloud Architect,Engineering,Germany,Entry,65000,85000,75000
+Cloud Architect,Engineering,Germany,Mid,90000,120000,105000
+Cloud Architect,Engineering,Germany,Senior,130000,170000,150000
+Cloud Architect,Engineering,Netherlands,Entry,60000,80000,70000
+Cloud Architect,Engineering,Netherlands,Mid,85000,115000,100000
+Cloud Architect,Engineering,Netherlands,Senior,120000,160000,140000
+Cloud Architect,Engineering,Switzerland,Entry,110000,145000,127000
+Cloud Architect,Engineering,Switzerland,Mid,150000,190000,170000
+Cloud Architect,Engineering,Switzerland,Senior,195000,245000,220000
+Cloud Architect,Engineering,Saudi Arabia,Entry,30000,45000,37000
+Cloud Architect,Engineering,Saudi Arabia,Mid,50000,85000,67000
+Cloud Architect,Engineering,Saudi Arabia,Senior,95000,145000,120000
+Cloud Architect,Engineering,UAE,Entry,38000,52000,45000
+Cloud Architect,Engineering,UAE,Mid,60000,100000,80000
+Cloud Architect,Engineering,UAE,Senior,110000,165000,135000
+Cloud Architect,Engineering,Qatar,Entry,32000,48000,40000
+Cloud Architect,Engineering,Qatar,Mid,55000,90000,72000
+Cloud Architect,Engineering,Qatar,Senior,100000,155000,127000
+Cloud Architect,Engineering,Egypt,Entry,5500,10000,7700
+Cloud Architect,Engineering,Egypt,Mid,12000,20000,16000
+Cloud Architect,Engineering,Egypt,Senior,22000,45000,32000
+Cloud Architect,Engineering,Syria,Entry,3500,6000,4700
+Cloud Architect,Engineering,Syria,Mid,6500,11000,8700
+Cloud Architect,Engineering,Syria,Senior,12000,20000,16000
+Cloud Architect,Engineering,Palestine,Entry,9000,15000,12000
+Cloud Architect,Engineering,Palestine,Mid,18000,35000,26000
+Cloud Architect,Engineering,Palestine,Senior,35000,70000,52000
+Cloud Architect,Engineering,Jordan,Entry,10000,16000,13000
+Cloud Architect,Engineering,Jordan,Mid,18000,32000,25000
+Cloud Architect,Engineering,Jordan,Senior,35000,60000,47000
+Cloud Architect,Engineering,Morocco,Entry,8000,14000,11000
+Cloud Architect,Engineering,Morocco,Mid,16000,28000,22000
+Cloud Architect,Engineering,Morocco,Senior,32000,55000,43000
+Cloud Architect,Engineering,India,Entry,8000,15000,11500
+Cloud Architect,Engineering,India,Mid,18000,35000,26500
+Cloud Architect,Engineering,India,Senior,40000,75000,57000
+Cloud Architect,Engineering,Pakistan,Entry,5500,11000,8200
+Cloud Architect,Engineering,Pakistan,Mid,12000,26000,19000
+Cloud Architect,Engineering,Pakistan,Senior,30000,55000,42000
+Cloud Architect,Engineering,Singapore,Entry,70000,95000,82000
+Cloud Architect,Engineering,Singapore,Mid,100000,145000,122000
+Cloud Architect,Engineering,Singapore,Senior,155000,210000,182000
+Cloud Architect,Engineering,Japan,Entry,60000,80000,70000
+Cloud Architect,Engineering,Japan,Mid,85000,115000,100000
+Cloud Architect,Engineering,Japan,Senior,120000,165000,142000
+Cloud Architect,Engineering,Australia,Entry,75000,100000,87000
+Cloud Architect,Engineering,Australia,Mid,110000,150000,130000
+Cloud Architect,Engineering,Australia,Senior,160000,210000,185000
+Cloud Architect,Engineering,Brazil,Entry,12000,22000,17000
+Cloud Architect,Engineering,Brazil,Mid,25000,45000,35000
+Cloud Architect,Engineering,Brazil,Senior,48000,80000,64000
+Cloud Architect,Engineering,South Africa,Entry,18000,30000,24000
+Cloud Architect,Engineering,South Africa,Mid,35000,65000,50000
+Cloud Architect,Engineering,South Africa,Senior,75000,115000,95000
+Cloud Architect,Engineering,Nigeria,Entry,7500,14000,10700
+Cloud Architect,Engineering,Nigeria,Mid,18000,32000,25000
+Cloud Architect,Engineering,Nigeria,Senior,35000,65000,50000
+System Administrator,Infrastructure,USA,Entry,55000,78000,68000
+System Administrator,Infrastructure,USA,Mid,80000,115000,100000
+System Administrator,Infrastructure,USA,Senior,115000,155000,135000
+System Administrator,Infrastructure,Canada,Entry,48000,65000,58000
+System Administrator,Infrastructure,Canada,Mid,70000,95000,82000
+System Administrator,Infrastructure,Canada,Senior,95000,135000,115000
+System Administrator,Infrastructure,UK,Entry,30000,45000,38000
+System Administrator,Infrastructure,UK,Mid,48000,72000,60000
+System Administrator,Infrastructure,UK,Senior,75000,110000,92000
+System Administrator,Infrastructure,Germany,Entry,42000,58000,50000
+System Administrator,Infrastructure,Germany,Mid,60000,82000,72000
+System Administrator,Infrastructure,Germany,Senior,85000,115000,100000
+System Administrator,Infrastructure,Netherlands,Entry,38000,52000,45000
+System Administrator,Infrastructure,Netherlands,Mid,55000,78000,68000
+System Administrator,Infrastructure,Netherlands,Senior,80000,110000,95000
+System Administrator,Infrastructure,Switzerland,Entry,85000,105000,95000
+System Administrator,Infrastructure,Switzerland,Mid,110000,135000,122000
+System Administrator,Infrastructure,Switzerland,Senior,140000,175000,155000
+System Administrator,Infrastructure,Saudi Arabia,Entry,14000,24000,19000
+System Administrator,Infrastructure,Saudi Arabia,Mid,28000,52000,40000
+System Administrator,Infrastructure,Saudi Arabia,Senior,55000,90000,72000
+System Administrator,Infrastructure,UAE,Entry,18000,28000,23000
+System Administrator,Infrastructure,UAE,Mid,32000,58000,45000
+System Administrator,Infrastructure,UAE,Senior,65000,100000,82000
+System Administrator,Infrastructure,Qatar,Entry,16000,26000,21000
+System Administrator,Infrastructure,Qatar,Mid,30000,55000,42000
+System Administrator,Infrastructure,Qatar,Senior,60000,95000,78000
+System Administrator,Infrastructure,Egypt,Entry,2000,4500,3200
+System Administrator,Infrastructure,Egypt,Mid,5000,11000,8000
+System Administrator,Infrastructure,Egypt,Senior,12000,22000,17000
+System Administrator,Infrastructure,Syria,Entry,1000,2200,1600
+System Administrator,Infrastructure,Syria,Mid,2500,4500,3500
+System Administrator,Infrastructure,Syria,Senior,5000,9500,7200
+System Administrator,Infrastructure,Palestine,Entry,4500,8500,6500
+System Administrator,Infrastructure,Palestine,Mid,9000,18000,13500
+System Administrator,Infrastructure,Palestine,Senior,20000,38000,28000
+System Administrator,Infrastructure,Jordan,Entry,5000,9500,7500
+System Administrator,Infrastructure,Jordan,Mid,10000,19000,14500
+System Administrator,Infrastructure,Jordan,Senior,22000,38000,30000
+System Administrator,Infrastructure,Morocco,Entry,4500,8000,6200
+System Administrator,Infrastructure,Morocco,Mid,9000,16000,12500
+System Administrator,Infrastructure,Morocco,Senior,18000,32000,25000
+System Administrator,Infrastructure,India,Entry,3500,7500,5500
+System Administrator,Infrastructure,India,Mid,8500,18000,13000
+System Administrator,Infrastructure,India,Senior,20000,40000,30000
+System Administrator,Infrastructure,Pakistan,Entry,3000,6500,4800
+System Administrator,Infrastructure,Pakistan,Mid,7000,14000,10500
+System Administrator,Infrastructure,Pakistan,Senior,16000,30000,23000
+System Administrator,Infrastructure,Singapore,Entry,45000,65000,55000
+System Administrator,Infrastructure,Singapore,Mid,68000,95000,82000
+System Administrator,Infrastructure,Singapore,Senior,100000,145000,125000
+System Administrator,Infrastructure,Japan,Entry,38000,55000,45000
+System Administrator,Infrastructure,Japan,Mid,58000,82000,70000
+System Administrator,Infrastructure,Japan,Senior,85000,115000,100000
+System Administrator,Infrastructure,Australia,Entry,50000,72000,62000
+System Administrator,Infrastructure,Australia,Mid,75000,105000,90000
+System Administrator,Infrastructure,Australia,Senior,110000,150000,130000
+System Administrator,Infrastructure,Brazil,Entry,7000,13000,10000
+System Administrator,Infrastructure,Brazil,Mid,15000,28000,21000
+System Administrator,Infrastructure,Brazil,Senior,30000,52000,41000
+System Administrator,Infrastructure,South Africa,Entry,11000,19000,15000
+System Administrator,Infrastructure,South Africa,Mid,22000,40000,31000
+System Administrator,Infrastructure,South Africa,Senior,45000,75000,60000
+System Administrator,Infrastructure,Nigeria,Entry,3800,7200,5500
+System Administrator,Infrastructure,Nigeria,Mid,8500,16000,12200
+System Administrator,Infrastructure,Nigeria,Senior,18000,32000,25000
+Business Analyst,Product/Data,USA,Entry,65000,88000,76000
+Business Analyst,Product/Data,USA,Mid,92000,125000,110000
+Business Analyst,Product/Data,USA,Senior,130000,180000,155000
+Business Analyst,Product/Data,Canada,Entry,55000,75000,65000
+Business Analyst,Product/Data,Canada,Mid,80000,105000,92000
+Business Analyst,Product/Data,Canada,Senior,110000,145000,128000
+Business Analyst,Product/Data,UK,Entry,35000,50000,42000
+Business Analyst,Product/Data,UK,Mid,55000,80000,68000
+Business Analyst,Product/Data,UK,Senior,85000,120000,105000
+Business Analyst,Product/Data,Germany,Entry,45000,62000,53000
+Business Analyst,Product/Data,Germany,Mid,65000,88000,78000
+Business Analyst,Product/Data,Germany,Senior,92000,125000,110000
+Business Analyst,Product/Data,Netherlands,Entry,42000,58000,50000
+Business Analyst,Product/Data,Netherlands,Mid,62000,85000,74000
+Business Analyst,Product/Data,Netherlands,Senior,88000,120000,105000
+Business Analyst,Product/Data,Switzerland,Entry,88000,115000,102000
+Business Analyst,Product/Data,Switzerland,Mid,120000,145000,132000
+Business Analyst,Product/Data,Switzerland,Senior,150000,190000,170000
+Business Analyst,Product/Data,Saudi Arabia,Entry,18000,30000,24000
+Business Analyst,Product/Data,Saudi Arabia,Mid,35000,65000,50000
+Business Analyst,Product/Data,Saudi Arabia,Senior,70000,115000,92000
+Business Analyst,Product/Data,UAE,Entry,22000,35000,28000
+Business Analyst,Product/Data,UAE,Mid,45000,78000,62000
+Business Analyst,Product/Data,UAE,Senior,85000,135000,110000
+Business Analyst,Product/Data,Qatar,Entry,20000,32000,26000
+Business Analyst,Product/Data,Qatar,Mid,42000,72000,58000
+Business Analyst,Product/Data,Qatar,Senior,78000,125000,102000
+Business Analyst,Product/Data,Egypt,Entry,3000,6500,4800
+Business Analyst,Product/Data,Egypt,Mid,7500,14000,10800
+Business Analyst,Product/Data,Egypt,Senior,16000,30000,23000
+Business Analyst,Product/Data,Syria,Entry,1500,3500,2500
+Business Analyst,Product/Data,Syria,Mid,4000,7500,5800
+Business Analyst,Product/Data,Syria,Senior,8500,15000,11800
+Business Analyst,Product/Data,Palestine,Entry,6000,11000,8500
+Business Analyst,Product/Data,Palestine,Mid,12500,25000,18500
+Business Analyst,Product/Data,Palestine,Senior,26000,48000,37000
+Business Analyst,Product/Data,Jordan,Entry,7000,12000,9500
+Business Analyst,Product/Data,Jordan,Mid,13500,24000,18800
+Business Analyst,Product/Data,Jordan,Senior,26000,45000,35500
+Business Analyst,Product/Data,Morocco,Entry,5500,10000,7800
+Business Analyst,Product/Data,Morocco,Mid,11000,20000,15500
+Business Analyst,Product/Data,Morocco,Senior,22000,40000,31000
+Business Analyst,Product/Data,India,Entry,4500,9000,6800
+Business Analyst,Product/Data,India,Mid,11000,22000,16500
+Business Analyst,Product/Data,India,Senior,26000,50000,38000
+Business Analyst,Product/Data,Pakistan,Entry,3500,7500,5500
+Business Analyst,Product/Data,Pakistan,Mid,9000,18000,13500
+Business Analyst,Product/Data,Pakistan,Senior,20000,38000,29000
+Business Analyst,Product/Data,Singapore,Entry,50000,70000,60000
+Business Analyst,Product/Data,Singapore,Mid,78000,110000,94000
+Business Analyst,Product/Data,Singapore,Senior,120000,165000,142000
+Business Analyst,Product/Data,Japan,Entry,42000,62000,52000
+Business Analyst,Product/Data,Japan,Mid,65000,88000,76000
+Business Analyst,Product/Data,Japan,Senior,95000,135000,115000
+Business Analyst,Product/Data,Australia,Entry,55000,78000,66000
+Business Analyst,Product/Data,Australia,Mid,82000,115000,98000
+Business Analyst,Product/Data,Australia,Senior,120000,165000,142000
+Business Analyst,Product/Data,Brazil,Entry,8500,15000,11800
+Business Analyst,Product/Data,Brazil,Mid,17000,32000,24500
+Business Analyst,Product/Data,Brazil,Senior,35000,60000,47500
+Business Analyst,Product/Data,South Africa,Entry,13000,22000,17500
+Business Analyst,Product/Data,South Africa,Mid,27000,48000,37500
+Business Analyst,Product/Data,South Africa,Senior,55000,88000,71500
+Business Analyst,Product/Data,Nigeria,Entry,5000,9500,7200
+Business Analyst,Product/Data,Nigeria,Mid,12000,22000,17000
+Business Analyst,Product/Data,Nigeria,Senior,25000,42000,33500
+Embedded Systems Engineer,Engineering,USA,Entry,72000,95000,84000
+Embedded Systems Engineer,Engineering,USA,Mid,100000,135000,118000
+Embedded Systems Engineer,Engineering,USA,Senior,140000,190000,165000
+Embedded Systems Engineer,Engineering,Canada,Entry,60000,80000,70000
+Embedded Systems Engineer,Engineering,Canada,Mid,85000,115000,100000
+Embedded Systems Engineer,Engineering,Canada,Senior,120000,155000,135000
+Embedded Systems Engineer,Engineering,UK,Entry,38000,52000,45000
+Embedded Systems Engineer,Engineering,UK,Mid,55000,80000,68000
+Embedded Systems Engineer,Engineering,UK,Senior,85000,120000,102000
+Embedded Systems Engineer,Engineering,Germany,Entry,48000,62000,55000
+Embedded Systems Engineer,Engineering,Germany,Mid,68000,88000,78000
+Embedded Systems Engineer,Engineering,Germany,Senior,95000,125000,110000
+Embedded Systems Engineer,Engineering,Netherlands,Entry,42000,58000,50000
+Embedded Systems Engineer,Engineering,Netherlands,Mid,62000,85000,74000
+Embedded Systems Engineer,Engineering,Netherlands,Senior,90000,120000,105000
+Embedded Systems Engineer,Engineering,Switzerland,Entry,90000,115000,102000
+Embedded Systems Engineer,Engineering,Switzerland,Mid,120000,145000,132000
+Embedded Systems Engineer,Engineering,Switzerland,Senior,150000,190000,170000
+Embedded Systems Engineer,Engineering,Saudi Arabia,Entry,18000,30000,24000
+Embedded Systems Engineer,Engineering,Saudi Arabia,Mid,35000,65000,50000
+Embedded Systems Engineer,Engineering,Saudi Arabia,Senior,70000,110000,90000
+Embedded Systems Engineer,Engineering,UAE,Entry,22000,35000,28000
+Embedded Systems Engineer,Engineering,UAE,Mid,45000,75000,60000
+Embedded Systems Engineer,Engineering,UAE,Senior,80000,130000,105000
+Embedded Systems Engineer,Engineering,Qatar,Entry,20000,32000,26000
+Embedded Systems Engineer,Engineering,Qatar,Mid,42000,70000,56000
+Embedded Systems Engineer,Engineering,Qatar,Senior,75000,120000,98000
+Embedded Systems Engineer,Engineering,Egypt,Entry,3500,6500,5000
+Embedded Systems Engineer,Engineering,Egypt,Mid,7500,14000,10500
+Embedded Systems Engineer,Engineering,Egypt,Senior,15000,30000,22000
+Embedded Systems Engineer,Engineering,Syria,Entry,1500,3500,2500
+Embedded Systems Engineer,Engineering,Syria,Mid,4000,7500,5800
+Embedded Systems Engineer,Engineering,Syria,Senior,8500,15000,11800
+Embedded Systems Engineer,Engineering,Palestine,Entry,6000,11000,8500
+Embedded Systems Engineer,Engineering,Palestine,Mid,13000,25000,19000
+Embedded Systems Engineer,Engineering,Palestine,Senior,26000,48000,37000
+Embedded Systems Engineer,Engineering,Jordan,Entry,7000,12000,9500
+Embedded Systems Engineer,Engineering,Jordan,Mid,13500,24000,18500
+Embedded Systems Engineer,Engineering,Jordan,Senior,26000,45000,35000
+Embedded Systems Engineer,Engineering,Morocco,Entry,5500,10000,7800
+Embedded Systems Engineer,Engineering,Morocco,Mid,11000,20000,15500
+Embedded Systems Engineer,Engineering,Morocco,Senior,22000,40000,31000
+Embedded Systems Engineer,Engineering,India,Entry,4500,9000,6800
+Embedded Systems Engineer,Engineering,India,Mid,11000,22000,16500
+Embedded Systems Engineer,Engineering,India,Senior,26000,50000,38000
+Embedded Systems Engineer,Engineering,Pakistan,Entry,3500,7500,5500
+Embedded Systems Engineer,Engineering,Pakistan,Mid,9000,18000,13500
+Embedded Systems Engineer,Engineering,Pakistan,Senior,20000,38000,29000
+Embedded Systems Engineer,Engineering,Singapore,Entry,50000,70000,60000
+Embedded Systems Engineer,Engineering,Singapore,Mid,78000,110000,94000
+Embedded Systems Engineer,Engineering,Singapore,Senior,120000,165000,142000
+Embedded Systems Engineer,Engineering,Japan,Entry,42000,62000,52000
+Embedded Systems Engineer,Engineering,Japan,Mid,65000,88000,76000
+Embedded Systems Engineer,Engineering,Japan,Senior,95000,135000,115000
+Embedded Systems Engineer,Engineering,Australia,Entry,55000,78000,66000
+Embedded Systems Engineer,Engineering,Australia,Mid,82000,115000,98000
+Embedded Systems Engineer,Engineering,Australia,Senior,120000,165000,142000
+Embedded Systems Engineer,Engineering,Brazil,Entry,8500,15000,11800
+Embedded Systems Engineer,Engineering,Brazil,Mid,17000,32000,24500
+Embedded Systems Engineer,Engineering,Brazil,Senior,35000,60000,47500
+Embedded Systems Engineer,Engineering,South Africa,Entry,13000,22000,17500
+Embedded Systems Engineer,Engineering,South Africa,Mid,27000,48000,37500
+Embedded Systems Engineer,Engineering,South Africa,Senior,55000,88000,71500
+Embedded Systems Engineer,Engineering,Nigeria,Entry,5000,9500,7200
+Embedded Systems Engineer,Engineering,Nigeria,Mid,12000,22000,17000
+Embedded Systems Engineer,Engineering,Nigeria,Senior,25000,42000,33500
+SEO/Digital Marketing Specialist,Marketing,USA,Entry,45000,65000,55000
+SEO/Digital Marketing Specialist,Marketing,USA,Mid,70000,95000,82000
+SEO/Digital Marketing Specialist,Marketing,USA,Senior,100000,145000,120000
+SEO/Digital Marketing Specialist,Marketing,Canada,Entry,38000,55000,46000
+SEO/Digital Marketing Specialist,Marketing,Canada,Mid,60000,82000,71000
+SEO/Digital Marketing Specialist,Marketing,Canada,Senior,85000,120000,102000
+SEO/Digital Marketing Specialist,Marketing,UK,Entry,28000,38000,33000
+SEO/Digital Marketing Specialist,Marketing,UK,Mid,42000,62000,52000
+SEO/Digital Marketing Specialist,Marketing,UK,Senior,65000,95000,80000
+SEO/Digital Marketing Specialist,Marketing,Germany,Entry,35000,48000,41000
+SEO/Digital Marketing Specialist,Marketing,Germany,Mid,52000,72000,62000
+SEO/Digital Marketing Specialist,Marketing,Germany,Senior,75000,105000,90000
+SEO/Digital Marketing Specialist,Marketing,Netherlands,Entry,32000,45000,38000
+SEO/Digital Marketing Specialist,Marketing,Netherlands,Mid,48000,68000,58000
+SEO/Digital Marketing Specialist,Marketing,Netherlands,Senior,70000,100000,85000
+SEO/Digital Marketing Specialist,Marketing,Switzerland,Entry,70000,90000,80000
+SEO/Digital Marketing Specialist,Marketing,Switzerland,Mid,95000,125000,110000
+SEO/Digital Marketing Specialist,Marketing,Switzerland,Senior,130000,170000,150000
+SEO/Digital Marketing Specialist,Marketing,Saudi Arabia,Entry,12000,22000,17000
+SEO/Digital Marketing Specialist,Marketing,Saudi Arabia,Mid,25000,45000,35000
+SEO/Digital Marketing Specialist,Marketing,Saudi Arabia,Senior,50000,85000,67000
+SEO/Digital Marketing Specialist,Marketing,UAE,Entry,15000,26000,20000
+SEO/Digital Marketing Specialist,Marketing,UAE,Mid,32000,55000,43000
+SEO/Digital Marketing Specialist,Marketing,UAE,Senior,60000,100000,80000
+SEO/Digital Marketing Specialist,Marketing,Qatar,Entry,14000,24000,19000
+SEO/Digital Marketing Specialist,Marketing,Qatar,Mid,28000,50000,39000
+SEO/Digital Marketing Specialist,Marketing,Qatar,Senior,55000,95000,75000
+SEO/Digital Marketing Specialist,Marketing,Egypt,Entry,1800,3800,2800
+SEO/Digital Marketing Specialist,Marketing,Egypt,Mid,4500,8500,6500
+SEO/Digital Marketing Specialist,Marketing,Egypt,Senior,10000,20000,15000
+SEO/Digital Marketing Specialist,Marketing,Syria,Entry,800,1800,1300
+SEO/Digital Marketing Specialist,Marketing,Syria,Mid,2200,4000,3100
+SEO/Digital Marketing Specialist,Marketing,Syria,Senior,4500,9000,6700
+SEO/Digital Marketing Specialist,Marketing,Palestine,Entry,4500,8000,6200
+SEO/Digital Marketing Specialist,Marketing,Palestine,Mid,9000,18000,13500
+SEO/Digital Marketing Specialist,Marketing,Palestine,Senior,20000,38000,29000
+SEO/Digital Marketing Specialist,Marketing,Jordan,Entry,5000,9000,7000
+SEO/Digital Marketing Specialist,Marketing,Jordan,Mid,10000,19000,14500
+SEO/Digital Marketing Specialist,Marketing,Jordan,Senior,22000,40000,31000
+SEO/Digital Marketing Specialist,Marketing,Morocco,Entry,4000,7500,5700
+SEO/Digital Marketing Specialist,Marketing,Morocco,Mid,8500,15500,12000
+SEO/Digital Marketing Specialist,Marketing,Morocco,Senior,18000,32000,25000
+SEO/Digital Marketing Specialist,Marketing,India,Entry,3500,7000,5200
+SEO/Digital Marketing Specialist,Marketing,India,Mid,8000,16000,12000
+SEO/Digital Marketing Specialist,Marketing,India,Senior,18000,35000,26500
+SEO/Digital Marketing Specialist,Marketing,Pakistan,Entry,2800,6000,4400
+SEO/Digital Marketing Specialist,Marketing,Pakistan,Mid,6500,13000,9700
+SEO/Digital Marketing Specialist,Marketing,Pakistan,Senior,15000,28000,21500
+SEO/Digital Marketing Specialist,Marketing,Singapore,Entry,38000,55000,46000
+SEO/Digital Marketing Specialist,Marketing,Singapore,Mid,58000,85000,71000
+SEO/Digital Marketing Specialist,Marketing,Singapore,Senior,90000,130000,110000
+SEO/Digital Marketing Specialist,Marketing,Japan,Entry,32000,48000,40000
+SEO/Digital Marketing Specialist,Marketing,Japan,Mid,52000,75000,63000
+SEO/Digital Marketing Specialist,Marketing,Japan,Senior,80000,115000,97000
+SEO/Digital Marketing Specialist,Marketing,Australia,Entry,42000,60000,51000
+SEO/Digital Marketing Specialist,Marketing,Australia,Mid,65000,92000,78000
+SEO/Digital Marketing Specialist,Marketing,Australia,Senior,95000,135000,115000
+SEO/Digital Marketing Specialist,Marketing,Brazil,Entry,6000,11000,8500
+SEO/Digital Marketing Specialist,Marketing,Brazil,Mid,13000,24000,18500
+SEO/Digital Marketing Specialist,Marketing,Brazil,Senior,28000,48000,38000
+SEO/Digital Marketing Specialist,Marketing,South Africa,Entry,9000,16000,12500
+SEO/Digital Marketing Specialist,Marketing,South Africa,Mid,18000,32000,25000
+SEO/Digital Marketing Specialist,Marketing,South Africa,Senior,38000,65000,51000
+SEO/Digital Marketing Specialist,Marketing,Nigeria,Entry,3500,6500,5000
+SEO/Digital Marketing Specialist,Marketing,Nigeria,Mid,7500,14000,10700
+SEO/Digital Marketing Specialist,Marketing,Nigeria,Senior,18000,32000,25000
+Data Engineer,Data,USA,Entry,80000,110000,95000
+Data Engineer,Data,USA,Mid,115000,155000,135000
+Data Engineer,Data,USA,Senior,155000,210000,180000
+Data Engineer,Data,Canada,Entry,65000,85000,75000
+Data Engineer,Data,Canada,Mid,90000,125000,108000
+Data Engineer,Data,Canada,Senior,130000,170000,150000
+Data Engineer,Data,UK,Entry,42000,60000,52000
+Data Engineer,Data,UK,Mid,65000,95000,80000
+Data Engineer,Data,UK,Senior,95000,140000,118000
+Data Engineer,Data,Germany,Entry,52000,70000,62000
+Data Engineer,Data,Germany,Mid,75000,100000,88000
+Data Engineer,Data,Germany,Senior,105000,140000,122000
+Data Engineer,Data,Netherlands,Entry,48000,65000,58000
+Data Engineer,Data,Netherlands,Mid,70000,95000,82000
+Data Engineer,Data,Netherlands,Senior,100000,135000,115000
+Data Engineer,Data,Switzerland,Entry,95000,125000,110000
+Data Engineer,Data,Switzerland,Mid,130000,160000,145000
+Data Engineer,Data,Switzerland,Senior,165000,205000,185000
+Data Engineer,Data,Saudi Arabia,Entry,22000,34000,28000
+Data Engineer,Data,Saudi Arabia,Mid,40000,72000,56000
+Data Engineer,Data,Saudi Arabia,Senior,78000,120000,98000
+Data Engineer,Data,UAE,Entry,28000,40000,34000
+Data Engineer,Data,UAE,Mid,48000,80000,64000
+Data Engineer,Data,UAE,Senior,85000,140000,112000
+Data Engineer,Data,Qatar,Entry,25000,38000,32000
+Data Engineer,Data,Qatar,Mid,45000,75000,60000
+Data Engineer,Data,Qatar,Senior,80000,130000,105000
+Data Engineer,Data,Egypt,Entry,4000,7500,5800
+Data Engineer,Data,Egypt,Mid,8500,15000,11500
+Data Engineer,Data,Egypt,Senior,17000,32000,24000
+Data Engineer,Data,Syria,Entry,2200,4200,3200
+Data Engineer,Data,Syria,Mid,4800,8500,6500
+Data Engineer,Data,Syria,Senior,9000,16000,12000
+Data Engineer,Data,Palestine,Entry,7000,12500,9800
+Data Engineer,Data,Palestine,Mid,14000,28000,21000
+Data Engineer,Data,Palestine,Senior,28000,52000,40000
+Data Engineer,Data,Jordan,Entry,8000,13500,10800
+Data Engineer,Data,Jordan,Mid,14000,26000,20000
+Data Engineer,Data,Jordan,Senior,28000,48000,38000
+Data Engineer,Data,Morocco,Entry,6000,10500,8200
+Data Engineer,Data,Morocco,Mid,12000,22000,17000
+Data Engineer,Data,Morocco,Senior,24000,42000,33000
+Data Engineer,Data,India,Entry,5500,11000,8200
+Data Engineer,Data,India,Mid,13000,26000,19500
+Data Engineer,Data,India,Senior,30000,58000,44000
+Data Engineer,Data,Pakistan,Entry,4000,8000,6000
+Data Engineer,Data,Pakistan,Mid,9500,19000,14000
+Data Engineer,Data,Pakistan,Senior,24000,42000,32000
+Data Engineer,Data,Singapore,Entry,58000,80000,68000
+Data Engineer,Data,Singapore,Mid,85000,120000,102000
+Data Engineer,Data,Singapore,Senior,130000,175000,152000
+Data Engineer,Data,Japan,Entry,45000,65000,55000
+Data Engineer,Data,Japan,Mid,70000,95000,82000
+Data Engineer,Data,Japan,Senior,100000,140000,120000
+Data Engineer,Data,Australia,Entry,62000,85000,74000
+Data Engineer,Data,Australia,Mid,90000,130000,110000
+Data Engineer,Data,Australia,Senior,135000,180000,155000
+Data Engineer,Data,Brazil,Entry,9500,17000,13000
+Data Engineer,Data,Brazil,Mid,19000,34000,26500
+Data Engineer,Data,Brazil,Senior,38000,64000,51000
+Data Engineer,Data,South Africa,Entry,14000,25000,19500
+Data Engineer,Data,South Africa,Mid,30000,52000,41000
+Data Engineer,Data,South Africa,Senior,58000,90000,74000
+Data Engineer,Data,Nigeria,Entry,5500,10000,7800
+Data Engineer,Data,Nigeria,Mid,13000,23000,18000
+Data Engineer,Data,Nigeria,Senior,28000,45000,36500
+Blockchain Developer,Engineering,USA,Entry,90000,130000,110000
+Blockchain Developer,Engineering,USA,Mid,135000,185000,160000
+Blockchain Developer,Engineering,USA,Senior,180000,260000,220000
+Blockchain Developer,Engineering,Canada,Entry,75000,105000,90000
+Blockchain Developer,Engineering,Canada,Mid,110000,150000,130000
+Blockchain Developer,Engineering,Canada,Senior,150000,210000,180000
+Blockchain Developer,Engineering,UK,Entry,50000,75000,62000
+Blockchain Developer,Engineering,UK,Mid,80000,120000,100000
+Blockchain Developer,Engineering,UK,Senior,120000,180000,150000
+Blockchain Developer,Engineering,Germany,Entry,60000,85000,72000
+Blockchain Developer,Engineering,Germany,Mid,90000,125000,108000
+Blockchain Developer,Engineering,Germany,Senior,130000,175000,152000
+Blockchain Developer,Engineering,Netherlands,Entry,55000,80000,68000
+Blockchain Developer,Engineering,Netherlands,Mid,85000,115000,100000
+Blockchain Developer,Engineering,Netherlands,Senior,120000,165000,142000
+Blockchain Developer,Engineering,Switzerland,Entry,105000,140000,122000
+Blockchain Developer,Engineering,Switzerland,Mid,145000,190000,168000
+Blockchain Developer,Engineering,Switzerland,Senior,195000,260000,225000
+Blockchain Developer,Engineering,Saudi Arabia,Entry,28000,45000,36000
+Blockchain Developer,Engineering,Saudi Arabia,Mid,50000,90000,70000
+Blockchain Developer,Engineering,Saudi Arabia,Senior,95000,150000,122000
+Blockchain Developer,Engineering,UAE,Entry,35000,52000,43000
+Blockchain Developer,Engineering,UAE,Mid,65000,110000,88000
+Blockchain Developer,Engineering,UAE,Senior,115000,180000,148000
+Blockchain Developer,Engineering,Qatar,Entry,30000,48000,39000
+Blockchain Developer,Engineering,Qatar,Mid,60000,100000,80000
+Blockchain Developer,Engineering,Qatar,Senior,105000,165000,135000
+Blockchain Developer,Engineering,Egypt,Entry,5000,10000,7500
+Blockchain Developer,Engineering,Egypt,Mid,12000,24000,18000
+Blockchain Developer,Engineering,Egypt,Senior,25000,50000,38000
+Blockchain Developer,Engineering,Syria,Entry,3000,6000,4500
+Blockchain Developer,Engineering,Syria,Mid,7000,13000,10000
+Blockchain Developer,Engineering,Syria,Senior,14000,25000,19500
+Blockchain Developer,Engineering,Palestine,Entry,8500,16000,12200
+Blockchain Developer,Engineering,Palestine,Mid,18000,38000,28000
+Blockchain Developer,Engineering,Palestine,Senior,40000,75000,58000
+Blockchain Developer,Engineering,Jordan,Entry,9500,17000,13200
+Blockchain Developer,Engineering,Jordan,Mid,19000,35000,27000
+Blockchain Developer,Engineering,Jordan,Senior,38000,65000,51500
+Blockchain Developer,Engineering,Morocco,Entry,7500,14000,10800
+Blockchain Developer,Engineering,Morocco,Mid,15000,28000,21500
+Blockchain Developer,Engineering,Morocco,Senior,30000,55000,42500
+Blockchain Developer,Engineering,India,Entry,8000,16000,12000
+Blockchain Developer,Engineering,India,Mid,20000,40000,30000
+Blockchain Developer,Engineering,India,Senior,45000,85000,65000
+Blockchain Developer,Engineering,Pakistan,Entry,5000,11000,8000
+Blockchain Developer,Engineering,Pakistan,Mid,13000,28000,20500
+Blockchain Developer,Engineering,Pakistan,Senior,32000,58000,45000
+Blockchain Developer,Engineering,Singapore,Entry,65000,95000,80000
+Blockchain Developer,Engineering,Singapore,Mid,100000,150000,125000
+Blockchain Developer,Engineering,Singapore,Senior,160000,220000,190000
+Blockchain Developer,Engineering,Japan,Entry,55000,80000,67000
+Blockchain Developer,Engineering,Japan,Mid,85000,120000,102000
+Blockchain Developer,Engineering,Japan,Senior,125000,175000,150000
+Blockchain Developer,Engineering,Australia,Entry,70000,100000,85000
+Blockchain Developer,Engineering,Australia,Mid,110000,160000,135000
+Blockchain Developer,Engineering,Australia,Senior,165000,225000,195000
+Blockchain Developer,Engineering,Brazil,Entry,12000,22000,17000
+Blockchain Developer,Engineering,Brazil,Mid,25000,48000,36500
+Blockchain Developer,Engineering,Brazil,Senior,52000,90000,71000
+Blockchain Developer,Engineering,South Africa,Entry,18000,32000,25000
+Blockchain Developer,Engineering,South Africa,Mid,38000,68000,53000
+Blockchain Developer,Engineering,South Africa,Senior,75000,125000,100000
+Blockchain Developer,Engineering,Nigeria,Entry,7500,15000,11250
+Blockchain Developer,Engineering,Nigeria,Mid,18000,35000,26500
+Blockchain Developer,Engineering,Nigeria,Senior,40000,70000,55000
+Game Developer,Engineering/Creative,USA,Entry,55000,85000,70000
+Game Developer,Engineering/Creative,USA,Mid,90000,125000,108000
+Game Developer,Engineering/Creative,USA,Senior,130000,185000,155000
+Game Developer,Engineering/Creative,Canada,Entry,45000,65000,55000
+Game Developer,Engineering/Creative,Canada,Mid,75000,105000,90000
+Game Developer,Engineering/Creative,Canada,Senior,110000,150000,130000
+Game Developer,Engineering/Creative,UK,Entry,30000,45000,37000
+Game Developer,Engineering/Creative,UK,Mid,50000,75000,62000
+Game Developer,Engineering/Creative,UK,Senior,80000,120000,100000
+Game Developer,Engineering/Creative,Germany,Entry,40000,55000,47000
+Game Developer,Engineering/Creative,Germany,Mid,60000,85000,72000
+Game Developer,Engineering/Creative,Germany,Senior,90000,125000,108000
+Game Developer,Engineering/Creative,Netherlands,Entry,38000,52000,45000
+Game Developer,Engineering/Creative,Netherlands,Mid,55000,78000,66000
+Game Developer,Engineering/Creative,Netherlands,Senior,85000,115000,100000
+Game Developer,Engineering/Creative,Switzerland,Entry,80000,105000,92000
+Game Developer,Engineering/Creative,Switzerland,Mid,110000,140000,125000
+Game Developer,Engineering/Creative,Switzerland,Senior,145000,185000,165000
+Game Developer,Engineering/Creative,Saudi Arabia,Entry,15000,28000,21000
+Game Developer,Engineering/Creative,Saudi Arabia,Mid,30000,60000,45000
+Game Developer,Engineering/Creative,Saudi Arabia,Senior,65000,100000,82000
+Game Developer,Engineering/Creative,UAE,Entry,20000,32000,26000
+Game Developer,Engineering/Creative,UAE,Mid,38000,68000,53000
+Game Developer,Engineering/Creative,UAE,Senior,75000,120000,98000
+Game Developer,Engineering/Creative,Qatar,Entry,18000,30000,24000
+Game Developer,Engineering/Creative,Qatar,Mid,35000,62000,48000
+Game Developer,Engineering/Creative,Qatar,Senior,70000,110000,90000
+Game Developer,Engineering/Creative,Egypt,Entry,2500,5500,4000
+Game Developer,Engineering/Creative,Egypt,Mid,6000,12000,9000
+Game Developer,Engineering/Creative,Egypt,Senior,14000,26000,20000
+Game Developer,Engineering/Creative,Syria,Entry,1200,2800,2000
+Game Developer,Engineering/Creative,Syria,Mid,3200,6000,4600
+Game Developer,Engineering/Creative,Syria,Senior,7000,13000,10000
+Game Developer,Engineering/Creative,Palestine,Entry,5000,9500,7200
+Game Developer,Engineering/Creative,Palestine,Mid,10500,22000,16000
+Game Developer,Engineering/Creative,Palestine,Senior,24000,45000,34500
+Game Developer,Engineering/Creative,Jordan,Entry,6000,10500,8200
+Game Developer,Engineering/Creative,Jordan,Mid,11500,22000,16800
+Game Developer,Engineering/Creative,Jordan,Senior,24000,42000,33000
+Game Developer,Engineering/Creative,Morocco,Entry,4500,8500,6500
+Game Developer,Engineering/Creative,Morocco,Mid,9500,18000,13800
+Game Developer,Engineering/Creative,Morocco,Senior,20000,36000,28000
+Game Developer,Engineering/Creative,India,Entry,4000,8000,6000
+Game Developer,Engineering/Creative,India,Mid,10000,20000,15000
+Game Developer,Engineering/Creative,India,Senior,24000,45000,34500
+Game Developer,Engineering/Creative,Pakistan,Entry,3000,6500,4700
+Game Developer,Engineering/Creative,Pakistan,Mid,7500,15500,11500
+Game Developer,Engineering/Creative,Pakistan,Senior,18000,32000,25000
+Game Developer,Engineering/Creative,Singapore,Entry,45000,65000,55000
+Game Developer,Engineering/Creative,Singapore,Mid,70000,100000,85000
+Game Developer,Engineering/Creative,Singapore,Senior,110000,155000,132000
+Game Developer,Engineering/Creative,Japan,Entry,38000,55000,46000
+Game Developer,Engineering/Creative,Japan,Mid,60000,85000,72000
+Game Developer,Engineering/Creative,Japan,Senior,90000,130000,110000
+Game Developer,Engineering/Creative,Australia,Entry,48000,68000,58000
+Game Developer,Engineering/Creative,Australia,Mid,75000,110000,92000
+Game Developer,Engineering/Creative,Australia,Senior,115000,155000,135000
+Game Developer,Engineering/Creative,Brazil,Entry,7000,14000,10500
+Game Developer,Engineering/Creative,Brazil,Mid,16000,28000,22000
+Game Developer,Engineering/Creative,Brazil,Senior,32000,55000,43500
+Game Developer,Engineering/Creative,South Africa,Entry,11000,20000,15500
+Game Developer,Engineering/Creative,South Africa,Mid,24000,42000,33000
+Game Developer,Engineering/Creative,South Africa,Senior,48000,80000,64000
+Game Developer,Engineering/Creative,Nigeria,Entry,4000,8000,6000
+Game Developer,Engineering/Creative,Nigeria,Mid,9000,18000,13500
+Game Developer,Engineering/Creative,Nigeria,Senior,20000,35000,27500
+Software Architect,Engineering,USA,Entry,110000,145000,125000
+Software Architect,Engineering,USA,Mid,150000,195000,172000
+Software Architect,Engineering,USA,Senior,200000,280000,235000
+Software Architect,Engineering,Canada,Entry,90000,115000,102000
+Software Architect,Engineering,Canada,Mid,125000,165000,145000
+Software Architect,Engineering,Canada,Senior,170000,225000,195000
+Software Architect,Engineering,UK,Entry,65000,85000,75000
+Software Architect,Engineering,UK,Mid,95000,135000,115000
+Software Architect,Engineering,UK,Senior,140000,200000,170000
+Software Architect,Engineering,Germany,Entry,75000,95000,85000
+Software Architect,Engineering,Germany,Mid,105000,135000,120000
+Software Architect,Engineering,Germany,Senior,145000,190000,165000
+Software Architect,Engineering,Netherlands,Entry,70000,90000,80000
+Software Architect,Engineering,Netherlands,Mid,100000,130000,115000
+Software Architect,Engineering,Netherlands,Senior,140000,185000,160000
+Software Architect,Engineering,Switzerland,Entry,120000,155000,135000
+Software Architect,Engineering,Switzerland,Mid,160000,205000,185000
+Software Architect,Engineering,Switzerland,Senior,210000,280000,245000
+Software Architect,Engineering,Saudi Arabia,Entry,35000,55000,45000
+Software Architect,Engineering,Saudi Arabia,Mid,65000,105000,85000
+Software Architect,Engineering,Saudi Arabia,Senior,120000,180000,150000
+Software Architect,Engineering,UAE,Entry,45000,65000,55000
+Software Architect,Engineering,UAE,Mid,75000,125000,100000
+Software Architect,Engineering,UAE,Senior,135000,210000,175000
+Software Architect,Engineering,Qatar,Entry,40000,60000,50000
+Software Architect,Engineering,Qatar,Mid,70000,115000,95000
+Software Architect,Engineering,Qatar,Senior,125000,195000,160000
+Software Architect,Engineering,Egypt,Entry,7000,13000,10000
+Software Architect,Engineering,Egypt,Mid,16000,28000,22000
+Software Architect,Engineering,Egypt,Senior,35000,65000,48000
+Software Architect,Engineering,Syria,Entry,4500,8000,6200
+Software Architect,Engineering,Syria,Mid,9000,16000,12500
+Software Architect,Engineering,Syria,Senior,18000,32000,25000
+Software Architect,Engineering,Palestine,Entry,12000,20000,16500
+Software Architect,Engineering,Palestine,Mid,25000,45000,35000
+Software Architect,Engineering,Palestine,Senior,50000,90000,72000
+Software Architect,Engineering,Jordan,Entry,13000,22000,17500
+Software Architect,Engineering,Jordan,Mid,26000,42000,34000
+Software Architect,Engineering,Jordan,Senior,55000,95000,75000
+Software Architect,Engineering,Morocco,Entry,10000,18000,14500
+Software Architect,Engineering,Morocco,Mid,22000,38000,30000
+Software Architect,Engineering,Morocco,Senior,45000,80000,62000
+Software Architect,Engineering,India,Entry,12000,22000,17000
+Software Architect,Engineering,India,Mid,28000,50000,38000
+Software Architect,Engineering,India,Senior,60000,110000,85000
+Software Architect,Engineering,Pakistan,Entry,8000,16000,12500
+Software Architect,Engineering,Pakistan,Mid,18000,35000,26000
+Software Architect,Engineering,Pakistan,Senior,45000,85000,62000
+Software Architect,Engineering,Singapore,Entry,85000,115000,100000
+Software Architect,Engineering,Singapore,Mid,125000,175000,150000
+Software Architect,Engineering,Singapore,Senior,185000,260000,220000
+Software Architect,Engineering,Japan,Entry,70000,95000,82000
+Software Architect,Engineering,Japan,Mid,105000,145000,125000
+Software Architect,Engineering,Japan,Senior,155000,210000,182000
+Software Architect,Engineering,Australia,Entry,90000,120000,105000
+Software Architect,Engineering,Australia,Mid,130000,180000,155000
+Software Architect,Engineering,Australia,Senior,190000,260000,225000
+Software Architect,Engineering,Brazil,Entry,16000,30000,23000
+Software Architect,Engineering,Brazil,Mid,35000,62000,48000
+Software Architect,Engineering,Brazil,Senior,70000,120000,95000
+Software Architect,Engineering,South Africa,Entry,22000,38000,30000
+Software Architect,Engineering,South Africa,Mid,45000,85000,65000
+Software Architect,Engineering,South Africa,Senior,95000,155000,125000
+Software Architect,Engineering,Nigeria,Entry,10000,20000,15500
+Software Architect,Engineering,Nigeria,Mid,25000,48000,36000
+Software Architect,Engineering,Nigeria,Senior,60000,105000,82000
+IT Project Manager,Management,USA,Entry,70000,95000,82000
+IT Project Manager,Management,USA,Mid,105000,145000,125000
+IT Project Manager,Management,USA,Senior,150000,210000,180000
+IT Project Manager,Management,Canada,Entry,55000,75000,65000
+IT Project Manager,Management,Canada,Mid,85000,115000,100000
+IT Project Manager,Management,Canada,Senior,120000,165000,142000
+IT Project Manager,Management,UK,Entry,38000,55000,46000
+IT Project Manager,Management,UK,Mid,60000,90000,75000
+IT Project Manager,Management,UK,Senior,95000,140000,118000
+IT Project Manager,Management,Germany,Entry,48000,65000,56000
+IT Project Manager,Management,Germany,Mid,72000,100000,86000
+IT Project Manager,Management,Germany,Senior,105000,145000,125000
+IT Project Manager,Management,Netherlands,Entry,45000,62000,53000
+IT Project Manager,Management,Netherlands,Mid,68000,92000,80000
+IT Project Manager,Management,Netherlands,Senior,100000,140000,120000
+IT Project Manager,Management,Switzerland,Entry,90000,120000,105000
+IT Project Manager,Management,Switzerland,Mid,125000,160000,142000
+IT Project Manager,Management,Switzerland,Senior,170000,225000,195000
+IT Project Manager,Management,Saudi Arabia,Entry,20000,32000,26000
+IT Project Manager,Management,Saudi Arabia,Mid,38000,70000,54000
+IT Project Manager,Management,Saudi Arabia,Senior,85000,140000,110000
+IT Project Manager,Management,UAE,Entry,28000,42000,35000
+IT Project Manager,Management,UAE,Mid,55000,90000,72000
+IT Project Manager,Management,UAE,Senior,100000,165000,132000
+IT Project Manager,Management,Qatar,Entry,24000,38000,31000
+IT Project Manager,Management,Qatar,Mid,48000,85000,66000
+IT Project Manager,Management,Qatar,Senior,95000,155000,125000
+IT Project Manager,Management,Egypt,Entry,4000,8000,6000
+IT Project Manager,Management,Egypt,Mid,9500,18000,13500
+IT Project Manager,Management,Egypt,Senior,22000,45000,33000
+IT Project Manager,Management,Syria,Entry,1800,3500,2600
+IT Project Manager,Management,Syria,Mid,4000,7500,5800
+IT Project Manager,Management,Syria,Senior,8500,16000,12200
+IT Project Manager,Management,Palestine,Entry,7500,13000,10200
+IT Project Manager,Management,Palestine,Mid,15000,32000,23000
+IT Project Manager,Management,Palestine,Senior,35000,65000,50000
+IT Project Manager,Management,Jordan,Entry,8500,14500,11500
+IT Project Manager,Management,Jordan,Mid,16000,30000,23000
+IT Project Manager,Management,Jordan,Senior,35000,60000,47000
+IT Project Manager,Management,Morocco,Entry,6500,12000,9200
+IT Project Manager,Management,Morocco,Mid,14000,25000,19500
+IT Project Manager,Management,Morocco,Senior,30000,55000,42000
+IT Project Manager,Management,India,Entry,6000,12000,9000
+IT Project Manager,Management,India,Mid,15000,32000,23000
+IT Project Manager,Management,India,Senior,35000,75000,55000
+IT Project Manager,Management,Pakistan,Entry,4500,9000,6800
+IT Project Manager,Management,Pakistan,Mid,11000,24000,17500
+IT Project Manager,Management,Pakistan,Senior,30000,55000,42500
+IT Project Manager,Management,Singapore,Entry,60000,85000,72000
+IT Project Manager,Management,Singapore,Mid,90000,130000,110000
+IT Project Manager,Management,Singapore,Senior,140000,195000,167000
+IT Project Manager,Management,Japan,Entry,45000,68000,56000
+IT Project Manager,Management,Japan,Mid,75000,105000,90000
+IT Project Manager,Management,Japan,Senior,115000,160000,137000
+IT Project Manager,Management,Australia,Entry,65000,90000,77000
+IT Project Manager,Management,Australia,Mid,95000,140000,117000
+IT Project Manager,Management,Australia,Senior,150000,210000,180000
+IT Project Manager,Management,Brazil,Entry,10000,18000,14000
+IT Project Manager,Management,Brazil,Mid,22000,42000,32000
+IT Project Manager,Management,Brazil,Senior,45000,85000,65000
+IT Project Manager,Management,South Africa,Entry,16000,28000,22000
+IT Project Manager,Management,South Africa,Mid,35000,62000,48000
+IT Project Manager,Management,South Africa,Senior,70000,115000,92000
+IT Project Manager,Management,Nigeria,Entry,6000,12000,9000
+IT Project Manager,Management,Nigeria,Mid,15000,28000,21500
+IT Project Manager,Management,Nigeria,Senior,35000,65000,50000
+IT Support Specialist,Support/Infrastructure,USA,Entry,40000,55000,47000
+IT Support Specialist,Support/Infrastructure,USA,Mid,58000,75000,66000
+IT Support Specialist,Support/Infrastructure,USA,Senior,80000,105000,92000
+IT Support Specialist,Support/Infrastructure,Canada,Entry,35000,48000,41000
+IT Support Specialist,Support/Infrastructure,Canada,Mid,50000,68000,59000
+IT Support Specialist,Support/Infrastructure,Canada,Senior,75000,95000,85000
+IT Support Specialist,Support/Infrastructure,UK,Entry,22000,32000,27000
+IT Support Specialist,Support/Infrastructure,UK,Mid,35000,48000,41000
+IT Support Specialist,Support/Infrastructure,UK,Senior,55000,75000,65000
+IT Support Specialist,Support/Infrastructure,Germany,Entry,32000,42000,37000
+IT Support Specialist,Support/Infrastructure,Germany,Mid,45000,60000,52000
+IT Support Specialist,Support/Infrastructure,Germany,Senior,65000,85000,75000
+IT Support Specialist,Support/Infrastructure,Netherlands,Entry,30000,40000,35000
+IT Support Specialist,Support/Infrastructure,Netherlands,Mid,42000,58000,50000
+IT Support Specialist,Support/Infrastructure,Netherlands,Senior,65000,82000,73000
+IT Support Specialist,Support/Infrastructure,Switzerland,Entry,65000,82000,73000
+IT Support Specialist,Support/Infrastructure,Switzerland,Mid,85000,105000,95000
+IT Support Specialist,Support/Infrastructure,Switzerland,Senior,110000,140000,125000
+IT Support Specialist,Support/Infrastructure,Saudi Arabia,Entry,10000,18000,14000
+IT Support Specialist,Support/Infrastructure,Saudi Arabia,Mid,22000,38000,30000
+IT Support Specialist,Support/Infrastructure,Saudi Arabia,Senior,45000,75000,60000
+IT Support Specialist,Support/Infrastructure,UAE,Entry,14000,22000,18000
+IT Support Specialist,Support/Infrastructure,UAE,Mid,28000,48000,38000
+IT Support Specialist,Support/Infrastructure,UAE,Senior,55000,85000,70000
+IT Support Specialist,Support/Infrastructure,Qatar,Entry,12000,20000,16000
+IT Support Specialist,Support/Infrastructure,Qatar,Mid,25000,45000,35000
+IT Support Specialist,Support/Infrastructure,Qatar,Senior,50000,80000,65000
+IT Support Specialist,Support/Infrastructure,Egypt,Entry,1500,3500,2500
+IT Support Specialist,Support/Infrastructure,Egypt,Mid,4000,8500,6200
+IT Support Specialist,Support/Infrastructure,Egypt,Senior,10000,18000,14000
+IT Support Specialist,Support/Infrastructure,Syria,Entry,800,1600,1200
+IT Support Specialist,Support/Infrastructure,Syria,Mid,2000,3800,2900
+IT Support Specialist,Support/Infrastructure,Syria,Senior,4500,8500,6500
+IT Support Specialist,Support/Infrastructure,Palestine,Entry,3500,6500,5000
+IT Support Specialist,Support/Infrastructure,Palestine,Mid,7000,13000,10000
+IT Support Specialist,Support/Infrastructure,Palestine,Senior,15000,28000,21500
+IT Support Specialist,Support/Infrastructure,Jordan,Entry,4000,7500,5700
+IT Support Specialist,Support/Infrastructure,Jordan,Mid,8500,15500,12000
+IT Support Specialist,Support/Infrastructure,Jordan,Senior,18000,30000,24000
+IT Support Specialist,Support/Infrastructure,Morocco,Entry,3500,6500,5000
+IT Support Specialist,Support/Infrastructure,Morocco,Mid,7500,13500,10500
+IT Support Specialist,Support/Infrastructure,Morocco,Senior,15000,28000,21500
+IT Support Specialist,Support/Infrastructure,India,Entry,2500,5500,4000
+IT Support Specialist,Support/Infrastructure,India,Mid,6000,12000,9000
+IT Support Specialist,Support/Infrastructure,India,Senior,15000,28000,21500
+IT Support Specialist,Support/Infrastructure,Pakistan,Entry,2000,5000,3500
+IT Support Specialist,Support/Infrastructure,Pakistan,Mid,5500,10000,7750
+IT Support Specialist,Support/Infrastructure,Pakistan,Senior,12000,22000,17000
+IT Support Specialist,Support/Infrastructure,Singapore,Entry,35000,48000,41500
+IT Support Specialist,Support/Infrastructure,Singapore,Mid,52000,72000,62000
+IT Support Specialist,Support/Infrastructure,Singapore,Senior,80000,110000,95000
+IT Support Specialist,Support/Infrastructure,Japan,Entry,28000,40000,34000
+IT Support Specialist,Support/Infrastructure,Japan,Mid,45000,65000,55000
+IT Support Specialist,Support/Infrastructure,Japan,Senior,70000,95000,82000
+IT Support Specialist,Support/Infrastructure,Australia,Entry,38000,52000,45000
+IT Support Specialist,Support/Infrastructure,Australia,Mid,58000,80000,69000
+IT Support Specialist,Support/Infrastructure,Australia,Senior,85000,115000,100000
+IT Support Specialist,Support/Infrastructure,Brazil,Entry,5000,9500,7200
+IT Support Specialist,Support/Infrastructure,Brazil,Mid,11000,20000,15500
+IT Support Specialist,Support/Infrastructure,Brazil,Senior,25000,42000,33500
+IT Support Specialist,Support/Infrastructure,South Africa,Entry,8000,14000,11000
+IT Support Specialist,Support/Infrastructure,South Africa,Mid,16000,28000,22000
+IT Support Specialist,Support/Infrastructure,South Africa,Senior,35000,58000,46500
+IT Support Specialist,Support/Infrastructure,Nigeria,Entry,2800,5500,4150
+IT Support Specialist,Support/Infrastructure,Nigeria,Mid,6500,12000,9250
+IT Support Specialist,Support/Infrastructure,Nigeria,Senior,14000,26000,20000
+Graphic Designer,Design,USA,Entry,40000,58000,48000
+Graphic Designer,Design,USA,Mid,60000,85000,72000
+Graphic Designer,Design,USA,Senior,85000,120000,100000
+Graphic Designer,Design,Canada,Entry,35000,48000,42000
+Graphic Designer,Design,Canada,Mid,52000,72000,62000
+Graphic Designer,Design,Canada,Senior,75000,100000,88000
+Graphic Designer,Design,UK,Entry,25000,35000,30000
+Graphic Designer,Design,UK,Mid,38000,55000,46000
+Graphic Designer,Design,UK,Senior,58000,85000,72000
+Graphic Designer,Design,Germany,Entry,32000,42000,37000
+Graphic Designer,Design,Germany,Mid,45000,60000,52000
+Graphic Designer,Design,Germany,Senior,65000,90000,78000
+Graphic Designer,Design,Netherlands,Entry,30000,40000,35000
+Graphic Designer,Design,Netherlands,Mid,42000,58000,50000
+Graphic Designer,Design,Netherlands,Senior,62000,85000,74000
+Graphic Designer,Design,Switzerland,Entry,65000,82000,74000
+Graphic Designer,Design,Switzerland,Mid,85000,105000,95000
+Graphic Designer,Design,Switzerland,Senior,110000,140000,125000
+Graphic Designer,Design,Saudi Arabia,Entry,10000,18000,14000
+Graphic Designer,Design,Saudi Arabia,Mid,22000,40000,30000
+Graphic Designer,Design,Saudi Arabia,Senior,45000,75000,60000
+Graphic Designer,Design,UAE,Entry,12000,22000,17000
+Graphic Designer,Design,UAE,Mid,28000,48000,38000
+Graphic Designer,Design,UAE,Senior,55000,85000,70000
+Graphic Designer,Design,Qatar,Entry,11000,20000,15500
+Graphic Designer,Design,Qatar,Mid,25000,45000,35000
+Graphic Designer,Design,Qatar,Senior,50000,80000,65000
+Graphic Designer,Design,Egypt,Entry,1500,3500,2500
+Graphic Designer,Design,Egypt,Mid,4000,8000,6000
+Graphic Designer,Design,Egypt,Senior,10000,18000,13500
+Graphic Designer,Design,Syria,Entry,800,1800,1300
+Graphic Designer,Design,Syria,Mid,2000,4000,3000
+Graphic Designer,Design,Syria,Senior,4500,8500,6500
+Graphic Designer,Design,Palestine,Entry,3500,6500,5000
+Graphic Designer,Design,Palestine,Mid,7500,13500,10500
+Graphic Designer,Design,Palestine,Senior,15000,28000,21500
+Graphic Designer,Design,Jordan,Entry,4000,7500,5700
+Graphic Designer,Design,Jordan,Mid,8500,15500,12000
+Graphic Designer,Design,Jordan,Senior,18000,32000,24000
+Graphic Designer,Design,Morocco,Entry,3500,6500,5000
+Graphic Designer,Design,Morocco,Mid,7500,13500,10500
+Graphic Designer,Design,Morocco,Senior,15000,28000,21500
+Graphic Designer,Design,India,Entry,2500,5500,4000
+Graphic Designer,Design,India,Mid,6000,12000,9000
+Graphic Designer,Design,India,Senior,15000,28000,21500
+Graphic Designer,Design,Pakistan,Entry,2000,5000,3500
+Graphic Designer,Design,Pakistan,Mid,5500,10000,7750
+Graphic Designer,Design,Pakistan,Senior,12000,22000,17000
+Graphic Designer,Design,Singapore,Entry,35000,48000,41500
+Graphic Designer,Design,Singapore,Mid,52000,72000,62000
+Graphic Designer,Design,Singapore,Senior,80000,110000,95000
+Graphic Designer,Design,Japan,Entry,28000,40000,34000
+Graphic Designer,Design,Japan,Mid,45000,65000,55000
+Graphic Designer,Design,Japan,Senior,70000,95000,82000
+Graphic Designer,Design,Australia,Entry,38000,52000,45000
+Graphic Designer,Design,Australia,Mid,58000,80000,69000
+Graphic Designer,Design,Australia,Senior,85000,115000,100000
+Graphic Designer,Design,Brazil,Entry,5000,9500,7200
+Graphic Designer,Design,Brazil,Mid,11000,20000,15500
+Graphic Designer,Design,Brazil,Senior,25000,42000,33500
+Graphic Designer,Design,South Africa,Entry,8000,14000,11000
+Graphic Designer,Design,South Africa,Mid,16000,28000,22000
+Graphic Designer,Design,South Africa,Senior,35000,58000,46500
+Graphic Designer,Design,Nigeria,Entry,2800,5500,4150
+Graphic Designer,Design,Nigeria,Mid,6500,12000,9250
+Graphic Designer,Design,Nigeria,Senior,14000,26000,20000
+Motion Graphics Designer,Design/Creative,USA,Entry,50000,72000,61000
+Motion Graphics Designer,Design/Creative,USA,Mid,75000,105000,90000
+Motion Graphics Designer,Design/Creative,USA,Senior,110000,150000,130000
+Motion Graphics Designer,Design/Creative,Canada,Entry,45000,62000,54000
+Motion Graphics Designer,Design/Creative,Canada,Mid,65000,90000,78000
+Motion Graphics Designer,Design/Creative,Canada,Senior,95000,130000,112000
+Motion Graphics Designer,Design/Creative,UK,Entry,28000,42000,35000
+Motion Graphics Designer,Design/Creative,UK,Mid,45000,68000,56000
+Motion Graphics Designer,Design/Creative,UK,Senior,75000,105000,90000
+Motion Graphics Designer,Design/Creative,Germany,Entry,38000,52000,45000
+Motion Graphics Designer,Design/Creative,Germany,Mid,55000,78000,66000
+Motion Graphics Designer,Design/Creative,Germany,Senior,80000,110000,95000
+Motion Graphics Designer,Design/Creative,Netherlands,Entry,35000,48000,41000
+Motion Graphics Designer,Design/Creative,Netherlands,Mid,52000,72000,62000
+Motion Graphics Designer,Design/Creative,Netherlands,Senior,75000,105000,90000
+Motion Graphics Designer,Design/Creative,Switzerland,Entry,75000,95000,85000
+Motion Graphics Designer,Design/Creative,Switzerland,Mid,100000,130000,115000
+Motion Graphics Designer,Design/Creative,Switzerland,Senior,140000,180000,160000
+Motion Graphics Designer,Design/Creative,Saudi Arabia,Entry,15000,28000,21000
+Motion Graphics Designer,Design/Creative,Saudi Arabia,Mid,35000,65000,50000
+Motion Graphics Designer,Design/Creative,Saudi Arabia,Senior,70000,110000,90000
+Motion Graphics Designer,Design/Creative,UAE,Entry,18000,32000,25000
+Motion Graphics Designer,Design/Creative,UAE,Mid,42000,72000,57000
+Motion Graphics Designer,Design/Creative,UAE,Senior,80000,125000,102000
+Motion Graphics Designer,Design/Creative,Qatar,Entry,16000,28000,22000
+Motion Graphics Designer,Design/Creative,Qatar,Mid,38000,65000,51000
+Motion Graphics Designer,Design/Creative,Qatar,Senior,75000,115000,95000
+Motion Graphics Designer,Design/Creative,Egypt,Entry,2500,5500,4000
+Motion Graphics Designer,Design/Creative,Egypt,Mid,6500,13000,9500
+Motion Graphics Designer,Design/Creative,Egypt,Senior,16000,32000,24000
+Motion Graphics Designer,Design/Creative,Syria,Entry,1200,2800,2000
+Motion Graphics Designer,Design/Creative,Syria,Mid,3500,6500,5000
+Motion Graphics Designer,Design/Creative,Syria,Senior,8000,15000,11500
+Motion Graphics Designer,Design/Creative,Palestine,Entry,5000,9500,7200
+Motion Graphics Designer,Design/Creative,Palestine,Mid,10500,22000,16200
+Motion Graphics Designer,Design/Creative,Palestine,Senior,25000,48000,36500
+Motion Graphics Designer,Design/Creative,Jordan,Entry,6000,10500,8200
+Motion Graphics Designer,Design/Creative,Jordan,Mid,12000,23000,17500
+Motion Graphics Designer,Design/Creative,Jordan,Senior,26000,48000,37000
+Motion Graphics Designer,Design/Creative,Morocco,Entry,5000,9500,7200
+Motion Graphics Designer,Design/Creative,Morocco,Mid,10500,19000,14700
+Motion Graphics Designer,Design/Creative,Morocco,Senior,22000,40000,31000
+Motion Graphics Designer,Design/Creative,India,Entry,4000,8500,6200
+Motion Graphics Designer,Design/Creative,India,Mid,11000,22000,16500
+Motion Graphics Designer,Design/Creative,India,Senior,28000,52000,40000
+Motion Graphics Designer,Design/Creative,Pakistan,Entry,3000,6500,4700
+Motion Graphics Designer,Design/Creative,Pakistan,Mid,8500,17000,12700
+Motion Graphics Designer,Design/Creative,Pakistan,Senior,22000,40000,31000
+Motion Graphics Designer,Design/Creative,Singapore,Entry,42000,62000,52000
+Motion Graphics Designer,Design/Creative,Singapore,Mid,65000,95000,80000
+Motion Graphics Designer,Design/Creative,Singapore,Senior,105000,145000,125000
+Motion Graphics Designer,Design/Creative,Japan,Entry,35000,52000,43000
+Motion Graphics Designer,Design/Creative,Japan,Mid,55000,82000,68000
+Motion Graphics Designer,Design/Creative,Japan,Senior,85000,120000,102000
+Motion Graphics Designer,Design/Creative,Australia,Entry,45000,65000,55000
+Motion Graphics Designer,Design/Creative,Australia,Mid,72000,102000,87000
+Motion Graphics Designer,Design/Creative,Australia,Senior,110000,150000,130000
+Motion Graphics Designer,Design/Creative,Brazil,Entry,7000,13500,10200
+Motion Graphics Designer,Design/Creative,Brazil,Mid,16000,30000,23000
+Motion Graphics Designer,Design/Creative,Brazil,Senior,35000,60000,47500
+Motion Graphics Designer,Design/Creative,South Africa,Entry,11000,20000,15500
+Motion Graphics Designer,Design/Creative,South Africa,Mid,24000,42000,33000
+Motion Graphics Designer,Design/Creative,South Africa,Senior,52000,85000,68500
+Motion Graphics Designer,Design/Creative,Nigeria,Entry,4000,8500,6250
+Motion Graphics Designer,Design/Creative,Nigeria,Mid,10500,19500,15000
+Motion Graphics Designer,Design/Creative,Nigeria,Senior,25000,45000,35000
+Product Designer,Design/Product,USA,Entry,75000,105000,90000
+Product Designer,Design/Product,USA,Mid,110000,150000,130000
+Product Designer,Design/Product,USA,Senior,155000,220000,185000
+Product Designer,Design/Product,Canada,Entry,65000,85000,75000
+Product Designer,Design/Product,Canada,Mid,90000,125000,107000
+Product Designer,Design/Product,Canada,Senior,130000,175000,152000
+Product Designer,Design/Product,UK,Entry,40000,60000,50000
+Product Designer,Design/Product,UK,Mid,65000,95000,80000
+Product Designer,Design/Product,UK,Senior,100000,145000,122000
+Product Designer,Design/Product,Germany,Entry,50000,70000,60000
+Product Designer,Design/Product,Germany,Mid,75000,100000,87000
+Product Designer,Design/Product,Germany,Senior,110000,150000,130000
+Product Designer,Design/Product,Netherlands,Entry,45000,65000,55000
+Product Designer,Design/Product,Netherlands,Mid,70000,95000,82000
+Product Designer,Design/Product,Netherlands,Senior,100000,140000,120000
+Product Designer,Design/Product,Switzerland,Entry,95000,120000,107000
+Product Designer,Design/Product,Switzerland,Mid,125000,160000,142000
+Product Designer,Design/Product,Switzerland,Senior,170000,220000,195000
+Product Designer,Design/Product,Saudi Arabia,Entry,22000,35000,28500
+Product Designer,Design/Product,Saudi Arabia,Mid,45000,75000,60000
+Product Designer,Design/Product,Saudi Arabia,Senior,85000,140000,112000
+Product Designer,Design/Product,UAE,Entry,28000,42000,35000
+Product Designer,Design/Product,UAE,Mid,55000,90000,72500
+Product Designer,Design/Product,UAE,Senior,100000,160000,130000
+Product Designer,Design/Product,Qatar,Entry,25000,38000,31500
+Product Designer,Design/Product,Qatar,Mid,50000,85000,67500
+Product Designer,Design/Product,Qatar,Senior,95000,150000,122500
+Product Designer,Design/Product,Egypt,Entry,4000,8000,6000
+Product Designer,Design/Product,Egypt,Mid,9000,18000,13500
+Product Designer,Design/Product,Egypt,Senior,22000,45000,33500
+Product Designer,Design/Product,Syria,Entry,2000,4500,3250
+Product Designer,Design/Product,Syria,Mid,5000,9500,7250
+Product Designer,Design/Product,Syria,Senior,12000,22000,17000
+Product Designer,Design/Product,Palestine,Entry,7500,14000,10750
+Product Designer,Design/Product,Palestine,Mid,16000,32000,24000
+Product Designer,Design/Product,Palestine,Senior,35000,65000,50000
+Product Designer,Design/Product,Jordan,Entry,8500,15000,11750
+Product Designer,Design/Product,Jordan,Mid,18000,34000,26000
+Product Designer,Design/Product,Jordan,Senior,38000,65000,51500
+Product Designer,Design/Product,Morocco,Entry,7000,13000,10000
+Product Designer,Design/Product,Morocco,Mid,15000,28000,21500
+Product Designer,Design/Product,Morocco,Senior,32000,55000,43500
+Product Designer,Design/Product,India,Entry,6000,12000,9000
+Product Designer,Design/Product,India,Mid,15000,32000,23500
+Product Designer,Design/Product,India,Senior,40000,75000,57500
+Product Designer,Design/Product,Pakistan,Entry,4500,9500,7000
+Product Designer,Design/Product,Pakistan,Mid,12000,25000,18500
+Product Designer,Design/Product,Pakistan,Senior,35000,65000,50000
+Product Designer,Design/Product,Singapore,Entry,60000,85000,72500
+Product Designer,Design/Product,Singapore,Mid,90000,130000,110000
+Product Designer,Design/Product,Singapore,Senior,145000,200000,172500
+Product Designer,Design/Product,Japan,Entry,50000,75000,62500
+Product Designer,Design/Product,Japan,Mid,80000,115000,97500
+Product Designer,Design/Product,Japan,Senior,125000,175000,150000
+Product Designer,Design/Product,Australia,Entry,65000,95000,80000
+Product Designer,Design/Product,Australia,Mid,105000,150000,127500
+Product Designer,Design/Product,Australia,Senior,160000,220000,190000
+Product Designer,Design/Product,Brazil,Entry,11000,20000,15500
+Product Designer,Design/Product,Brazil,Mid,24000,45000,34500
+Product Designer,Design/Product,Brazil,Senior,52000,95000,73500
+Product Designer,Design/Product,South Africa,Entry,16000,28000,22000
+Product Designer,Design/Product,South Africa,Mid,35000,60000,47500
+Product Designer,Design/Product,South Africa,Senior,75000,120000,97500
+Product Designer,Design/Product,Nigeria,Entry,7000,14000,10500
+Product Designer,Design/Product,Nigeria,Mid,18000,35000,26500
+Product Designer,Design/Product,Nigeria,Senior,42000,75000,58500
+Network Engineer,Infrastructure,USA,Entry,60000,85000,72000
+Network Engineer,Infrastructure,USA,Mid,90000,120000,105000
+Network Engineer,Infrastructure,USA,Senior,125000,170000,145000
+Network Engineer,Infrastructure,Canada,Entry,50000,70000,60000
+Network Engineer,Infrastructure,Canada,Mid,75000,105000,90000
+Network Engineer,Infrastructure,Canada,Senior,110000,145000,125000
+Network Engineer,Infrastructure,UK,Entry,32000,48000,40000
+Network Engineer,Infrastructure,UK,Mid,52000,78000,65000
+Network Engineer,Infrastructure,UK,Senior,85000,115000,100000
+Network Engineer,Infrastructure,Germany,Entry,45000,60000,52000
+Network Engineer,Infrastructure,Germany,Mid,65000,85000,75000
+Network Engineer,Infrastructure,Germany,Senior,90000,120000,105000
+Network Engineer,Infrastructure,Netherlands,Entry,40000,55000,48000
+Network Engineer,Infrastructure,Netherlands,Mid,60000,82000,71000
+Network Engineer,Infrastructure,Netherlands,Senior,85000,115000,100000
+Network Engineer,Infrastructure,Switzerland,Entry,85000,110000,98000
+Network Engineer,Infrastructure,Switzerland,Mid,115000,145000,130000
+Network Engineer,Infrastructure,Switzerland,Senior,150000,190000,170000
+Network Engineer,Infrastructure,Saudi Arabia,Entry,18000,32000,25000
+Network Engineer,Infrastructure,Saudi Arabia,Mid,38000,65000,52000
+Network Engineer,Infrastructure,Saudi Arabia,Senior,70000,110000,90000
+Network Engineer,Infrastructure,UAE,Entry,22000,35000,28000
+Network Engineer,Infrastructure,UAE,Mid,45000,75000,60000
+Network Engineer,Infrastructure,UAE,Senior,80000,130000,105000
+Network Engineer,Infrastructure,Qatar,Entry,20000,32000,26000
+Network Engineer,Infrastructure,Qatar,Mid,42000,72000,57000
+Network Engineer,Infrastructure,Qatar,Senior,75000,120000,98000
+Network Engineer,Infrastructure,Egypt,Entry,3000,6500,4800
+Network Engineer,Infrastructure,Egypt,Mid,7500,14000,10800
+Network Engineer,Infrastructure,Egypt,Senior,16000,30000,23000
+Network Engineer,Infrastructure,Syria,Entry,1500,3500,2500
+Network Engineer,Infrastructure,Syria,Mid,4000,7500,5800
+Network Engineer,Infrastructure,Syria,Senior,8500,15000,11800
+Network Engineer,Infrastructure,Palestine,Entry,6000,11000,8500
+Network Engineer,Infrastructure,Palestine,Mid,12500,25000,18500
+Network Engineer,Infrastructure,Palestine,Senior,26000,48000,37000
+Network Engineer,Infrastructure,Jordan,Entry,7000,12000,9500
+Network Engineer,Infrastructure,Jordan,Mid,13500,24000,18800
+Network Engineer,Infrastructure,Jordan,Senior,26000,45000,35500
+Network Engineer,Infrastructure,Morocco,Entry,5500,10000,7800
+Network Engineer,Infrastructure,Morocco,Mid,11000,20000,15500
+Network Engineer,Infrastructure,Morocco,Senior,22000,40000,31000
+Network Engineer,Infrastructure,India,Entry,4500,9000,6800
+Network Engineer,Infrastructure,India,Mid,11000,22000,16500
+Network Engineer,Infrastructure,India,Senior,26000,50000,38000
+Network Engineer,Infrastructure,Pakistan,Entry,3500,7500,5500
+Network Engineer,Infrastructure,Pakistan,Mid,9000,18000,13500
+Network Engineer,Infrastructure,Pakistan,Senior,20000,38000,29000
+Network Engineer,Infrastructure,Singapore,Entry,50000,70000,60000
+Network Engineer,Infrastructure,Singapore,Mid,78000,110000,94000
+Network Engineer,Infrastructure,Singapore,Senior,120000,165000,142000
+Network Engineer,Infrastructure,Japan,Entry,42000,62000,52000
+Network Engineer,Infrastructure,Japan,Mid,65000,88000,76000
+Network Engineer,Infrastructure,Japan,Senior,95000,135000,115000
+Network Engineer,Infrastructure,Australia,Entry,55000,78000,66000
+Network Engineer,Infrastructure,Australia,Mid,82000,115000,98000
+Network Engineer,Infrastructure,Australia,Senior,120000,165000,142000
+Network Engineer,Infrastructure,Brazil,Entry,8500,15000,11800
+Network Engineer,Infrastructure,Brazil,Mid,17000,32000,24500
+Network Engineer,Infrastructure,Brazil,Senior,35000,60000,47500
+Network Engineer,Infrastructure,South Africa,Entry,13000,22000,17500
+Network Engineer,Infrastructure,South Africa,Mid,27000,48000,37500
+Network Engineer,Infrastructure,South Africa,Senior,55000,88000,71500
+Network Engineer,Infrastructure,Nigeria,Entry,5000,9500,7200
+Network Engineer,Infrastructure,Nigeria,Mid,12000,22000,17000
+Network Engineer,Infrastructure,Nigeria,Senior,25000,42000,33500
+Database Administrator,Data/Engineering,USA,Entry,65000,90000,78000
+Database Administrator,Data/Engineering,USA,Mid,95000,135000,115000
+Database Administrator,Data/Engineering,USA,Senior,140000,190000,165000
+Database Administrator,Data/Engineering,Canada,Entry,55000,75000,65000
+Database Administrator,Data/Engineering,Canada,Mid,80000,110000,95000
+Database Administrator,Data/Engineering,Canada,Senior,115000,155000,135000
+Database Administrator,Data/Engineering,UK,Entry,35000,52000,43000
+Database Administrator,Data/Engineering,UK,Mid,55000,82000,68000
+Database Administrator,Data/Engineering,UK,Senior,90000,125000,105000
+Database Administrator,Data/Engineering,Germany,Entry,48000,65000,56000
+Database Administrator,Data/Engineering,Germany,Mid,70000,95000,82000
+Database Administrator,Data/Engineering,Germany,Senior,100000,140000,120000
+Database Administrator,Data/Engineering,Netherlands,Entry,42000,58000,50000
+Database Administrator,Data/Engineering,Netherlands,Mid,65000,90000,78000
+Database Administrator,Data/Engineering,Netherlands,Senior,95000,130000,112000
+Database Administrator,Data/Engineering,Switzerland,Entry,90000,115000,102000
+Database Administrator,Data/Engineering,Switzerland,Mid,120000,150000,135000
+Database Administrator,Data/Engineering,Switzerland,Senior,160000,210000,185000
+Database Administrator,Data/Engineering,Saudi Arabia,Entry,20000,35000,28000
+Database Administrator,Data/Engineering,Saudi Arabia,Mid,40000,75000,58000
+Database Administrator,Data/Engineering,Saudi Arabia,Senior,80000,130000,105000
+Database Administrator,Data/Engineering,UAE,Entry,25000,40000,32000
+Database Administrator,Data/Engineering,UAE,Mid,50000,85000,68000
+Database Administrator,Data/Engineering,UAE,Senior,90000,145000,118000
+Database Administrator,Data/Engineering,Qatar,Entry,22000,38000,30000
+Database Administrator,Data/Engineering,Qatar,Mid,45000,80000,62000
+Database Administrator,Data/Engineering,Qatar,Senior,85000,140000,112000
+Database Administrator,Data/Engineering,Egypt,Entry,4000,8000,6000
+Database Administrator,Data/Engineering,Egypt,Mid,9000,16000,12500
+Database Administrator,Data/Engineering,Egypt,Senior,18000,35000,26000
+Database Administrator,Data/Engineering,Syria,Entry,2000,4000,3000
+Database Administrator,Data/Engineering,Syria,Mid,4500,8500,6500
+Database Administrator,Data/Engineering,Syria,Senior,9500,16000,12500
+Database Administrator,Data/Engineering,Palestine,Entry,7000,13000,10000
+Database Administrator,Data/Engineering,Palestine,Mid,15000,32000,23000
+Database Administrator,Data/Engineering,Palestine,Senior,35000,65000,50000
+Database Administrator,Data/Engineering,Jordan,Entry,8000,14000,11000
+Database Administrator,Data/Engineering,Jordan,Mid,16000,32000,24000
+Database Administrator,Data/Engineering,Jordan,Senior,35000,60000,47500
+Database Administrator,Data/Engineering,Morocco,Entry,6500,12000,9200
+Database Administrator,Data/Engineering,Morocco,Mid,14000,26000,20000
+Database Administrator,Data/Engineering,Morocco,Senior,32000,55000,43000
+Database Administrator,Data/Engineering,India,Entry,6000,12000,9000
+Database Administrator,Data/Engineering,India,Mid,15000,32000,23000
+Database Administrator,Data/Engineering,India,Senior,35000,70000,52000
+Database Administrator,Data/Engineering,Pakistan,Entry,4500,9500,7000
+Database Administrator,Data/Engineering,Pakistan,Mid,11000,25000,18000
+Database Administrator,Data/Engineering,Pakistan,Senior,30000,55000,42000
+Database Administrator,Data/Engineering,Singapore,Entry,55000,80000,67000
+Database Administrator,Data/Engineering,Singapore,Mid,85000,120000,102000
+Database Administrator,Data/Engineering,Singapore,Senior,130000,175000,152000
+Database Administrator,Data/Engineering,Japan,Entry,45000,65000,55000
+Database Administrator,Data/Engineering,Japan,Mid,75000,105000,90000
+Database Administrator,Data/Engineering,Japan,Senior,110000,150000,130000
+Database Administrator,Data/Engineering,Australia,Entry,60000,85000,72000
+Database Administrator,Data/Engineering,Australia,Mid,90000,130000,110000
+Database Administrator,Data/Engineering,Australia,Senior,140000,190000,165000
+Database Administrator,Data/Engineering,Brazil,Entry,10000,18000,14000
+Database Administrator,Data/Engineering,Brazil,Mid,22000,42000,32000
+Database Administrator,Data/Engineering,Brazil,Senior,48000,85000,66000
+Database Administrator,Data/Engineering,South Africa,Entry,15000,26000,20000
+Database Administrator,Data/Engineering,South Africa,Mid,32000,58000,45000
+Database Administrator,Data/Engineering,South Africa,Senior,70000,115000,92000
+Database Administrator,Data/Engineering,Nigeria,Entry,6000,12000,9000
+Database Administrator,Data/Engineering,Nigeria,Mid,15000,28000,21500
+Database Administrator,Data/Engineering,Nigeria,Senior,35000,65000,50000
+Social Media Manager,Marketing,USA,Entry,40000,60000,50000
+Social Media Manager,Marketing,USA,Mid,65000,95000,80000
+Social Media Manager,Marketing,USA,Senior,100000,145000,122000
+Social Media Manager,Marketing,Canada,Entry,35000,52000,43000
+Social Media Manager,Marketing,Canada,Mid,58000,85000,71000
+Social Media Manager,Marketing,Canada,Senior,90000,125000,107000
+Social Media Manager,Marketing,UK,Entry,25000,38000,31000
+Social Media Manager,Marketing,UK,Mid,42000,65000,53000
+Social Media Manager,Marketing,UK,Senior,70000,105000,87000
+Social Media Manager,Marketing,Germany,Entry,32000,45000,38000
+Social Media Manager,Marketing,Germany,Mid,50000,75000,62000
+Social Media Manager,Marketing,Germany,Senior,80000,115000,97000
+Social Media Manager,Marketing,Netherlands,Entry,30000,42000,36000
+Social Media Manager,Marketing,Netherlands,Mid,48000,70000,59000
+Social Media Manager,Marketing,Netherlands,Senior,75000,105000,90000
+Social Media Manager,Marketing,Switzerland,Entry,65000,85000,75000
+Social Media Manager,Marketing,Switzerland,Mid,90000,120000,105000
+Social Media Manager,Marketing,Switzerland,Senior,130000,175000,152000
+Social Media Manager,Marketing,Saudi Arabia,Entry,12000,20000,16000
+Social Media Manager,Marketing,Saudi Arabia,Mid,25000,48000,36000
+Social Media Manager,Marketing,Saudi Arabia,Senior,55000,95000,75000
+Social Media Manager,Marketing,UAE,Entry,15000,25000,20000
+Social Media Manager,Marketing,UAE,Mid,35000,60000,47000
+Social Media Manager,Marketing,UAE,Senior,70000,115000,92000
+Social Media Manager,Marketing,Qatar,Entry,14000,24000,19000
+Social Media Manager,Marketing,Qatar,Mid,32000,55000,43000
+Social Media Manager,Marketing,Qatar,Senior,65000,105000,85000
+Social Media Manager,Marketing,Egypt,Entry,1500,4000,2700
+Social Media Manager,Marketing,Egypt,Mid,4500,9000,6700
+Social Media Manager,Marketing,Egypt,Senior,12000,22000,17000
+Social Media Manager,Marketing,Syria,Entry,800,1800,1300
+Social Media Manager,Marketing,Syria,Mid,2200,4500,3300
+Social Media Manager,Marketing,Syria,Senior,5000,10000,7500
+Social Media Manager,Marketing,Palestine,Entry,4500,8500,6500
+Social Media Manager,Marketing,Palestine,Mid,9000,18000,13500
+Social Media Manager,Marketing,Palestine,Senior,22000,42000,32000
+Social Media Manager,Marketing,Jordan,Entry,5000,9000,7000
+Social Media Manager,Marketing,Jordan,Mid,10000,20000,15000
+Social Media Manager,Marketing,Jordan,Senior,25000,45000,35000
+Social Media Manager,Marketing,Morocco,Entry,4000,8000,6000
+Social Media Manager,Marketing,Morocco,Mid,9000,17000,13000
+Social Media Manager,Marketing,Morocco,Senior,20000,38000,29000
+Social Media Manager,Marketing,India,Entry,3000,7000,5000
+Social Media Manager,Marketing,India,Mid,8500,18000,13200
+Social Media Manager,Marketing,India,Senior,22000,42000,32000
+Social Media Manager,Marketing,Pakistan,Entry,2500,6000,4200
+Social Media Manager,Marketing,Pakistan,Mid,7000,14000,10500
+Social Media Manager,Marketing,Pakistan,Senior,18000,32000,25000
+Social Media Manager,Marketing,Singapore,Entry,38000,55000,46000
+Social Media Manager,Marketing,Singapore,Mid,62000,90000,76000
+Social Media Manager,Marketing,Singapore,Senior,100000,145000,122000
+Social Media Manager,Marketing,Japan,Entry,32000,48000,40000
+Social Media Manager,Marketing,Japan,Mid,52000,78000,65000
+Social Media Manager,Marketing,Japan,Senior,85000,120000,102000
+Social Media Manager,Marketing,Australia,Entry,42000,62000,52000
+Social Media Manager,Marketing,Australia,Mid,68000,98000,83000
+Social Media Manager,Marketing,Australia,Senior,105000,150000,127000
+Social Media Manager,Marketing,Brazil,Entry,6000,11000,8500
+Social Media Manager,Marketing,Brazil,Mid,14000,26000,20000
+Social Media Manager,Marketing,Brazil,Senior,32000,58000,45000
+Social Media Manager,Marketing,South Africa,Entry,10000,18000,14000
+Social Media Manager,Marketing,South Africa,Mid,22000,38000,30000
+Social Media Manager,Marketing,South Africa,Senior,45000,75000,60000
+Social Media Manager,Marketing,Nigeria,Entry,3500,7000,5200
+Social Media Manager,Marketing,Nigeria,Mid,8500,16000,12200
+Social Media Manager,Marketing,Nigeria,Senior,20000,38000,29000
+Solution Architect,Engineering,USA,Entry,100000,135000,118000
+Solution Architect,Engineering,USA,Mid,140000,185000,165000
+Solution Architect,Engineering,USA,Senior,185000,260000,220000
+Solution Architect,Engineering,Canada,Entry,85000,110000,98000
+Solution Architect,Engineering,Canada,Mid,120000,155000,138000
+Solution Architect,Engineering,Canada,Senior,160000,210000,185000
+Solution Architect,Engineering,UK,Entry,60000,80000,70000
+Solution Architect,Engineering,UK,Mid,90000,130000,110000
+Solution Architect,Engineering,UK,Senior,135000,190000,165000
+Solution Architect,Engineering,Germany,Entry,70000,90000,80000
+Solution Architect,Engineering,Germany,Mid,100000,130000,115000
+Solution Architect,Engineering,Germany,Senior,140000,180000,160000
+Solution Architect,Engineering,Netherlands,Entry,65000,85000,75000
+Solution Architect,Engineering,Netherlands,Mid,95000,125000,110000
+Solution Architect,Engineering,Netherlands,Senior,135000,175000,155000
+Solution Architect,Engineering,Switzerland,Entry,115000,150000,132000
+Solution Architect,Engineering,Switzerland,Mid,155000,195000,178000
+Solution Architect,Engineering,Switzerland,Senior,200000,270000,235000
+Solution Architect,Engineering,Saudi Arabia,Entry,32000,52000,42000
+Solution Architect,Engineering,Saudi Arabia,Mid,60000,100000,80000
+Solution Architect,Engineering,Saudi Arabia,Senior,115000,175000,145000
+Solution Architect,Engineering,UAE,Entry,40000,60000,50000
+Solution Architect,Engineering,UAE,Mid,70000,120000,95000
+Solution Architect,Engineering,UAE,Senior,130000,200000,165000
+Solution Architect,Engineering,Qatar,Entry,38000,58000,48000
+Solution Architect,Engineering,Qatar,Mid,65000,110000,90000
+Solution Architect,Engineering,Qatar,Senior,120000,190000,155000
+Solution Architect,Engineering,Egypt,Entry,6500,12000,9200
+Solution Architect,Engineering,Egypt,Mid,15000,26000,20000
+Solution Architect,Engineering,Egypt,Senior,32000,60000,45000
+Solution Architect,Engineering,Syria,Entry,4000,7500,5800
+Solution Architect,Engineering,Syria,Mid,8500,15000,11800
+Solution Architect,Engineering,Syria,Senior,17000,30000,23000
+Solution Architect,Engineering,Palestine,Entry,11000,19000,15500
+Solution Architect,Engineering,Palestine,Mid,24000,42000,33000
+Solution Architect,Engineering,Palestine,Senior,48000,85000,68000
+Solution Architect,Engineering,Jordan,Entry,12000,21000,16500
+Solution Architect,Engineering,Jordan,Mid,25000,40000,32000
+Solution Architect,Engineering,Jordan,Senior,52000,90000,72000
+Solution Architect,Engineering,Morocco,Entry,9500,17000,13800
+Solution Architect,Engineering,Morocco,Mid,20000,35000,28000
+Solution Architect,Engineering,Morocco,Senior,42000,75000,58000
+Solution Architect,Engineering,India,Entry,11000,21000,16000
+Solution Architect,Engineering,India,Mid,26000,48000,36000
+Solution Architect,Engineering,India,Senior,55000,100000,80000
+Solution Architect,Engineering,Pakistan,Entry,7500,15000,11800
+Solution Architect,Engineering,Pakistan,Mid,17000,32000,24500
+Solution Architect,Engineering,Pakistan,Senior,42000,80000,58000
+Solution Architect,Engineering,Singapore,Entry,80000,110000,95000
+Solution Architect,Engineering,Singapore,Mid,120000,165000,142000
+Solution Architect,Engineering,Singapore,Senior,175000,245000,210000
+Solution Architect,Engineering,Japan,Entry,65000,90000,78000
+Solution Architect,Engineering,Japan,Mid,100000,135000,118000
+Solution Architect,Engineering,Japan,Senior,145000,200000,172000
+Solution Architect,Engineering,Australia,Entry,85000,115000,100000
+Solution Architect,Engineering,Australia,Mid,125000,170000,148000
+Solution Architect,Engineering,Australia,Senior,180000,250000,215000
+Solution Architect,Engineering,Brazil,Entry,15000,28000,21500
+Solution Architect,Engineering,Brazil,Mid,32000,58000,45000
+Solution Architect,Engineering,Brazil,Senior,65000,110000,88000
+Solution Architect,Engineering,South Africa,Entry,20000,35000,28000
+Solution Architect,Engineering,South Africa,Mid,42000,80000,62000
+Solution Architect,Engineering,South Africa,Senior,90000,145000,118000
+Solution Architect,Engineering,Nigeria,Entry,9500,18000,14500
+Solution Architect,Engineering,Nigeria,Mid,23000,45000,34000
+Solution Architect,Engineering,Nigeria,Senior,55000,100000,78000
+Video Editor,Creative/Marketing,USA,Entry,45000,68000,56000
+Video Editor,Creative/Marketing,USA,Mid,72000,105000,88000
+Video Editor,Creative/Marketing,USA,Senior,110000,160000,135000
+Video Editor,Creative/Marketing,Canada,Entry,38000,58000,48000
+Video Editor,Creative/Marketing,Canada,Mid,62000,92000,77000
+Video Editor,Creative/Marketing,Canada,Senior,95000,140000,118000
+Video Editor,Creative/Marketing,UK,Entry,28000,42000,35000
+Video Editor,Creative/Marketing,UK,Mid,45000,68000,56000
+Video Editor,Creative/Marketing,UK,Senior,75000,110000,92000
+Video Editor,Creative/Marketing,Germany,Entry,35000,48000,41000
+Video Editor,Creative/Marketing,Germany,Mid,52000,75000,63000
+Video Editor,Creative/Marketing,Germany,Senior,80000,115000,97000
+Video Editor,Creative/Marketing,Netherlands,Entry,32000,45000,38000
+Video Editor,Creative/Marketing,Netherlands,Mid,48000,70000,59000
+Video Editor,Creative/Marketing,Netherlands,Senior,75000,105000,90000
+Video Editor,Creative/Marketing,Switzerland,Entry,70000,90000,80000
+Video Editor,Creative/Marketing,Switzerland,Mid,95000,125000,110000
+Video Editor,Creative/Marketing,Switzerland,Senior,135000,180000,155000
+Video Editor,Creative/Marketing,Saudi Arabia,Entry,14000,24000,19000
+Video Editor,Creative/Marketing,Saudi Arabia,Mid,28000,55000,42000
+Video Editor,Creative/Marketing,Saudi Arabia,Senior,60000,100000,80000
+Video Editor,Creative/Marketing,UAE,Entry,18000,32000,25000
+Video Editor,Creative/Marketing,UAE,Mid,38000,68000,53000
+Video Editor,Creative/Marketing,UAE,Senior,75000,120000,98000
+Video Editor,Creative/Marketing,Qatar,Entry,16000,28000,22000
+Video Editor,Creative/Marketing,Qatar,Mid,35000,62000,48500
+Video Editor,Creative/Marketing,Qatar,Senior,70000,115000,92000
+Video Editor,Creative/Marketing,Egypt,Entry,2200,5200,3700
+Video Editor,Creative/Marketing,Egypt,Mid,6000,11000,8500
+Video Editor,Creative/Marketing,Egypt,Senior,14000,28000,21000
+Video Editor,Creative/Marketing,Syria,Entry,1100,2600,1850
+Video Editor,Creative/Marketing,Syria,Mid,3200,6200,4700
+Video Editor,Creative/Marketing,Syria,Senior,7500,14000,10500
+Video Editor,Creative/Marketing,Palestine,Entry,4500,9000,6700
+Video Editor,Creative/Marketing,Palestine,Mid,9500,20000,14800
+Video Editor,Creative/Marketing,Palestine,Senior,24000,45000,34500
+Video Editor,Creative/Marketing,Jordan,Entry,5500,10000,7700
+Video Editor,Creative/Marketing,Jordan,Mid,11000,21000,16000
+Video Editor,Creative/Marketing,Jordan,Senior,25000,45000,35000
+Video Editor,Creative/Marketing,Morocco,Entry,4500,8500,6500
+Video Editor,Creative/Marketing,Morocco,Mid,9500,18000,13700
+Video Editor,Creative/Marketing,Morocco,Senior,22000,38000,30000
+Video Editor,Creative/Marketing,India,Entry,3500,7500,5500
+Video Editor,Creative/Marketing,India,Mid,9500,19000,14200
+Video Editor,Creative/Marketing,India,Senior,25000,48000,36500
+Video Editor,Creative/Marketing,Pakistan,Entry,2800,6200,4500
+Video Editor,Creative/Marketing,Pakistan,Mid,7800,16000,11900
+Video Editor,Creative/Marketing,Pakistan,Senior,20000,38000,29000
+Video Editor,Creative/Marketing,Singapore,Entry,38000,55000,46500
+Video Editor,Creative/Marketing,Singapore,Mid,62000,92000,77000
+Video Editor,Creative/Marketing,Singapore,Senior,100000,145000,122000
+Video Editor,Creative/Marketing,Japan,Entry,32000,48000,40000
+Video Editor,Creative/Marketing,Japan,Mid,52000,78000,65000
+Video Editor,Creative/Marketing,Japan,Senior,85000,120000,102000
+Video Editor,Creative/Marketing,Australia,Entry,42000,62000,52000
+Video Editor,Creative/Marketing,Australia,Mid,68000,98000,83000
+Video Editor,Creative/Marketing,Australia,Senior,105000,150000,127000
+Video Editor,Creative/Marketing,Brazil,Entry,6500,12000,9200
+Video Editor,Creative/Marketing,Brazil,Mid,15000,28000,21500
+Video Editor,Creative/Marketing,Brazil,Senior,32000,58000,45000
+Video Editor,Creative/Marketing,South Africa,Entry,10000,18000,14000
+Video Editor,Creative/Marketing,South Africa,Mid,22000,38000,30000
+Video Editor,Creative/Marketing,South Africa,Senior,45000,75000,60000
+Video Editor,Creative/Marketing,Nigeria,Entry,3500,7500,5500
+Video Editor,Creative/Marketing,Nigeria,Mid,9500,18000,13700
+Video Editor,Creative/Marketing,Nigeria,Senior,22000,40000,31000
+Content Writer,Marketing,USA,Entry,42000,62000,52000
+Content Writer,Marketing,USA,Mid,65000,92000,78000
+Content Writer,Marketing,USA,Senior,95000,135000,115000
+Content Writer,Marketing,Canada,Entry,35000,52000,43000
+Content Writer,Marketing,Canada,Mid,55000,82000,68000
+Content Writer,Marketing,Canada,Senior,85000,115000,100000
+Content Writer,Marketing,UK,Entry,24000,35000,29000
+Content Writer,Marketing,UK,Mid,38000,58000,48000
+Content Writer,Marketing,UK,Senior,65000,95000,80000
+Content Writer,Marketing,Germany,Entry,32000,45000,38000
+Content Writer,Marketing,Germany,Mid,48000,68000,58000
+Content Writer,Marketing,Germany,Senior,72000,100000,86000
+Content Writer,Marketing,Netherlands,Entry,28000,40000,34000
+Content Writer,Marketing,Netherlands,Mid,45000,62000,53000
+Content Writer,Marketing,Netherlands,Senior,70000,95000,82000
+Content Writer,Marketing,Switzerland,Entry,65000,85000,75000
+Content Writer,Marketing,Switzerland,Mid,90000,115000,102000
+Content Writer,Marketing,Switzerland,Senior,125000,165000,145000
+Content Writer,Marketing,Saudi Arabia,Entry,12000,20000,16000
+Content Writer,Marketing,Saudi Arabia,Mid,25000,48000,36000
+Content Writer,Marketing,Saudi Arabia,Senior,55000,90000,72000
+Content Writer,Marketing,UAE,Entry,15000,25000,20000
+Content Writer,Marketing,UAE,Mid,35000,60000,47000
+Content Writer,Marketing,UAE,Senior,70000,110000,90000
+Content Writer,Marketing,Qatar,Entry,14000,24000,19000
+Content Writer,Marketing,Qatar,Mid,32000,55000,43500
+Content Writer,Marketing,Qatar,Senior,65000,100000,82000
+Content Writer,Marketing,Egypt,Entry,1500,4000,2700
+Content Writer,Marketing,Egypt,Mid,4500,9000,6700
+Content Writer,Marketing,Egypt,Senior,12000,22000,17000
+Content Writer,Marketing,Syria,Entry,800,1800,1300
+Content Writer,Marketing,Syria,Mid,2200,4500,3350
+Content Writer,Marketing,Syria,Senior,5500,10000,7750
+Content Writer,Marketing,Palestine,Entry,4500,8500,6500
+Content Writer,Marketing,Palestine,Mid,9000,18000,13500
+Content Writer,Marketing,Palestine,Senior,22000,42000,32000
+Content Writer,Marketing,Jordan,Entry,5000,9000,7000
+Content Writer,Marketing,Jordan,Mid,10000,20000,15000
+Content Writer,Marketing,Jordan,Senior,25000,45000,35000
+Content Writer,Marketing,Morocco,Entry,4000,8000,6000
+Content Writer,Marketing,Morocco,Mid,9000,17000,13000
+Content Writer,Marketing,Morocco,Senior,20000,38000,29000
+Content Writer,Marketing,India,Entry,3000,7000,5000
+Content Writer,Marketing,India,Mid,8500,18000,13250
+Content Writer,Marketing,India,Senior,22000,42000,32000
+Content Writer,Marketing,Pakistan,Entry,2500,6000,4250
+Content Writer,Marketing,Pakistan,Mid,7000,14000,10500
+Content Writer,Marketing,Pakistan,Senior,18000,32000,25000
+Content Writer,Marketing,Singapore,Entry,38000,55000,46000
+Content Writer,Marketing,Singapore,Mid,62000,90000,76000
+Content Writer,Marketing,Singapore,Senior,100000,145000,122000
+Content Writer,Marketing,Japan,Entry,32000,48000,40000
+Content Writer,Marketing,Japan,Mid,52000,78000,65000
+Content Writer,Marketing,Japan,Senior,85000,120000,102000
+Content Writer,Marketing,Australia,Entry,42000,62000,52000
+Content Writer,Marketing,Australia,Mid,68000,98000,83000
+Content Writer,Marketing,Australia,Senior,105000,150000,127000
+Content Writer,Marketing,Brazil,Entry,6000,11000,8500
+Content Writer,Marketing,Brazil,Mid,14000,26000,20000
+Content Writer,Marketing,Brazil,Senior,32000,58000,45000
+Content Writer,Marketing,South Africa,Entry,10000,18000,14000
+Content Writer,Marketing,South Africa,Mid,22000,38000,30000
+Content Writer,Marketing,South Africa,Senior,45000,75000,60000
+Content Writer,Marketing,Nigeria,Entry,3500,7000,5250
+Content Writer,Marketing,Nigeria,Mid,8500,16000,12250
+Content Writer,Marketing,Nigeria,Senior,20000,38000,29000
+AI Researcher,AI/ML,USA,Entry,110000,150000,130000
+AI Researcher,AI/ML,USA,Mid,160000,220000,190000
+AI Researcher,AI/ML,USA,Senior,220000,350000,280000
+AI Researcher,AI/ML,Canada,Entry,90000,120000,105000
+AI Researcher,AI/ML,Canada,Mid,130000,170000,150000
+AI Researcher,AI/ML,Canada,Senior,180000,260000,220000
+AI Researcher,AI/ML,UK,Entry,65000,90000,78000
+AI Researcher,AI/ML,UK,Mid,100000,145000,125000
+AI Researcher,AI/ML,UK,Senior,150000,220000,185000
+AI Researcher,AI/ML,Germany,Entry,75000,100000,88000
+AI Researcher,AI/ML,Germany,Mid,110000,150000,130000
+AI Researcher,AI/ML,Germany,Senior,160000,210000,185000
+AI Researcher,AI/ML,Netherlands,Entry,65000,85000,75000
+AI Researcher,AI/ML,Netherlands,Mid,95000,130000,115000
+AI Researcher,AI/ML,Netherlands,Senior,140000,190000,165000
+AI Researcher,AI/ML,Switzerland,Entry,120000,160000,140000
+AI Researcher,AI/ML,Switzerland,Mid,170000,220000,195000
+AI Researcher,AI/ML,Switzerland,Senior,230000,320000,275000
+AI Researcher,AI/ML,Saudi Arabia,Entry,40000,65000,52000
+AI Researcher,AI/ML,Saudi Arabia,Mid,75000,130000,105000
+AI Researcher,AI/ML,Saudi Arabia,Senior,140000,220000,180000
+AI Researcher,AI/ML,UAE,Entry,45000,75000,60000
+AI Researcher,AI/ML,UAE,Mid,85000,150000,118000
+AI Researcher,AI/ML,UAE,Senior,160000,260000,210000
+AI Researcher,AI/ML,Qatar,Entry,42000,70000,56000
+AI Researcher,AI/ML,Qatar,Mid,80000,140000,110000
+AI Researcher,AI/ML,Qatar,Senior,150000,240000,195000
+AI Researcher,AI/ML,Egypt,Entry,8000,15000,11500
+AI Researcher,AI/ML,Egypt,Mid,18000,35000,26500
+AI Researcher,AI/ML,Egypt,Senior,40000,85000,62000
+AI Researcher,AI/ML,Syria,Entry,5000,10000,7500
+AI Researcher,AI/ML,Syria,Mid,12000,22000,17000
+AI Researcher,AI/ML,Syria,Senior,25000,45000,35000
+AI Researcher,AI/ML,Palestine,Entry,15000,28000,21500
+AI Researcher,AI/ML,Palestine,Mid,32000,58000,45000
+AI Researcher,AI/ML,Palestine,Senior,65000,120000,92500
+AI Researcher,AI/ML,Jordan,Entry,18000,32000,25000
+AI Researcher,AI/ML,Jordan,Mid,35000,65000,50000
+AI Researcher,AI/ML,Jordan,Senior,70000,130000,100000
+AI Researcher,AI/ML,Morocco,Entry,12000,22000,17000
+AI Researcher,AI/ML,Morocco,Mid,25000,45000,35000
+AI Researcher,AI/ML,Morocco,Senior,55000,95000,75000
+AI Researcher,AI/ML,India,Entry,15000,30000,22500
+AI Researcher,AI/ML,India,Mid,35000,70000,52500
+AI Researcher,AI/ML,India,Senior,80000,150000,115000
+AI Researcher,AI/ML,Pakistan,Entry,10000,22000,16000
+AI Researcher,AI/ML,Pakistan,Mid,25000,48000,36500
+AI Researcher,AI/ML,Pakistan,Senior,60000,110000,85000
+AI Researcher,AI/ML,Singapore,Entry,90000,130000,110000
+AI Researcher,AI/ML,Singapore,Mid,140000,190000,165000
+AI Researcher,AI/ML,Singapore,Senior,200000,280000,240000
+AI Researcher,AI/ML,Japan,Entry,75000,110000,92500
+AI Researcher,AI/ML,Japan,Mid,120000,165000,142500
+AI Researcher,AI/ML,Japan,Senior,180000,250000,215000
+AI Researcher,AI/ML,Australia,Entry,85000,120000,102500
+AI Researcher,AI/ML,Australia,Mid,130000,180000,155000
+AI Researcher,AI/ML,Australia,Senior,190000,270000,230000
+AI Researcher,AI/ML,Brazil,Entry,18000,32000,25000
+AI Researcher,AI/ML,Brazil,Mid,38000,65000,51500
+AI Researcher,AI/ML,Brazil,Senior,80000,135000,107500
+AI Researcher,AI/ML,South Africa,Entry,25000,45000,35000
+AI Researcher,AI/ML,South Africa,Mid,55000,90000,72500
+AI Researcher,AI/ML,South Africa,Senior,100000,160000,130000
+AI Researcher,AI/ML,Nigeria,Entry,12000,24000,18000
+AI Researcher,AI/ML,Nigeria,Mid,28000,52000,40000
+AI Researcher,AI/ML,Nigeria,Senior,65000,115000,90000
+Technical Recruiter,HR,USA,Entry,55000,75000,65000
+Technical Recruiter,HR,USA,Mid,85000,120000,102500
+Technical Recruiter,HR,USA,Senior,130000,180000,155000
+Technical Recruiter,HR,Canada,Entry,45000,65000,55000
+Technical Recruiter,HR,Canada,Mid,70000,95000,82500
+Technical Recruiter,HR,Canada,Senior,105000,145000,125000
+Technical Recruiter,HR,UK,Entry,30000,45000,37500
+Technical Recruiter,HR,UK,Mid,50000,75000,62500
+Technical Recruiter,HR,UK,Senior,85000,120000,102500
+Technical Recruiter,HR,Germany,Entry,40000,55000,47500
+Technical Recruiter,HR,Germany,Mid,60000,85000,72500
+Technical Recruiter,HR,Germany,Senior,95000,130000,112500
+Technical Recruiter,HR,Netherlands,Entry,38000,50000,44000
+Technical Recruiter,HR,Netherlands,Mid,58000,80000,69000
+Technical Recruiter,HR,Netherlands,Senior,90000,120000,105000
+Technical Recruiter,HR,Switzerland,Entry,85000,110000,97500
+Technical Recruiter,HR,Switzerland,Mid,120000,150000,135000
+Technical Recruiter,HR,Switzerland,Senior,160000,200000,180000
+Technical Recruiter,HR,Saudi Arabia,Entry,15000,25000,20000
+Technical Recruiter,HR,Saudi Arabia,Mid,32000,55000,43500
+Technical Recruiter,HR,Saudi Arabia,Senior,65000,110000,87500
+Technical Recruiter,HR,UAE,Entry,20000,32000,26000
+Technical Recruiter,HR,UAE,Mid,42000,72000,57000
+Technical Recruiter,HR,UAE,Senior,85000,135000,110000
+Technical Recruiter,HR,Qatar,Entry,18000,30000,24000
+Technical Recruiter,HR,Qatar,Mid,38000,68000,53000
+Technical Recruiter,HR,Qatar,Senior,75000,125000,100000
+Technical Recruiter,HR,Egypt,Entry,2500,5500,4000
+Technical Recruiter,HR,Egypt,Mid,6500,12500,9500
+Technical Recruiter,HR,Egypt,Senior,15000,32000,23500
+Technical Recruiter,HR,Syria,Entry,1500,3000,2250
+Technical Recruiter,HR,Syria,Mid,3500,6500,5000
+Technical Recruiter,HR,Syria,Senior,8500,16000,12250
+Technical Recruiter,HR,Palestine,Entry,5000,9500,7250
+Technical Recruiter,HR,Palestine,Mid,11500,22500,17000
+Technical Recruiter,HR,Palestine,Senior,26000,48000,37000
+Technical Recruiter,HR,Jordan,Entry,6000,11500,8750
+Technical Recruiter,HR,Jordan,Mid,13500,26000,19750
+Technical Recruiter,HR,Jordan,Senior,30000,55000,42500
+Technical Recruiter,HR,Morocco,Entry,4500,9500,7000
+Technical Recruiter,HR,Morocco,Mid,11000,21000,16000
+Technical Recruiter,HR,Morocco,Senior,24000,45000,34500
+Technical Recruiter,HR,India,Entry,4500,9500,7000
+Technical Recruiter,HR,India,Mid,11500,24000,17750
+Technical Recruiter,HR,India,Senior,28000,55000,41500
+Technical Recruiter,HR,Pakistan,Entry,3500,7500,5500
+Technical Recruiter,HR,Pakistan,Mid,8500,18000,13250
+Technical Recruiter,HR,Pakistan,Senior,22000,42000,32000
+Technical Recruiter,HR,Singapore,Entry,45000,65000,55000
+Technical Recruiter,HR,Singapore,Mid,72000,100000,86000
+Technical Recruiter,HR,Singapore,Senior,115000,160000,137500
+Technical Recruiter,HR,Japan,Entry,35000,52000,43500
+Technical Recruiter,HR,Japan,Mid,60000,85000,72500
+Technical Recruiter,HR,Japan,Senior,95000,130000,112500
+Technical Recruiter,HR,Australia,Entry,50000,70000,60000
+Technical Recruiter,HR,Australia,Mid,80000,110000,95000
+Technical Recruiter,HR,Australia,Senior,125000,170000,147500
+Technical Recruiter,HR,Brazil,Entry,7000,14000,10500
+Technical Recruiter,HR,Brazil,Mid,16500,32000,24250
+Technical Recruiter,HR,Brazil,Senior,35000,65000,50000
+Technical Recruiter,HR,South Africa,Entry,12000,22000,17000
+Technical Recruiter,HR,South Africa,Mid,28000,48000,38000
+Technical Recruiter,HR,South Africa,Senior,55000,90000,72500
+Technical Recruiter,HR,Nigeria,Entry,4500,9500,7000
+Technical Recruiter,HR,Nigeria,Mid,12000,24000,18000
+Technical Recruiter,HR,Nigeria,Senior,28000,52000,40000
+Customer Success Manager,Sales/Operations,USA,Entry,60000,85000,72500
+Customer Success Manager,Sales/Operations,USA,Mid,90000,130000,110000
+Customer Success Manager,Sales/Operations,USA,Senior,140000,200000,170000
+Customer Success Manager,Sales/Operations,Canada,Entry,50000,70000,60000
+Customer Success Manager,Sales/Operations,Canada,Mid,75000,105000,90000
+Customer Success Manager,Sales/Operations,Canada,Senior,115000,160000,137500
+Customer Success Manager,Sales/Operations,UK,Entry,35000,50000,42500
+Customer Success Manager,Sales/Operations,UK,Mid,55000,85000,70000
+Customer Success Manager,Sales/Operations,UK,Senior,90000,130000,110000
+Customer Success Manager,Sales/Operations,Germany,Entry,45000,62000,53500
+Customer Success Manager,Sales/Operations,Germany,Mid,68000,92000,80000
+Customer Success Manager,Sales/Operations,Germany,Senior,100000,145000,122500
+Customer Success Manager,Sales/Operations,Netherlands,Entry,42000,58000,50000
+Customer Success Manager,Sales/Operations,Netherlands,Mid,65000,90000,77500
+Customer Success Manager,Sales/Operations,Netherlands,Senior,95000,135000,115000
+Customer Success Manager,Sales/Operations,Switzerland,Entry,90000,120000,105000
+Customer Success Manager,Sales/Operations,Switzerland,Mid,130000,165000,147500
+Customer Success Manager,Sales/Operations,Switzerland,Senior,175000,230000,202500
+Customer Success Manager,Sales/Operations,Saudi Arabia,Entry,18000,32000,25000
+Customer Success Manager,Sales/Operations,Saudi Arabia,Mid,38000,70000,54000
+Customer Success Manager,Sales/Operations,Saudi Arabia,Senior,85000,145000,115000
+Customer Success Manager,Sales/Operations,UAE,Entry,24000,38000,31000
+Customer Success Manager,Sales/Operations,UAE,Mid,48000,85000,66500
+Customer Success Manager,Sales/Operations,UAE,Senior,95000,155000,125000
+Customer Success Manager,Sales/Operations,Qatar,Entry,22000,35000,28500
+Customer Success Manager,Sales/Operations,Qatar,Mid,45000,78000,61500
+Customer Success Manager,Sales/Operations,Qatar,Senior,90000,145000,117500
+Customer Success Manager,Sales/Operations,Egypt,Entry,3500,7500,5500
+Customer Success Manager,Sales/Operations,Egypt,Mid,9000,17000,13000
+Customer Success Manager,Sales/Operations,Egypt,Senior,20000,42000,31000
+Customer Success Manager,Sales/Operations,Syria,Entry,2000,4500,3250
+Customer Success Manager,Sales/Operations,Syria,Mid,5000,9500,7250
+Customer Success Manager,Sales/Operations,Syria,Senior,11000,22000,16500
+Customer Success Manager,Sales/Operations,Palestine,Entry,7000,13500,10250
+Customer Success Manager,Sales/Operations,Palestine,Mid,15500,32000,23750
+Customer Success Manager,Sales/Operations,Palestine,Senior,35000,68000,51500
+Customer Success Manager,Sales/Operations,Jordan,Entry,8500,15000,11750
+Customer Success Manager,Sales/Operations,Jordan,Mid,17000,32000,24500
+Customer Success Manager,Sales/Operations,Jordan,Senior,38000,68000,53000
+Customer Success Manager,Sales/Operations,Morocco,Entry,6500,12500,9500
+Customer Success Manager,Sales/Operations,Morocco,Mid,14500,28000,21250
+Customer Success Manager,Sales/Operations,Morocco,Senior,32000,58000,45000
+Customer Success Manager,Sales/Operations,India,Entry,6000,12500,9250
+Customer Success Manager,Sales/Operations,India,Mid,15500,32000,23750
+Customer Success Manager,Sales/Operations,India,Senior,38000,75000,56500
+Customer Success Manager,Sales/Operations,Pakistan,Entry,5000,10500,7750
+Customer Success Manager,Sales/Operations,Pakistan,Mid,12000,26000,19000
+Customer Success Manager,Sales/Operations,Pakistan,Senior,32000,58000,45000
+Customer Success Manager,Sales/Operations,Singapore,Entry,55000,82000,68500
+Customer Success Manager,Sales/Operations,Singapore,Mid,85000,125000,105000
+Customer Success Manager,Sales/Operations,Singapore,Senior,140000,200000,170000
+Customer Success Manager,Sales/Operations,Japan,Entry,45000,65000,55000
+Customer Success Manager,Sales/Operations,Japan,Mid,75000,110000,92500
+Customer Success Manager,Sales/Operations,Japan,Senior,120000,170000,145000
+Customer Success Manager,Sales/Operations,Australia,Entry,62000,88000,75000
+Customer Success Manager,Sales/Operations,Australia,Mid,95000,135000,115000
+Customer Success Manager,Sales/Operations,Australia,Senior,150000,210000,180000
+Customer Success Manager,Sales/Operations,Brazil,Entry,11000,22000,16500
+Customer Success Manager,Sales/Operations,Brazil,Mid,25000,48000,36500
+Customer Success Manager,Sales/Operations,Brazil,Senior,55000,95000,75000
+Customer Success Manager,Sales/Operations,South Africa,Entry,16000,30000,23000
+Customer Success Manager,Sales/Operations,South Africa,Mid,35000,65000,50000
+Customer Success Manager,Sales/Operations,South Africa,Senior,75000,120000,97500
+Customer Success Manager,Sales/Operations,Nigeria,Entry,7000,15000,11000
+Customer Success Manager,Sales/Operations,Nigeria,Mid,18000,35000,26500
+Customer Success Manager,Sales/Operations,Nigeria,Senior,42000,75000,58500
+Data Analyst,Data,USA,Entry,55000,75000,65000
+Data Analyst,Data,USA,Mid,75000,105000,90000
+Data Analyst,Data,USA,Senior,105000,145000,125000
+Data Analyst,Data,Canada,Entry,48000,65000,56000
+Data Analyst,Data,Canada,Mid,68000,92000,80000
+Data Analyst,Data,Canada,Senior,95000,125000,110000
+Data Analyst,Data,UK,Entry,30000,42000,36000
+Data Analyst,Data,UK,Mid,45000,68000,56000
+Data Analyst,Data,UK,Senior,70000,95000,82000
+Data Analyst,Data,Germany,Entry,40000,55000,47000
+Data Analyst,Data,Germany,Mid,55000,78000,66000
+Data Analyst,Data,Germany,Senior,80000,105000,92000
+Data Analyst,Data,Netherlands,Entry,35000,48000,42000
+Data Analyst,Data,Netherlands,Mid,52000,72000,62000
+Data Analyst,Data,Netherlands,Senior,75000,100000,87000
+Data Analyst,Data,Switzerland,Entry,75000,95000,85000
+Data Analyst,Data,Switzerland,Mid,100000,125000,112000
+Data Analyst,Data,Switzerland,Senior,130000,165000,147000
+Data Analyst,Data,Saudi Arabia,Entry,15000,28000,21000
+Data Analyst,Data,Saudi Arabia,Mid,30000,55000,42000
+Data Analyst,Data,Saudi Arabia,Senior,60000,95000,77000
+Data Analyst,Data,UAE,Entry,18000,30000,24000
+Data Analyst,Data,UAE,Mid,35000,65000,50000
+Data Analyst,Data,UAE,Senior,75000,115000,92000
+Data Analyst,Data,Qatar,Entry,16000,28000,22000
+Data Analyst,Data,Qatar,Mid,32000,58000,45000
+Data Analyst,Data,Qatar,Senior,70000,105000,87000
+Data Analyst,Data,Egypt,Entry,2500,5500,4000
+Data Analyst,Data,Egypt,Mid,6000,11000,8500
+Data Analyst,Data,Egypt,Senior,14000,26000,19500
+Data Analyst,Data,Syria,Entry,1200,2500,1800
+Data Analyst,Data,Syria,Mid,2800,5200,4000
+Data Analyst,Data,Syria,Senior,6500,12000,9200
+Data Analyst,Data,Palestine,Entry,5000,9500,7200
+Data Analyst,Data,Palestine,Mid,10000,20000,15000
+Data Analyst,Data,Palestine,Senior,24000,45000,34000
+Data Analyst,Data,Jordan,Entry,6000,10500,8200
+Data Analyst,Data,Jordan,Mid,12000,22000,17000
+Data Analyst,Data,Jordan,Senior,26000,45000,35000
+Data Analyst,Data,Morocco,Entry,5000,9200,7200
+Data Analyst,Data,Morocco,Mid,10500,18500,14500
+Data Analyst,Data,Morocco,Senior,22000,38000,30000
+Data Analyst,Data,India,Entry,4000,8500,6200
+Data Analyst,Data,India,Mid,10500,21000,15700
+Data Analyst,Data,India,Senior,25000,48000,36000
+Data Analyst,Data,Pakistan,Entry,3000,6500,4700
+Data Analyst,Data,Pakistan,Mid,7500,15500,11500
+Data Analyst,Data,Pakistan,Senior,20000,35000,27000
+Data Analyst,Data,Singapore,Entry,42000,62000,52000
+Data Analyst,Data,Singapore,Mid,68000,95000,81000
+Data Analyst,Data,Singapore,Senior,100000,140000,120000
+Data Analyst,Data,Japan,Entry,35000,50000,42000
+Data Analyst,Data,Japan,Mid,55000,78000,66000
+Data Analyst,Data,Japan,Senior,80000,110000,95000
+Data Analyst,Data,Australia,Entry,48000,65000,56000
+Data Analyst,Data,Australia,Mid,72000,102000,87000
+Data Analyst,Data,Australia,Senior,110000,145000,127000
+Data Analyst,Data,Brazil,Entry,7000,13500,10200
+Data Analyst,Data,Brazil,Mid,16000,30000,23000
+Data Analyst,Data,Brazil,Senior,35000,55000,45000
+Data Analyst,Data,South Africa,Entry,11000,19000,15000
+Data Analyst,Data,South Africa,Mid,24000,42000,33000
+Data Analyst,Data,South Africa,Senior,50000,80000,65000
+Data Analyst,Data,Nigeria,Entry,4000,8500,6200
+Data Analyst,Data,Nigeria,Mid,10500,19500,15000
+Data Analyst,Data,Nigeria,Senior,25000,42000,33000
+3D Artist,Design/Creative,USA,Entry,45000,65000,55000
+3D Artist,Design/Creative,USA,Mid,70000,100000,85000
+3D Artist,Design/Creative,USA,Senior,110000,155000,132000
+3D Artist,Design/Creative,Canada,Entry,40000,58000,49000
+3D Artist,Design/Creative,Canada,Mid,62000,88000,75000
+3D Artist,Design/Creative,Canada,Senior,95000,130000,112000
+3D Artist,Design/Creative,UK,Entry,26000,40000,33000
+3D Artist,Design/Creative,UK,Mid,45000,65000,55000
+3D Artist,Design/Creative,UK,Senior,72000,105000,88000
+3D Artist,Design/Creative,Germany,Entry,35000,48000,41000
+3D Artist,Design/Creative,Germany,Mid,52000,75000,63000
+3D Artist,Design/Creative,Germany,Senior,80000,115000,97000
+3D Artist,Design/Creative,Netherlands,Entry,32000,45000,38000
+3D Artist,Design/Creative,Netherlands,Mid,48000,68000,58000
+3D Artist,Design/Creative,Netherlands,Senior,75000,105000,90000
+3D Artist,Design/Creative,Switzerland,Entry,70000,90000,80000
+3D Artist,Design/Creative,Switzerland,Mid,95000,125000,110000
+3D Artist,Design/Creative,Switzerland,Senior,135000,175000,155000
+3D Artist,Design/Creative,Saudi Arabia,Entry,12000,22000,17000
+3D Artist,Design/Creative,Saudi Arabia,Mid,28000,50000,39000
+3D Artist,Design/Creative,Saudi Arabia,Senior,55000,90000,72000
+3D Artist,Design/Creative,UAE,Entry,15000,28000,21500
+3D Artist,Design/Creative,UAE,Mid,35000,60000,47000
+3D Artist,Design/Creative,UAE,Senior,70000,110000,90000
+3D Artist,Design/Creative,Qatar,Entry,14000,25000,19500
+3D Artist,Design/Creative,Qatar,Mid,32000,55000,43000
+3D Artist,Design/Creative,Qatar,Senior,65000,105000,85000
+3D Artist,Design/Creative,Egypt,Entry,2000,4500,3200
+3D Artist,Design/Creative,Egypt,Mid,5000,10000,7500
+3D Artist,Design/Creative,Egypt,Senior,12000,22000,17000
+3D Artist,Design/Creative,Syria,Entry,1000,2200,1600
+3D Artist,Design/Creative,Syria,Mid,2500,5000,3700
+3D Artist,Design/Creative,Syria,Senior,6000,12000,9000
+3D Artist,Design/Creative,Palestine,Entry,4500,8500,6500
+3D Artist,Design/Creative,Palestine,Mid,9000,17000,13000
+3D Artist,Design/Creative,Palestine,Senior,20000,38000,29000
+3D Artist,Design/Creative,Jordan,Entry,5000,9000,7000
+3D Artist,Design/Creative,Jordan,Mid,10000,19000,14500
+3D Artist,Design/Creative,Jordan,Senior,22000,38000,30000
+3D Artist,Design/Creative,Morocco,Entry,4500,8500,6500
+3D Artist,Design/Creative,Morocco,Mid,9500,17000,13200
+3D Artist,Design/Creative,Morocco,Senior,20000,35000,27500
+3D Artist,Design/Creative,India,Entry,3500,7500,5500
+3D Artist,Design/Creative,India,Mid,9000,18000,13500
+3D Artist,Design/Creative,India,Senior,22000,42000,32000
+3D Artist,Design/Creative,Pakistan,Entry,2800,6000,4400
+3D Artist,Design/Creative,Pakistan,Mid,7500,14000,10700
+3D Artist,Design/Creative,Pakistan,Senior,18000,32000,25000
+3D Artist,Design/Creative,Singapore,Entry,40000,58000,49000
+3D Artist,Design/Creative,Singapore,Mid,65000,92000,78000
+3D Artist,Design/Creative,Singapore,Senior,100000,140000,120000
+3D Artist,Design/Creative,Japan,Entry,32000,48000,40000
+3D Artist,Design/Creative,Japan,Mid,52000,75000,63000
+3D Artist,Design/Creative,Japan,Senior,85000,120000,102000
+3D Artist,Design/Creative,Australia,Entry,42000,62000,52000
+3D Artist,Design/Creative,Australia,Mid,68000,95000,81000
+3D Artist,Design/Creative,Australia,Senior,105000,145000,125000
+3D Artist,Design/Creative,Brazil,Entry,6000,11500,8700
+3D Artist,Design/Creative,Brazil,Mid,14000,26000,20000
+3D Artist,Design/Creative,Brazil,Senior,32000,55000,43500
+3D Artist,Design/Creative,South Africa,Entry,9000,16000,12500
+3D Artist,Design/Creative,South Africa,Mid,20000,35000,27500
+3D Artist,Design/Creative,South Africa,Senior,42000,70000,56000
+3D Artist,Design/Creative,Nigeria,Entry,3500,7000,5250
+3D Artist,Design/Creative,Nigeria,Mid,9000,17000,13000
+3D Artist,Design/Creative,Nigeria,Senior,20000,35000,27500
+Site Reliability Engineer,Infrastructure,USA,Entry,90000,125000,107000
+Site Reliability Engineer,Infrastructure,USA,Mid,130000,170000,150000
+Site Reliability Engineer,Infrastructure,USA,Senior,170000,240000,205000
+Site Reliability Engineer,Infrastructure,Canada,Entry,75000,100000,87000
+Site Reliability Engineer,Infrastructure,Canada,Mid,105000,140000,122000
+Site Reliability Engineer,Infrastructure,Canada,Senior,145000,195000,170000
+Site Reliability Engineer,Infrastructure,UK,Entry,50000,70000,60000
+Site Reliability Engineer,Infrastructure,UK,Mid,75000,110000,92000
+Site Reliability Engineer,Infrastructure,UK,Senior,115000,160000,137000
+Site Reliability Engineer,Infrastructure,Germany,Entry,60000,80000,70000
+Site Reliability Engineer,Infrastructure,Germany,Mid,85000,115000,100000
+Site Reliability Engineer,Infrastructure,Germany,Senior,120000,165000,142000
+Site Reliability Engineer,Infrastructure,Netherlands,Entry,55000,75000,65000
+Site Reliability Engineer,Infrastructure,Netherlands,Mid,80000,110000,95000
+Site Reliability Engineer,Infrastructure,Netherlands,Senior,115000,155000,135000
+Site Reliability Engineer,Infrastructure,Switzerland,Entry,105000,135000,120000
+Site Reliability Engineer,Infrastructure,Switzerland,Mid,140000,180000,160000
+Site Reliability Engineer,Infrastructure,Switzerland,Senior,185000,240000,212000
+Site Reliability Engineer,Infrastructure,Saudi Arabia,Entry,28000,45000,36000
+Site Reliability Engineer,Infrastructure,Saudi Arabia,Mid,50000,85000,67000
+Site Reliability Engineer,Infrastructure,Saudi Arabia,Senior,95000,145000,120000
+Site Reliability Engineer,Infrastructure,UAE,Entry,35000,52000,43000
+Site Reliability Engineer,Infrastructure,UAE,Mid,65000,105000,85000
+Site Reliability Engineer,Infrastructure,UAE,Senior,115000,175000,145000
+Site Reliability Engineer,Infrastructure,Qatar,Entry,30000,48000,39000
+Site Reliability Engineer,Infrastructure,Qatar,Mid,60000,100000,80000
+Site Reliability Engineer,Infrastructure,Qatar,Senior,105000,165000,135000
+Site Reliability Engineer,Infrastructure,Egypt,Entry,5500,10000,7700
+Site Reliability Engineer,Infrastructure,Egypt,Mid,12000,22000,17000
+Site Reliability Engineer,Infrastructure,Egypt,Senior,25000,50000,37500
+Site Reliability Engineer,Infrastructure,Syria,Entry,3500,6500,5000
+Site Reliability Engineer,Infrastructure,Syria,Mid,7500,13500,10500
+Site Reliability Engineer,Infrastructure,Syria,Senior,15000,28000,21500
+Site Reliability Engineer,Infrastructure,Palestine,Entry,10000,18000,14000
+Site Reliability Engineer,Infrastructure,Palestine,Mid,22000,42000,32000
+Site Reliability Engineer,Infrastructure,Palestine,Senior,45000,85000,65000
+Site Reliability Engineer,Infrastructure,Jordan,Entry,11000,19000,15000
+Site Reliability Engineer,Infrastructure,Jordan,Mid,22000,40000,31000
+Site Reliability Engineer,Infrastructure,Jordan,Senior,45000,80000,62500
+Site Reliability Engineer,Infrastructure,Morocco,Entry,9000,16000,12500
+Site Reliability Engineer,Infrastructure,Morocco,Mid,18000,32000,25000
+Site Reliability Engineer,Infrastructure,Morocco,Senior,38000,65000,51500
+Site Reliability Engineer,Infrastructure,India,Entry,8000,16000,12000
+Site Reliability Engineer,Infrastructure,India,Mid,20000,42000,31000
+Site Reliability Engineer,Infrastructure,India,Senior,48000,85000,66500
+Site Reliability Engineer,Infrastructure,Pakistan,Entry,6000,12000,9000
+Site Reliability Engineer,Infrastructure,Pakistan,Mid,14000,28000,21000
+Site Reliability Engineer,Infrastructure,Pakistan,Senior,35000,65000,50000
+Site Reliability Engineer,Infrastructure,Singapore,Entry,70000,95000,82500
+Site Reliability Engineer,Infrastructure,Singapore,Mid,105000,150000,127500
+Site Reliability Engineer,Infrastructure,Singapore,Senior,160000,220000,190000
+Site Reliability Engineer,Infrastructure,Japan,Entry,60000,85000,72500
+Site Reliability Engineer,Infrastructure,Japan,Mid,90000,125000,107500
+Site Reliability Engineer,Infrastructure,Japan,Senior,135000,185000,160000
+Site Reliability Engineer,Infrastructure,Australia,Entry,75000,105000,90000
+Site Reliability Engineer,Infrastructure,Australia,Mid,115000,155000,135000
+Site Reliability Engineer,Infrastructure,Australia,Senior,170000,230000,200000
+Site Reliability Engineer,Infrastructure,Brazil,Entry,13000,24000,18500
+Site Reliability Engineer,Infrastructure,Brazil,Mid,28000,50000,39000
+Site Reliability Engineer,Infrastructure,Brazil,Senior,60000,100000,80000
+Site Reliability Engineer,Infrastructure,South Africa,Entry,18000,32000,25000
+Site Reliability Engineer,Infrastructure,South Africa,Mid,40000,70000,55000
+Site Reliability Engineer,Infrastructure,South Africa,Senior,85000,135000,110000
+Site Reliability Engineer,Infrastructure,Nigeria,Entry,8000,16000,12000
+Site Reliability Engineer,Infrastructure,Nigeria,Mid,20000,38000,29000
+Site Reliability Engineer,Infrastructure,Nigeria,Senior,45000,80000,62500
+ERP Consultant,Enterprise Systems,USA,Entry,70000,95000,82000
+ERP Consultant,Enterprise Systems,USA,Mid,100000,140000,120000
+ERP Consultant,Enterprise Systems,USA,Senior,145000,200000,170000
+ERP Consultant,Enterprise Systems,Canada,Entry,60000,80000,70000
+ERP Consultant,Enterprise Systems,Canada,Mid,85000,115000,100000
+ERP Consultant,Enterprise Systems,Canada,Senior,120000,165000,142000
+ERP Consultant,Enterprise Systems,UK,Entry,35000,50000,42000
+ERP Consultant,Enterprise Systems,UK,Mid,55000,85000,70000
+ERP Consultant,Enterprise Systems,UK,Senior,90000,135000,110000
+ERP Consultant,Enterprise Systems,Germany,Entry,45000,60000,52000
+ERP Consultant,Enterprise Systems,Germany,Mid,65000,95000,80000
+ERP Consultant,Enterprise Systems,Germany,Senior,100000,140000,120000
+ERP Consultant,Enterprise Systems,Netherlands,Entry,42000,58000,50000
+ERP Consultant,Enterprise Systems,Netherlands,Mid,62000,90000,76000
+ERP Consultant,Enterprise Systems,Netherlands,Senior,95000,130000,112000
+ERP Consultant,Enterprise Systems,Switzerland,Entry,90000,120000,105000
+ERP Consultant,Enterprise Systems,Switzerland,Mid,125000,160000,142000
+ERP Consultant,Enterprise Systems,Switzerland,Senior,170000,230000,200000
+ERP Consultant,Enterprise Systems,Saudi Arabia,Entry,22000,38000,30000
+ERP Consultant,Enterprise Systems,Saudi Arabia,Mid,45000,85000,65000
+ERP Consultant,Enterprise Systems,Saudi Arabia,Senior,90000,150000,120000
+ERP Consultant,Enterprise Systems,UAE,Entry,28000,45000,36000
+ERP Consultant,Enterprise Systems,UAE,Mid,55000,95000,75000
+ERP Consultant,Enterprise Systems,UAE,Senior,100000,170000,135000
+ERP Consultant,Enterprise Systems,Qatar,Entry,25000,42000,33000
+ERP Consultant,Enterprise Systems,Qatar,Mid,50000,90000,70000
+ERP Consultant,Enterprise Systems,Qatar,Senior,95000,160000,127000
+ERP Consultant,Enterprise Systems,Egypt,Entry,4500,9000,6700
+ERP Consultant,Enterprise Systems,Egypt,Mid,10000,20000,15000
+ERP Consultant,Enterprise Systems,Egypt,Senior,22000,45000,33500
+ERP Consultant,Enterprise Systems,Syria,Entry,2500,5000,3700
+ERP Consultant,Enterprise Systems,Syria,Mid,6000,11000,8500
+ERP Consultant,Enterprise Systems,Syria,Senior,12000,22000,17000
+ERP Consultant,Enterprise Systems,Palestine,Entry,8000,15000,11500
+ERP Consultant,Enterprise Systems,Palestine,Mid,18000,35000,26500
+ERP Consultant,Enterprise Systems,Palestine,Senior,40000,75000,57500
+ERP Consultant,Enterprise Systems,Jordan,Entry,9000,16000,12500
+ERP Consultant,Enterprise Systems,Jordan,Mid,19000,36000,27500
+ERP Consultant,Enterprise Systems,Jordan,Senior,40000,70000,55000
+ERP Consultant,Enterprise Systems,Morocco,Entry,7000,13000,10000
+ERP Consultant,Enterprise Systems,Morocco,Mid,15000,28000,21500
+ERP Consultant,Enterprise Systems,Morocco,Senior,35000,60000,47500
+ERP Consultant,Enterprise Systems,India,Entry,6500,13000,9700
+ERP Consultant,Enterprise Systems,India,Mid,16000,32000,24000
+ERP Consultant,Enterprise Systems,India,Senior,40000,75000,57500
+ERP Consultant,Enterprise Systems,Pakistan,Entry,5000,11000,8000
+ERP Consultant,Enterprise Systems,Pakistan,Mid,12000,26000,19000
+ERP Consultant,Enterprise Systems,Pakistan,Senior,32000,60000,46000
+ERP Consultant,Enterprise Systems,Singapore,Entry,55000,80000,67500
+ERP Consultant,Enterprise Systems,Singapore,Mid,85000,125000,105000
+ERP Consultant,Enterprise Systems,Singapore,Senior,135000,190000,162500
+ERP Consultant,Enterprise Systems,Japan,Entry,48000,70000,59000
+ERP Consultant,Enterprise Systems,Japan,Mid,75000,110000,92500
+ERP Consultant,Enterprise Systems,Japan,Senior,115000,165000,140000
+ERP Consultant,Enterprise Systems,Australia,Entry,65000,90000,77500
+ERP Consultant,Enterprise Systems,Australia,Mid,100000,145000,122500
+ERP Consultant,Enterprise Systems,Australia,Senior,150000,200000,175000
+ERP Consultant,Enterprise Systems,Brazil,Entry,12000,22000,17000
+ERP Consultant,Enterprise Systems,Brazil,Mid,25000,48000,36500
+ERP Consultant,Enterprise Systems,Brazil,Senior,55000,95000,75000
+ERP Consultant,Enterprise Systems,South Africa,Entry,18000,32000,25000
+ERP Consultant,Enterprise Systems,South Africa,Mid,40000,70000,55000
+ERP Consultant,Enterprise Systems,South Africa,Senior,85000,135000,110000
+ERP Consultant,Enterprise Systems,Nigeria,Entry,7500,15000,11250
+ERP Consultant,Enterprise Systems,Nigeria,Mid,18000,35000,26500
+ERP Consultant,Enterprise Systems,Nigeria,Senior,40000,75000,57500
+Product Marketing Manager,Marketing/Product,USA,Entry,65000,92000,78500
+Product Marketing Manager,Marketing/Product,USA,Mid,100000,145000,122500
+Product Marketing Manager,Marketing/Product,USA,Senior,150000,210000,180000
+Product Marketing Manager,Marketing/Product,Canada,Entry,55000,75000,65000
+Product Marketing Manager,Marketing/Product,Canada,Mid,85000,115000,100000
+Product Marketing Manager,Marketing/Product,Canada,Senior,120000,165000,142500
+Product Marketing Manager,Marketing/Product,UK,Entry,35000,50000,42500
+Product Marketing Manager,Marketing/Product,UK,Mid,55000,85000,70000
+Product Marketing Manager,Marketing/Product,UK,Senior,90000,135000,112500
+Product Marketing Manager,Marketing/Product,Germany,Entry,45000,60000,52500
+Product Marketing Manager,Marketing/Product,Germany,Mid,68000,95000,81500
+Product Marketing Manager,Marketing/Product,Germany,Senior,105000,150000,127500
+Product Marketing Manager,Marketing/Product,Netherlands,Entry,40000,55000,47500
+Product Marketing Manager,Marketing/Product,Netherlands,Mid,62000,88000,75000
+Product Marketing Manager,Marketing/Product,Netherlands,Senior,95000,135000,115000
+Product Marketing Manager,Marketing/Product,Switzerland,Entry,90000,120000,105000
+Product Marketing Manager,Marketing/Product,Switzerland,Mid,130000,165000,147500
+Product Marketing Manager,Marketing/Product,Switzerland,Senior,180000,235000,207500
+Product Marketing Manager,Marketing/Product,Saudi Arabia,Entry,18000,32000,25000
+Product Marketing Manager,Marketing/Product,Saudi Arabia,Mid,38000,70000,54000
+Product Marketing Manager,Marketing/Product,Saudi Arabia,Senior,85000,145000,115000
+Product Marketing Manager,Marketing/Product,UAE,Entry,24000,38000,31000
+Product Marketing Manager,Marketing/Product,UAE,Mid,48000,85000,66500
+Product Marketing Manager,Marketing/Product,UAE,Senior,95000,155000,125000
+Product Marketing Manager,Marketing/Product,Qatar,Entry,22000,35000,28500
+Product Marketing Manager,Marketing/Product,Qatar,Mid,45000,78000,61500
+Product Marketing Manager,Marketing/Product,Qatar,Senior,90000,145000,117500
+Product Marketing Manager,Marketing/Product,Egypt,Entry,3500,7500,5500
+Product Marketing Manager,Marketing/Product,Egypt,Mid,9000,17000,13000
+Product Marketing Manager,Marketing/Product,Egypt,Senior,20000,42000,31000
+Product Marketing Manager,Marketing/Product,Syria,Entry,2000,4500,3250
+Product Marketing Manager,Marketing/Product,Syria,Mid,5000,9500,7250
+Product Marketing Manager,Marketing/Product,Syria,Senior,11000,22000,16500
+Product Marketing Manager,Marketing/Product,Palestine,Entry,7000,13500,10250
+Product Marketing Manager,Marketing/Product,Palestine,Mid,15500,32000,23750
+Product Marketing Manager,Marketing/Product,Palestine,Senior,35000,68000,51500
+Product Marketing Manager,Marketing/Product,Jordan,Entry,8500,15000,11750
+Product Marketing Manager,Marketing/Product,Jordan,Mid,17000,32000,24500
+Product Marketing Manager,Marketing/Product,Jordan,Senior,38000,68000,53000
+Product Marketing Manager,Marketing/Product,Morocco,Entry,6500,12500,9500
+Product Marketing Manager,Marketing/Product,Morocco,Mid,14500,28000,21250
+Product Marketing Manager,Marketing/Product,Morocco,Senior,32000,58000,45000
+Product Marketing Manager,Marketing/Product,India,Entry,6000,12500,9250
+Product Marketing Manager,Marketing/Product,India,Mid,15500,32000,23750
+Product Marketing Manager,Marketing/Product,India,Senior,38000,75000,56500
+Product Marketing Manager,Marketing/Product,Pakistan,Entry,5000,10500,7750
+Product Marketing Manager,Marketing/Product,Pakistan,Mid,12000,26000,19000
+Product Marketing Manager,Marketing/Product,Pakistan,Senior,32000,58000,45000
+Product Marketing Manager,Marketing/Product,Singapore,Entry,55000,82000,68500
+Product Marketing Manager,Marketing/Product,Singapore,Mid,85000,125000,105000
+Product Marketing Manager,Marketing/Product,Singapore,Senior,140000,200000,170000
+Product Marketing Manager,Marketing/Product,Japan,Entry,45000,65000,55000
+Product Marketing Manager,Marketing/Product,Japan,Mid,75000,110000,92500
+Product Marketing Manager,Marketing/Product,Japan,Senior,120000,170000,145000
+Product Marketing Manager,Marketing/Product,Australia,Entry,62000,88000,75000
+Product Marketing Manager,Marketing/Product,Australia,Mid,95000,135000,115000
+Product Marketing Manager,Marketing/Product,Australia,Senior,150000,210000,180000
+Product Marketing Manager,Marketing/Product,Brazil,Entry,11000,22000,16500
+Product Marketing Manager,Marketing/Product,Brazil,Mid,25000,48000,36500
+Product Marketing Manager,Marketing/Product,Brazil,Senior,55000,95000,75000
+Product Marketing Manager,Marketing/Product,South Africa,Entry,16000,30000,23000
+Product Marketing Manager,Marketing/Product,South Africa,Mid,35000,65000,50000
+Product Marketing Manager,Marketing/Product,South Africa,Senior,75000,120000,97500
+Product Marketing Manager,Marketing/Product,Nigeria,Entry,7000,15000,11000
+Product Marketing Manager,Marketing/Product,Nigeria,Mid,18000,35000,26500
+Product Marketing Manager,Marketing/Product,Nigeria,Senior,42000,75000,58500
+Sales Engineer,Sales/Engineering,USA,Entry,75000,105000,90000
+Sales Engineer,Sales/Engineering,USA,Mid,110000,155000,132500
+Sales Engineer,Sales/Engineering,USA,Senior,160000,230000,195000
+Sales Engineer,Sales/Engineering,Canada,Entry,65000,90000,77500
+Sales Engineer,Sales/Engineering,Canada,Mid,95000,130000,112500
+Sales Engineer,Sales/Engineering,Canada,Senior,135000,185000,160000
+Sales Engineer,Sales/Engineering,UK,Entry,40000,60000,50000
+Sales Engineer,Sales/Engineering,UK,Mid,65000,95000,80000
+Sales Engineer,Sales/Engineering,UK,Senior,105000,155000,130000
+Sales Engineer,Sales/Engineering,Germany,Entry,50000,75000,62500
+Sales Engineer,Sales/Engineering,Germany,Mid,80000,115000,97500
+Sales Engineer,Sales/Engineering,Germany,Senior,125000,175000,150000
+Sales Engineer,Sales/Engineering,Netherlands,Entry,45000,65000,55000
+Sales Engineer,Sales/Engineering,Netherlands,Mid,72000,100000,86000
+Sales Engineer,Sales/Engineering,Netherlands,Senior,110000,155000,132500
+Sales Engineer,Sales/Engineering,Switzerland,Entry,95000,130000,112500
+Sales Engineer,Sales/Engineering,Switzerland,Mid,135000,175000,155000
+Sales Engineer,Sales/Engineering,Switzerland,Senior,190000,250000,220000
+Sales Engineer,Sales/Engineering,Saudi Arabia,Entry,20000,35000,27500
+Sales Engineer,Sales/Engineering,Saudi Arabia,Mid,45000,80000,62500
+Sales Engineer,Sales/Engineering,Saudi Arabia,Senior,95000,155000,125000
+Sales Engineer,Sales/Engineering,UAE,Entry,28000,45000,36500
+Sales Engineer,Sales/Engineering,UAE,Mid,55000,95000,75000
+Sales Engineer,Sales/Engineering,UAE,Senior,110000,180000,145000
+Sales Engineer,Sales/Engineering,Qatar,Entry,25000,42000,33500
+Sales Engineer,Sales/Engineering,Qatar,Mid,50000,90000,70000
+Sales Engineer,Sales/Engineering,Qatar,Senior,100000,165000,132500
+Sales Engineer,Sales/Engineering,Egypt,Entry,4500,9000,6750
+Sales Engineer,Sales/Engineering,Egypt,Mid,12000,22000,17000
+Sales Engineer,Sales/Engineering,Egypt,Senior,25000,55000,40000
+Sales Engineer,Sales/Engineering,Syria,Entry,2500,5500,4000
+Sales Engineer,Sales/Engineering,Syria,Mid,6500,12000,9250
+Sales Engineer,Sales/Engineering,Syria,Senior,14000,28000,21000
+Sales Engineer,Sales/Engineering,Palestine,Entry,8500,16000,12250
+Sales Engineer,Sales/Engineering,Palestine,Mid,19000,38000,28500
+Sales Engineer,Sales/Engineering,Palestine,Senior,42000,80000,61000
+Sales Engineer,Sales/Engineering,Jordan,Entry,9500,17000,13250
+Sales Engineer,Sales/Engineering,Jordan,Mid,20000,38000,29000
+Sales Engineer,Sales/Engineering,Jordan,Senior,45000,80000,62500
+Sales Engineer,Sales/Engineering,Morocco,Entry,8000,15000,11500
+Sales Engineer,Sales/Engineering,Morocco,Mid,17000,32000,24500
+Sales Engineer,Sales/Engineering,Morocco,Senior,38000,65000,51500
+Sales Engineer,Sales/Engineering,India,Entry,7500,15000,11250
+Sales Engineer,Sales/Engineering,India,Mid,18000,38000,28000
+Sales Engineer,Sales/Engineering,India,Senior,45000,85000,65000
+Sales Engineer,Sales/Engineering,Pakistan,Entry,5500,12000,8750
+Sales Engineer,Sales/Engineering,Pakistan,Mid,14000,30000,22000
+Sales Engineer,Sales/Engineering,Pakistan,Senior,35000,65000,50000
+Sales Engineer,Sales/Engineering,Singapore,Entry,65000,95000,80000
+Sales Engineer,Sales/Engineering,Singapore,Mid,100000,145000,122500
+Sales Engineer,Sales/Engineering,Singapore,Senior,160000,220000,190000
+Sales Engineer,Sales/Engineering,Japan,Entry,55000,80000,67500
+Sales Engineer,Sales/Engineering,Japan,Mid,85000,125000,105000
+Sales Engineer,Sales/Engineering,Japan,Senior,135000,185000,160000
+Sales Engineer,Sales/Engineering,Australia,Entry,70000,100000,85000
+Sales Engineer,Sales/Engineering,Australia,Mid,110000,155000,132500
+Sales Engineer,Sales/Engineering,Australia,Senior,165000,225000,195000
+Sales Engineer,Sales/Engineering,Brazil,Entry,12000,24000,18000
+Sales Engineer,Sales/Engineering,Brazil,Mid,28000,55000,41500
+Sales Engineer,Sales/Engineering,Brazil,Senior,60000,105000,82500
+Sales Engineer,Sales/Engineering,South Africa,Entry,18000,35000,26500
+Sales Engineer,Sales/Engineering,South Africa,Mid,42000,75000,58500
+Sales Engineer,Sales/Engineering,South Africa,Senior,90000,145000,117500
+Sales Engineer,Sales/Engineering,Nigeria,Entry,8000,16000,12000
+Sales Engineer,Sales/Engineering,Nigeria,Mid,20000,40000,30000
+Sales Engineer,Sales/Engineering,Nigeria,Senior,45000,85000,65000
+Cloud Engineer,Infrastructure,USA,Entry,80000,110000,95000
+Cloud Engineer,Infrastructure,USA,Mid,115000,150000,132500
+Cloud Engineer,Infrastructure,USA,Senior,155000,200000,177500
+Cloud Engineer,Infrastructure,Canada,Entry,65000,85000,75000
+Cloud Engineer,Infrastructure,Canada,Mid,90000,120000,105000
+Cloud Engineer,Infrastructure,Canada,Senior,130000,170000,150000
+Cloud Engineer,Infrastructure,UK,Entry,40000,55000,47500
+Cloud Engineer,Infrastructure,UK,Mid,60000,85000,72500
+Cloud Engineer,Infrastructure,UK,Senior,95000,135000,115000
+Cloud Engineer,Infrastructure,Germany,Entry,50000,65000,57500
+Cloud Engineer,Infrastructure,Germany,Mid,75000,100000,87500
+Cloud Engineer,Infrastructure,Germany,Senior,110000,145000,127500
+Cloud Engineer,Infrastructure,Netherlands,Entry,45000,60000,52500
+Cloud Engineer,Infrastructure,Netherlands,Mid,70000,95000,82500
+Cloud Engineer,Infrastructure,Netherlands,Senior,100000,135000,117500
+Cloud Engineer,Infrastructure,Switzerland,Entry,95000,120000,107500
+Cloud Engineer,Infrastructure,Switzerland,Mid,130000,160000,145000
+Cloud Engineer,Infrastructure,Switzerland,Senior,170000,220000,195000
+Cloud Engineer,Infrastructure,Saudi Arabia,Entry,22000,35000,28500
+Cloud Engineer,Infrastructure,Saudi Arabia,Mid,45000,75000,60000
+Cloud Engineer,Infrastructure,Saudi Arabia,Senior,85000,135000,110000
+Cloud Engineer,Infrastructure,UAE,Entry,28000,42000,35000
+Cloud Engineer,Infrastructure,UAE,Mid,55000,90000,72500
+Cloud Engineer,Infrastructure,UAE,Senior,100000,160000,130000
+Cloud Engineer,Infrastructure,Qatar,Entry,25000,38000,31500
+Cloud Engineer,Infrastructure,Qatar,Mid,50000,85000,67500
+Cloud Engineer,Infrastructure,Qatar,Senior,95000,145000,120000
+Cloud Engineer,Infrastructure,Egypt,Entry,5000,9500,7250
+Cloud Engineer,Infrastructure,Egypt,Mid,12000,22000,17000
+Cloud Engineer,Infrastructure,Egypt,Senior,25000,50000,37500
+Cloud Engineer,Infrastructure,Syria,Entry,2500,5000,3750
+Cloud Engineer,Infrastructure,Syria,Mid,6500,11500,9000
+Cloud Engineer,Infrastructure,Syria,Senior,13000,24000,18500
+Cloud Engineer,Infrastructure,Palestine,Entry,8500,15000,11750
+Cloud Engineer,Infrastructure,Palestine,Mid,20000,38000,29000
+Cloud Engineer,Infrastructure,Palestine,Senior,42000,80000,61000
+Cloud Engineer,Infrastructure,Jordan,Entry,9500,16000,12750
+Cloud Engineer,Infrastructure,Jordan,Mid,20000,35000,27500
+Cloud Engineer,Infrastructure,Jordan,Senior,42000,75000,58500
+Cloud Engineer,Infrastructure,Morocco,Entry,8000,14000,11000
+Cloud Engineer,Infrastructure,Morocco,Mid,17000,30000,23500
+Cloud Engineer,Infrastructure,Morocco,Senior,38000,65000,51500
+Cloud Engineer,Infrastructure,India,Entry,7000,14000,10500
+Cloud Engineer,Infrastructure,India,Mid,17000,32000,24500
+Cloud Engineer,Infrastructure,India,Senior,40000,75000,57500
+Cloud Engineer,Infrastructure,Pakistan,Entry,5500,11000,8250
+Cloud Engineer,Infrastructure,Pakistan,Mid,13000,25000,19000
+Cloud Engineer,Infrastructure,Pakistan,Senior,32000,58000,45000
+Cloud Engineer,Infrastructure,Singapore,Entry,60000,85000,72500
+Cloud Engineer,Infrastructure,Singapore,Mid,90000,125000,107500
+Cloud Engineer,Infrastructure,Singapore,Senior,135000,185000,160000
+Cloud Engineer,Infrastructure,Japan,Entry,50000,70000,60000
+Cloud Engineer,Infrastructure,Japan,Mid,75000,105000,90000
+Cloud Engineer,Infrastructure,Japan,Senior,115000,155000,135000
+Cloud Engineer,Infrastructure,Australia,Entry,65000,90000,77500
+Cloud Engineer,Infrastructure,Australia,Mid,100000,140000,120000
+Cloud Engineer,Infrastructure,Australia,Senior,145000,195000,170000
+Cloud Engineer,Infrastructure,Brazil,Entry,11000,20000,15500
+Cloud Engineer,Infrastructure,Brazil,Mid,24000,42000,33000
+Cloud Engineer,Infrastructure,Brazil,Senior,50000,85000,67500
+Cloud Engineer,Infrastructure,South Africa,Entry,16000,28000,22000
+Cloud Engineer,Infrastructure,South Africa,Mid,35000,62000,48500
+Cloud Engineer,Infrastructure,South Africa,Senior,75000,115000,95000
+Cloud Engineer,Infrastructure,Nigeria,Entry,7500,14000,10750
+Cloud Engineer,Infrastructure,Nigeria,Mid,18000,32000,25000
+Cloud Engineer,Infrastructure,Nigeria,Senior,42000,72000,57000
+IT Manager,Management,USA,Entry,90000,125000,107500
+IT Manager,Management,USA,Mid,135000,185000,160000
+IT Manager,Management,USA,Senior,180000,260000,220000
+IT Manager,Management,Canada,Entry,75000,105000,90000
+IT Manager,Management,Canada,Mid,110000,150000,130000
+IT Manager,Management,Canada,Senior,150000,210000,180000
+IT Manager,Management,UK,Entry,50000,75000,62500
+IT Manager,Management,UK,Mid,85000,120000,102500
+IT Manager,Management,UK,Senior,130000,180000,155000
+IT Manager,Management,Germany,Entry,60000,85000,72500
+IT Manager,Management,Germany,Mid,95000,130000,112500
+IT Manager,Management,Germany,Senior,140000,190000,165000
+IT Manager,Management,Netherlands,Entry,55000,80000,67500
+IT Manager,Management,Netherlands,Mid,90000,125000,107500
+IT Manager,Management,Netherlands,Senior,130000,175000,152500
+IT Manager,Management,Switzerland,Entry,110000,145000,127500
+IT Manager,Management,Switzerland,Mid,150000,200000,175000
+IT Manager,Management,Switzerland,Senior,200000,270000,235000
+IT Manager,Management,Saudi Arabia,Entry,28000,45000,36500
+IT Manager,Management,Saudi Arabia,Mid,60000,105000,82500
+IT Manager,Management,Saudi Arabia,Senior,120000,190000,155000
+IT Manager,Management,UAE,Entry,35000,55000,45000
+IT Manager,Management,UAE,Mid,75000,130000,102500
+IT Manager,Management,UAE,Senior,140000,220000,180000
+IT Manager,Management,Qatar,Entry,32000,52000,42000
+IT Manager,Management,Qatar,Mid,70000,120000,95000
+IT Manager,Management,Qatar,Senior,130000,200000,165000
+IT Manager,Management,Egypt,Entry,6500,12000,9250
+IT Manager,Management,Egypt,Mid,16000,32000,24000
+IT Manager,Management,Egypt,Senior,35000,75000,55000
+IT Manager,Management,Syria,Entry,3500,7500,5500
+IT Manager,Management,Syria,Mid,9000,18000,13500
+IT Manager,Management,Syria,Senior,22000,42000,32000
+IT Manager,Management,Palestine,Entry,12000,22000,17000
+IT Manager,Management,Palestine,Mid,28000,55000,41500
+IT Manager,Management,Palestine,Senior,65000,120000,92500
+IT Manager,Management,Jordan,Entry,13000,24000,18500
+IT Manager,Management,Jordan,Mid,30000,58000,44000
+IT Manager,Management,Jordan,Senior,70000,125000,97500
+IT Manager,Management,Morocco,Entry,11000,21000,16000
+IT Manager,Management,Morocco,Mid,25000,48000,36500
+IT Manager,Management,Morocco,Senior,55000,100000,77500
+IT Manager,Management,India,Entry,10000,20000,15000
+IT Manager,Management,India,Mid,28000,55000,41500
+IT Manager,Management,India,Senior,65000,125000,95000
+IT Manager,Management,Pakistan,Entry,8500,18000,13250
+IT Manager,Management,Pakistan,Mid,22000,42000,32000
+IT Manager,Management,Pakistan,Senior,55000,100000,77500
+IT Manager,Management,Singapore,Entry,85000,120000,102500
+IT Manager,Management,Singapore,Mid,130000,180000,155000
+IT Manager,Management,Singapore,Senior,190000,260000,225000
+IT Manager,Management,Japan,Entry,70000,100000,85000
+IT Manager,Management,Japan,Mid,110000,150000,130000
+IT Manager,Management,Japan,Senior,160000,220000,190000
+IT Manager,Management,Australia,Entry,90000,125000,107500
+IT Manager,Management,Australia,Mid,140000,190000,165000
+IT Manager,Management,Australia,Senior,200000,280000,240000
+IT Manager,Management,Brazil,Entry,15000,30000,22500
+IT Manager,Management,Brazil,Mid,38000,70000,54000
+IT Manager,Management,Brazil,Senior,85000,150000,117500
+IT Manager,Management,South Africa,Entry,22000,40000,31000
+IT Manager,Management,South Africa,Mid,50000,90000,70000
+IT Manager,Management,South Africa,Senior,105000,170000,137500
+IT Manager,Management,Nigeria,Entry,11000,22000,16500
+IT Manager,Management,Nigeria,Mid,28000,55000,41500
+IT Manager,Management,Nigeria,Senior,65000,115000,90000
+Business Development Representative,Sales/Marketing,USA,Entry,50000,75000,62500
+Business Development Representative,Sales/Marketing,USA,Mid,80000,115000,97500
+Business Development Representative,Sales/Marketing,USA,Senior,120000,170000,145000
+Business Development Representative,Sales/Marketing,Canada,Entry,45000,65000,55000
+Business Development Representative,Sales/Marketing,Canada,Mid,70000,95000,82500
+Business Development Representative,Sales/Marketing,Canada,Senior,105000,145000,125000
+Business Development Representative,Sales/Marketing,UK,Entry,30000,45000,37500
+Business Development Representative,Sales/Marketing,UK,Mid,50000,75000,62500
+Business Development Representative,Sales/Marketing,UK,Senior,85000,120000,102500
+Business Development Representative,Sales/Marketing,Germany,Entry,40000,55000,47500
+Business Development Representative,Sales/Marketing,Germany,Mid,60000,85000,72500
+Business Development Representative,Sales/Marketing,Germany,Senior,95000,130000,112500
+Business Development Representative,Sales/Marketing,Netherlands,Entry,38000,50000,44000
+Business Development Representative,Sales/Marketing,Netherlands,Mid,58000,80000,69000
+Business Development Representative,Sales/Marketing,Netherlands,Senior,90000,120000,105000
+Business Development Representative,Sales/Marketing,Switzerland,Entry,85000,110000,97500
+Business Development Representative,Sales/Marketing,Switzerland,Mid,120000,150000,135000
+Business Development Representative,Sales/Marketing,Switzerland,Senior,160000,200000,180000
+Business Development Representative,Sales/Marketing,Saudi Arabia,Entry,12000,22000,17000
+Business Development Representative,Sales/Marketing,Saudi Arabia,Mid,28000,52000,40000
+Business Development Representative,Sales/Marketing,Saudi Arabia,Senior,60000,100000,80000
+Business Development Representative,Sales/Marketing,UAE,Entry,15000,28000,21500
+Business Development Representative,Sales/Marketing,UAE,Mid,35000,65000,50000
+Business Development Representative,Sales/Marketing,UAE,Senior,75000,120000,97500
+Business Development Representative,Sales/Marketing,Qatar,Entry,14000,25000,19500
+Business Development Representative,Sales/Marketing,Qatar,Mid,32000,60000,46000
+Business Development Representative,Sales/Marketing,Qatar,Senior,70000,115000,92500
+Business Development Representative,Sales/Marketing,Egypt,Entry,3000,6500,4750
+Business Development Representative,Sales/Marketing,Egypt,Mid,8000,15000,11500
+Business Development Representative,Sales/Marketing,Egypt,Senior,18000,35000,26500
+Business Development Representative,Sales/Marketing,Syria,Entry,1500,3500,2500
+Business Development Representative,Sales/Marketing,Syria,Mid,4000,8500,6250
+Business Development Representative,Sales/Marketing,Syria,Senior,10000,20000,15000
+Business Development Representative,Sales/Marketing,Palestine,Entry,5500,10000,7750
+Business Development Representative,Sales/Marketing,Palestine,Mid,12000,24000,18000
+Business Development Representative,Sales/Marketing,Palestine,Senior,28000,55000,41500
+Business Development Representative,Sales/Marketing,Jordan,Entry,6500,11500,9000
+Business Development Representative,Sales/Marketing,Jordan,Mid,13500,26000,19750
+Business Development Representative,Sales/Marketing,Jordan,Senior,32000,58000,45000
+Business Development Representative,Sales/Marketing,Morocco,Entry,5500,10500,8000
+Business Development Representative,Sales/Marketing,Morocco,Mid,12000,22000,17000
+Business Development Representative,Sales/Marketing,Morocco,Senior,26000,48000,37000
+Business Development Representative,Sales/Marketing,India,Entry,5000,10500,7750
+Business Development Representative,Sales/Marketing,India,Mid,12000,25000,18500
+Business Development Representative,Sales/Marketing,India,Senior,30000,58000,44000
+Business Development Representative,Sales/Marketing,Pakistan,Entry,4000,8500,6250
+Business Development Representative,Sales/Marketing,Pakistan,Mid,9500,18000,13750
+Business Development Representative,Sales/Marketing,Pakistan,Senior,24000,45000,34500
+Business Development Representative,Sales/Marketing,Singapore,Entry,48000,68000,58000
+Business Development Representative,Sales/Marketing,Singapore,Mid,75000,105000,90000
+Business Development Representative,Sales/Marketing,Singapore,Senior,115000,160000,137500
+Business Development Representative,Sales/Marketing,Japan,Entry,38000,55000,46500
+Business Development Representative,Sales/Marketing,Japan,Mid,62000,90000,76000
+Business Development Representative,Sales/Marketing,Japan,Senior,100000,140000,120000
+Business Development Representative,Sales/Marketing,Australia,Entry,52000,75000,63500
+Business Development Representative,Sales/Marketing,Australia,Mid,85000,120000,102500
+Business Development Representative,Sales/Marketing,Australia,Senior,130000,180000,155000
+Business Development Representative,Sales/Marketing,Brazil,Entry,8000,16000,12000
+Business Development Representative,Sales/Marketing,Brazil,Mid,18000,35000,26500
+Business Development Representative,Sales/Marketing,Brazil,Senior,42000,75000,58500
+Business Development Representative,Sales/Marketing,South Africa,Entry,13000,24000,18500
+Business Development Representative,Sales/Marketing,South Africa,Mid,28000,52000,40000
+Business Development Representative,Sales/Marketing,South Africa,Senior,65000,110000,87500
+Business Development Representative,Sales/Marketing,Nigeria,Entry,5000,11000,8000
+Business Development Representative,Sales/Marketing,Nigeria,Mid,13000,25000,19000
+Business Development Representative,Sales/Marketing,Nigeria,Senior,30000,55000,42500
