@@ -14,6 +14,7 @@ const companyRoutes = require('./routes/companyRoutes'); // 👈 استدعاء 
 const adminRoutes = require('./routes/adminRoutes'); // تأكد من وجود هذا السطر
 const jobRoutes = require('./routes/jobRoutes');
 const network = require('./routes/connectionRoutes');
+const salaryRoutes = require('./routes/salaryRoutes');
 dotenv.config();
 
 // الاتصال بقاعدة البيانات
@@ -35,6 +36,8 @@ app.use('/api/companies', companyRoutes); // 👈 ربط المسار
 app.use('/api/admin', adminRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/network', network);
+app.use('/api/salaries', salaryRoutes);
+
 // تسجيل الطلبات في موجه الأوامر أثناء التطوير
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
