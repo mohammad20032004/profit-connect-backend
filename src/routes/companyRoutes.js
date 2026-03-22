@@ -4,7 +4,9 @@ const router = express.Router();
 const { 
   createCompany, 
   getCompanies, 
-  getCompanyById 
+  getCompanyById,
+  toggleFollowCompany, // 👈 استدعاء دالة المتابعة
+  addCompanyAdmin      // 👈 استدعاء دالة إضافة المدير
 } = require('../controllers/companyController');
 
 const { protect } = require('../middleware/authMiddleware');
@@ -19,5 +21,6 @@ router.route('/')
 
 router.route('/:id')
   .get(getCompanyById);
-
+router.post('/:id/follow', toggleFollowCompany);
+router.post('/:id/admins', addCompanyAdmin);
 module.exports = router;

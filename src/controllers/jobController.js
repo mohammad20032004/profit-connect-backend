@@ -1,0 +1,243 @@
+const Job = require('../models/Job');
+const Company = require('../models/Company');
+const JobApplication = require('../models/Job');
+
+// ==========================================
+// @desc    نشر وظيفة جديدة
+// @route   POST /api/jobs
+// @access  Private (يجب أن يكون المستخدم مديراً في الشركة)
+// ==========================================
+exports.createJob = async (req, res) => {
+  try {
+    const { companyId } = req.body;
+
+    // 1. التأكد من أن الشركة موجودة ومعتمدة
+    const company = await Company.findById(companyId);
+    if (!company || company.status !== 'Approved') {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'يجب اختيار شركة معتمدة لنشر وظيفة' 
+      });
+    }
+
+    // 2. التأكد من أن الشخص الذي ينشر الوظيفة هو أدمن (مدير) في هذه الشركة
+    if (!company.admins.includes(req.user._id)) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'ليس لديك صلاحية النشر باسم هذه الشركة' 
+      });
+    }
+
+    // 3. إنشاء الوظيفة
+    const job = await Job.create({
+      ...req.body,
+      company: companyId,
+      postedBy: req.user._id
+    });
+
+    res.status(201).json({ success: true, data: job });
+  } catch (error) {
+    console.error('Create Job Error:', error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// ==========================================
+// @desc    جلب جميع الوظائف مع فلاتر البحث
+// @route   GET /api/jobs
+// @access  Public (متاح للجميع)
+// ==========================================
+exports.getJobs = async (req, res) => {
+  try {
+    // بناء نظام فلاتر للبحث المتقدم
+    const { type, workPlace, workLevel } = req.query;
+    
+    // افتراضياً نجلب الوظائف المفتوحة فقط
+    let query = { status: 'Open' };
+
+    // إضافة الفلاتر إذا تم إرسالها في الرابط
+    if (type) query.type = type;
+    if (workPlace) query.workPlace = workPlace;
+    if (workLevel) query.workLevel = workLevel;
+
+    // جلب الوظائف وترتيبها من الأحدث للأقدم
+    const jobs = await Job.find(query)
+      .populate('company', 'name logo location') // جلب بيانات الشركة الأساسية مع الوظيفة
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ 
+      success: true, 
+      count: jobs.length, 
+      data: jobs 
+    });
+  } catch (error) {
+    console.error('Get Jobs Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب الوظائف' });
+  }
+};
+
+// ==========================================
+// @desc    التقديم على وظيفة
+// @route   POST /api/jobs/:id/apply
+// @access  Private (يحتاج تسجيل دخول)
+// ==========================================
+exports.applyForJob = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const { resumeLink, coverLetter } = req.body;
+
+    // 1. التأكد من أن الوظيفة موجودة ومتاحة للتقديم
+    const job = await Job.findById(jobId);
+    
+    if (!job) {
+      return res.status(404).json({ success: false, message: 'الوظيفة غير موجودة' });
+    }
+    
+    if (job.status !== 'Open') {
+      return res.status(400).json({ success: false, message: 'عذراً، تم إغلاق باب التقديم على هذه الوظيفة' });
+    }
+
+    // 2. التحقق مما إذا كان المستخدم قد قدم على هذه الوظيفة بالفعل
+    const existingApplication = await JobApplication.findOne({ 
+      job: jobId, 
+      applicant: req.user._id 
+    });
+
+    if (existingApplication) {
+      return res.status(400).json({ success: false, message: 'لقد قمت بالتقديم على هذه الوظيفة مسبقاً' });
+    }
+
+    // 3. إنشاء طلب التوظيف
+    const application = await JobApplication.create({
+      job: jobId,
+      applicant: req.user._id,
+      resumeLink,
+      coverLetter
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'تم إرسال طلب التقديم بنجاح! حظاً موفقاً 🚀',
+      data: application
+    });
+
+  } catch (error) {
+    console.error('Apply Job Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء التقديم على الوظيفة' });
+  }
+};
+
+// ==========================================
+// @desc    جلب قائمة المتقدمين لوظيفة معينة
+// @route   GET /api/jobs/:id/applicants
+// @access  Private (يجب أن يكون المستخدم مديراً في الشركة صاحبة الوظيفة)
+// ==========================================
+exports.getJobApplicants = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+
+    // 1. جلب الوظيفة مع بيانات الشركة لنتأكد من الصلاحيات
+    const job = await Job.findById(jobId).populate('company');
+    
+    if (!job) {
+      return res.status(404).json({ success: false, message: 'الوظيفة غير موجودة' });
+    }
+
+    // 2. 🛡️ حماية: التأكد من أن المستخدم الحالي هو "مدير" في هذه الشركة
+    if (!job.company.admins.includes(req.user._id)) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك برؤية المتقدمين لهذه الوظيفة' });
+    }
+
+    // 3. جلب جميع طلبات التوظيف المرتبطة بهذه الوظيفة
+    const applicants = await JobApplication.find({ job: jobId })
+      .populate('applicant', 'profile.firstName profile.lastName profile.headline profile.avatar email') // جلب بيانات المتقدم
+      .sort({ createdAt: -1 }); // ترتيب من الأحدث للأقدم
+
+    res.status(200).json({
+      success: true,
+      count: applicants.length,
+      data: applicants
+    });
+
+  } catch (error) {
+    console.error('Get Applicants Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب المتقدمين' });
+  }
+};
+
+// ==========================================
+// @desc    تحديث حالة طلب التوظيف (قبول / رفض / إلخ)
+// @route   PUT /api/jobs/applications/:applicationId/status
+// @access  Private (يجب أن يكون مديراً في الشركة)
+// ==========================================
+exports.updateApplicationStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const applicationId = req.params.applicationId;
+
+    // 1. التأكد من أن الحالة المرسلة صحيحة وموجودة في الـ Schema
+    const validStatuses = ['Pending', 'Reviewed', 'Shortlisted', 'Rejected', 'Accepted'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ success: false, message: 'حالة الطلب غير صالحة' });
+    }
+
+    // 2. جلب طلب التوظيف مع بيانات الوظيفة والشركة
+    const application = await JobApplication.findById(applicationId).populate({
+      path: 'job',
+      populate: { path: 'company' }
+    });
+
+    if (!application) {
+      return res.status(404).json({ success: false, message: 'طلب التوظيف غير موجود' });
+    }
+
+    // 3. 🛡️ حماية: التأكد من أن المستخدم هو مدير في الشركة صاحبة الوظيفة
+    if (!application.job.company.admins.includes(req.user._id)) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بتعديل حالة هذا الطلب' });
+    }
+
+    // 4. تحديث الحالة وحفظها
+    application.status = status;
+    await application.save();
+
+    res.status(200).json({
+      success: true,
+      message: `تم تحديث حالة الطلب إلى ${status} بنجاح`,
+      data: application
+    });
+
+  } catch (error) {
+    console.error('Update Application Status Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث حالة الطلب' });
+  }
+};
+
+// ==========================================
+// @desc    جلب قائمة الوظائف التي قدم عليها المستخدم الحالي
+// @route   GET /api/jobs/my-applications
+// @access  Private
+// ==========================================
+exports.getMyApplications = async (req, res) => {
+  try {
+    // البحث عن جميع الطلبات التي تخص هذا المستخدم (applicant)
+    const applications = await JobApplication.find({ applicant: req.user._id })
+      .populate({
+        path: 'job',
+        select: 'title location type salary', // جلب بيانات الوظيفة
+        populate: {
+          path: 'company',
+          select: 'name logo' // جلب اسم وشعار الشركة صاحبة الوظيفة
+        }
+      })
+      .sort({ createdAt: -1 }); // الترتيب من الأحدث للتقديم
+
+    res.status(200).json({
+      success: true,
+      count: applications.length,
+      data: applications
+    });
+  } catch (error) {
+    console.error('Get My Applications Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب طلباتك' });
+  }
+};

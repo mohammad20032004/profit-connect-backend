@@ -12,6 +12,7 @@ const postRoutes = require('./routes/postRoutes'); // 👈 استدعاء مسا
 // تحميل متغيرات البيئة من ملف .env
 const companyRoutes = require('./routes/companyRoutes'); // 👈 استدعاء مسار الشركات
 const adminRoutes = require('./routes/adminRoutes'); // تأكد من وجود هذا السطر
+const jobRoutes = require('./routes/jobRoutes')
 dotenv.config();
 
 // الاتصال بقاعدة البيانات
@@ -31,6 +32,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/companies', companyRoutes); // 👈 ربط المسار
 app.use('/api/admin', adminRoutes);
+app.use('/api/jobs', jobRoutes)
 // تسجيل الطلبات في موجه الأوامر أثناء التطوير
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));

@@ -1,0 +1,20 @@
+info:
+  name: Follow Company
+  type: http
+  seq: 18
+
+http:
+  method: POST
+  url: http://localhost:5000/api/companies/69bed0b0a0d4360dcb82ca02/follow
+  headers:
+    - name: ""
+      value: Authorization
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YmVkMDcyYTBkNDM2MGRjYjgyYzlmZiIsImlhdCI6MTc3NDE2OTEzOCwiZXhwIjoxNzc0NzczOTM4fQ.XrXaDXattcSW_0Im8wkOkQ_lgMAvtxPewME_sZFCtHQ
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

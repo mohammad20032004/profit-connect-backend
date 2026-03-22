@@ -45,3 +45,4 @@ exports.updateCompanyStatus = async (req, res) => {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث حالة الشركة' });
   }
 };
+

@@ -10,11 +10,11 @@ http:
     type: json
     data: |-
       {
-        "firstName": "Amen1",
+        "firstName": "Amen AL Abed",
         "lastName": "Development",
-        "email": "amen121231@example.com",
-        "password": "SecurePassword12315",
-        "role": "Student",
+        "email": "Mohammad.amen.abed.2025@example.com",
+        "password": "123456789",
+        "role": "Admin",
         "phoneNumber": "+1-555-0000",
         "industry": "Technology",
         "yearsOfExperience": 5
