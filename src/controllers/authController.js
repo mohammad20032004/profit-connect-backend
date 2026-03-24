@@ -1,5 +1,5 @@
-const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 // دالة مساعدة لإنشاء التوكن
 const generateToken = (id) => {
@@ -112,6 +112,26 @@ exports.login = async (req, res) => {
       }
     });
 
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc    التحقق من التوكن وإرجاع المستخدم الحالي
+// @route   GET /api/auth/me
+// @access  Private
+exports.getCurrentUser = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      user: {
+        id: req.user._id,
+        email: req.user.email,
+        username: req.user.username,
+        role: req.user.role,
+        profile: req.user.profile,
+      },
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
