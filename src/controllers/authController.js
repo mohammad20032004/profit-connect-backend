@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
+const { formatUserResponse } = require('../utils/userResponse');
 
 // دالة مساعدة لإنشاء التوكن
 const generateToken = (id) => {
@@ -13,7 +15,7 @@ const generateToken = (id) => {
 // @access  Public
 exports.signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password,role, phoneNumber, industry, yearsOfExperience, skills } = req.body;
+    const { firstName, lastName, email, password,role, phoneNumber, industry, yearsOfExperience, skills ,rScore} = req.body;
 
     // 1. التحقق من وجود المستخدم مسبقاً
     let user = await User.findOne({ email });
@@ -29,7 +31,8 @@ exports.signup = async (req, res) => {
       profile: {
         firstName,
         lastName,
-        phoneNumber
+        phoneNumber,
+        ...(req.file ? { avatar: buildAvatarUrl(req, req.file.filename) } : {}),
       },
       professional: {
         industry,
@@ -45,16 +48,14 @@ exports.signup = async (req, res) => {
     res.status(201).json({
       success: true,
       token,
-      user: {
-        id: user._id,
-        email: user.email,
-        role: user.role,
-        username: user.username,
-        profile: user.profile
-      }
+      user: formatUserResponse(user)
     });
 
   } catch (error) {
+    if (req.file) {
+      await deleteAvatarFile(buildAvatarUrl(req, req.file.filename));
+    }
+
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -103,13 +104,7 @@ exports.login = async (req, res) => {
     res.status(200).json({
       success: true,
       token,
-      user: {
-        id: user._id,
-        email: user.email,
-        username: user.username,
-        role: user.role,
-        profile: user.profile
-      }
+      user: formatUserResponse(user)
     });
 
   } catch (error) {
@@ -124,13 +119,7 @@ exports.getCurrentUser = async (req, res) => {
   try {
     res.status(200).json({
       success: true,
-      user: {
-        id: req.user._id,
-        email: req.user.email,
-        username: req.user.username,
-        role: req.user.role,
-        profile: req.user.profile,
-      },
+      user: formatUserResponse(req.user),
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

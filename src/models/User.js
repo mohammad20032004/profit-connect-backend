@@ -69,6 +69,10 @@ const userSchema = new mongoose.Schema(
         type: Number,
         default: 0
       },
+      rScore:{
+        type: Number,
+        default: 0
+      }
     },
     professional: {
       industry: String,

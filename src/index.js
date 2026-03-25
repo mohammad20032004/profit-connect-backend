@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path');
 
 // استدعاء دالة الاتصال بقاعدة البيانات
 const connectDB = require('./config/db');
@@ -23,13 +24,21 @@ connectDB();
 // تهيئة تطبيق Express
 const app = express();
 
+const corsOptions = {
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  credentials: true,
+};
+
 // --- إعدادات الـ Middlewares الأساسية ---
-app.use(helmet()); // لحماية الترويسات (Headers)
-app.use(cors()); // للسماح للواجهة الأمامية بالاتصال
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+); // لحماية الترويسات (Headers) مع السماح بعرض الصور من الواجهة
+app.use(cors(corsOptions)); // للسماح للواجهة الأمامية بالاتصال
 app.use(express.json()); // لكي يتمكن السيرفر من قراءة البيانات بصيغة JSON
+app.use('/uploads', cors(corsOptions), express.static(path.join(__dirname, '../uploads')));
 app.use('/api/auth', authRoutes); 
-app.use('/api/user', userRoutes);
-app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/companies', companyRoutes); // 👈 ربط المسار

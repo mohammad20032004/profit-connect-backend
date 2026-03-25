@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
+const { formatUserResponse } = require('../utils/userResponse');
 
 // @desc    الحصول على بيانات الملف الشخصي للمستخدم الحالي
 // @route   GET /api/user/profile
@@ -14,7 +16,7 @@ exports.getUserProfile = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: user
+      data: formatUserResponse(user)
     });
 
   } catch (error) {
@@ -61,7 +63,7 @@ exports.updateUserProfile = async (req, res) => {
       res.status(200).json({
         success: true,
         message: 'تم تحديث الملف الشخصي بنجاح',
-        data: updatedUser
+        data: formatUserResponse(updatedUser)
       });
     } else {
       res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
@@ -69,6 +71,51 @@ exports.updateUserProfile = async (req, res) => {
   } catch (error) {
     console.error('Update Profile Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث البيانات' });
+  }
+};
+
+// @desc    تحديث الصورة الشخصية للمستخدم الحالي
+// @route   PUT /api/user/profile/avatar
+// @access  Private (يحتاج توكن)
+exports.updateUserAvatar = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'يرجى رفع صورة في الحقل avatar',
+      });
+    }
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    }
+
+    const oldAvatar = user.profile.avatar;
+    user.profile.avatar = buildAvatarUrl(req, req.file.filename);
+
+    const updatedUser = await user.save();
+
+    if (oldAvatar && oldAvatar !== updatedUser.profile.avatar) {
+      await deleteAvatarFile(oldAvatar);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'تم تحديث الصورة الشخصية بنجاح',
+      data: {
+        avatar: formatUserResponse(updatedUser).profile.avatar,
+        user: formatUserResponse(updatedUser),
+      },
+    });
+  } catch (error) {
+    if (req.file) {
+      await deleteAvatarFile(buildAvatarUrl(req, req.file.filename));
+    }
+
+    console.error('Update Avatar Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث الصورة الشخصية' });
   }
 };
 
@@ -114,7 +161,7 @@ exports.getUserById = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: user
+      data: formatUserResponse(user)
     });
   } catch (error) {
     console.error('Get User By Id Error:', error.message);
