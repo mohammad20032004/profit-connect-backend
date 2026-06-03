@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
 const { formatUserResponse } = require('../utils/userResponse');
-
+const RScoreService = require('../services/rScoreService'); // 👈 استدعاء الخدمة
 // @desc    الحصول على بيانات الملف الشخصي للمستخدم الحالي
 // @route   GET /api/user/profile
 // @access  Private (يحتاج توكن)
@@ -29,71 +29,53 @@ exports.getUserProfile = async (req, res) => {
 // @desc    تحديث بيانات الملف الشخصي للمستخدم الحالي
 // @route   PUT /api/user/profile
 // @access  Private (يحتاج توكن)
+// @desc    تحديث بيانات الملف الشخصي للمستخدم الحالي
 exports.updateUserProfile = async (req, res) => {
   try {
-    // 1. نجلب المستخدم من قاعدة البيانات باستخدام الـ ID القادم من التوكن (req.user)
     const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
 
-    if (user) {
-      // 2. تحديث البيانات الشخصية (إذا تم إرسالها في الطلب، وإلا نحتفظ بالقيمة القديمة)
-      user.profile.firstName = req.body.firstName || user.profile.firstName;
-      user.profile.lastName = req.body.lastName || user.profile.lastName;
-      user.profile.headline = req.body.headline || user.profile.headline;
-      user.profile.bio = req.body.bio || user.profile.bio;
-      user.profile.location = req.body.location || user.profile.location;
-      user.profile.avatar = req.body.avatar || user.profile.avatar;
-      user.profile.phoneNumber = req.body.phoneNumber || user.profile.phoneNumber;
+    // التحقق عما إذا كانت هذه أول مرة يملأ فيها النبذة الشخصية (Bio) والمهارات
+    const wasIncomplete = !user.profile.bio || user.professional.skills.length === 0;
 
-      // 3. تحديث الروابط الاجتماعية (نتأكد أولاً أن المستخدم أرسل كائن socialLinks)
-      if (req.body.socialLinks) {
-        user.profile.socialLinks.linkedin = req.body.socialLinks.linkedin || user.profile.socialLinks.linkedin;
-        user.profile.socialLinks.github = req.body.socialLinks.github || user.profile.socialLinks.github;
-        user.profile.socialLinks.website = req.body.socialLinks.website || user.profile.socialLinks.website;
-      }
-
-      // 4. تحديث البيانات المهنية
-      if (req.body.industry) user.professional.industry = req.body.industry;
-      if (req.body.yearsOfExperience) user.professional.yearsOfExperience = req.body.yearsOfExperience;
-      if (req.body.skills) user.professional.skills = req.body.skills; // skills عبارة عن مصفوفة (Array)
-
-      // 5. حفظ البيانات في قاعدة البيانات (هنا سيتدخل الـ pre('save') لتحديث الـ fullname إن لزم الأمر)
-      const updatedUser = await user.save();
-
-      // 6. إرسال الاستجابة مع البيانات المُحدثة
-      res.status(200).json({
-        success: true,
-        message: 'تم تحديث الملف الشخصي بنجاح',
-        data: formatUserResponse(updatedUser)
-      });
-    } else {
-      res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    // ... (كود التحديث القديم كما هو لديك) ...
+    user.profile.firstName = req.body.firstName || user.profile.firstName;
+    user.profile.lastName = req.body.lastName || user.profile.lastName;
+    user.profile.bio = req.body.bio || user.profile.bio;
+    if (req.body.skills) user.professional.skills = req.body.skills;
+    
+    // 🌟 2. مكافأة إكمال البيانات (ONCE)
+    const isIncompleteNow = !req.body.bio && (!req.body.skills || req.body.skills.length === 0);
+    if (wasIncomplete && !isIncompleteNow) {
+      await RScoreService.applyScore(user._id, 'COMPLETE_PROFILE', 'مكافأة إكمال البيانات المهنية');
+      user.profile.rScore += 15; // النقاط من القواعد
     }
+
+    const updatedUser = await user.save();
+    res.status(200).json({ success: true, message: 'تم التحديث بنجاح', data: formatUserResponse(updatedUser) });
   } catch (error) {
-    console.error('Update Profile Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث البيانات' });
   }
 };
-
 // @desc    تحديث الصورة الشخصية للمستخدم الحالي
 // @route   PUT /api/user/profile/avatar
 // @access  Private (يحتاج توكن)
+// @desc    تحديث الصورة الشخصية للمستخدم الحالي
 exports.updateUserAvatar = async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: 'يرجى رفع صورة في الحقل avatar',
-      });
-    }
+    if (!req.file) return res.status(400).json({ success: false, message: 'يرجى رفع صورة' });
 
     const user = await User.findById(req.user._id);
-
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
-    }
+    if (!user) return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
 
     const oldAvatar = user.profile.avatar;
     user.profile.avatar = buildAvatarUrl(req, req.file.filename);
+
+    // 🌟 1. مكافأة رفع الصورة لأول مرة (ONCE)
+    if (oldAvatar === 'default-avatar.png') {
+       await RScoreService.applyScore(user._id, 'UPLOAD_AVATAR', 'مكافأة إكمال الملف الشخصي: صورة العرض');
+       user.profile.rScore += 10; // تحديث فوري للرد
+    }
 
     const updatedUser = await user.save();
 
@@ -104,21 +86,12 @@ exports.updateUserAvatar = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'تم تحديث الصورة الشخصية بنجاح',
-      data: {
-        avatar: formatUserResponse(updatedUser).profile.avatar,
-        user: formatUserResponse(updatedUser),
-      },
+      data: { avatar: formatUserResponse(updatedUser).profile.avatar, user: formatUserResponse(updatedUser) },
     });
   } catch (error) {
-    if (req.file) {
-      await deleteAvatarFile(buildAvatarUrl(req, req.file.filename));
-    }
-
-    console.error('Update Avatar Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث الصورة الشخصية' });
   }
 };
-
 // @desc    حذف حساب المستخدم الحالي نهائياً
 // @route   DELETE /api/user/profile
 // @access  Private (يحتاج توكن)

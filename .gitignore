@@ -5,3 +5,7 @@ logs/
 coverage/
 npm-debug.log
 dist/
+
+# Ignore uploaded avatars
+uploads/avatars/*
+!uploads/avatars/.gitkeep

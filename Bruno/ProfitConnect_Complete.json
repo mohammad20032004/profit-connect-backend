@@ -1,0 +1,181 @@
+{
+  "info": {
+    "name": "ProfitConnect Complete API",
+    "_postman_id": "a1b2c3d4-profitconnect-full",
+    "description": "كولكشن شاملة لجميع واجهات ProfitConnect (متوافقة مع Bruno). لا تنسَ تحديث المتغير authToken بعد تسجيل الدخول.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. 🔐 Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "firstName", "value": "Ahmad", "type": "text" },
+                { "key": "lastName", "value": "Ali", "type": "text" },
+                { "key": "email", "value": "ahmad@example.com", "type": "text" },
+                { "key": "password", "value": "12345678", "type": "text" },
+                { "key": "role", "value": "Professional", "type": "text" }
+              ]
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/signup", "host": ["{{baseUrl}}"], "path": ["api", "auth", "signup"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"ahmad@example.com\",\n  \"password\": \"12345678\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current User (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api", "auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. 👤 User Profile",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/user/profile", "host": ["{{baseUrl}}"], "path": ["api", "user", "profile"] } }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"headline\": \"Senior Full Stack Developer\",\n  \"bio\": \"Updated bio...\",\n  \"location\": \"Palestine\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/user/profile", "host": ["{{baseUrl}}"], "path": ["api", "user", "profile"] }
+          }
+        },
+        {
+          "name": "Update Avatar",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "avatar", "type": "file", "src": "" }] }, "url": { "raw": "{{baseUrl}}/api/user/profile/avatar", "host": ["{{baseUrl}}"], "path": ["api", "user", "profile", "avatar"] } }
+        },
+        {
+          "name": "Delete Profile",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/user/profile", "host": ["{{baseUrl}}"], "path": ["api", "user", "profile"] } }
+        },
+        {
+          "name": "Get User By ID",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/user/:userId", "host": ["{{baseUrl}}"], "path": ["api", "user", ":userId"] } }
+        }
+      ]
+    },
+    {
+      "name": "3. 🏢 Companies",
+      "item": [
+        {
+          "name": "Get Companies",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/companies", "host": ["{{baseUrl}}"], "path": ["api", "companies"] } }
+        },
+        {
+          "name": "Create Company",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"MaxTec Group\",\n  \"description\": \"Tech company\",\n  \"industry\": \"IT\",\n  \"location\": \"Palestine\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/companies", "host": ["{{baseUrl}}"], "path": ["api", "companies"] }
+          }
+        },
+        {
+          "name": "Get Company By ID",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/companies/:id", "host": ["{{baseUrl}}"], "path": ["api", "companies", ":id"] } }
+        },
+        {
+          "name": "Toggle Follow Company",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/companies/:id/follow", "host": ["{{baseUrl}}"], "path": ["api", "companies", ":id", "follow"] } }
+        },
+        {
+          "name": "Add Company Admin",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"newAdminId\": \"USER_ID_HERE\"\n}" }, "url": { "raw": "{{baseUrl}}/api/companies/:id/admins", "host": ["{{baseUrl}}"], "path": ["api", "companies", ":id", "admins"] } }
+        }
+      ]
+    },
+    {
+      "name": "4. 👔 Jobs",
+      "item": [
+        {
+          "name": "Get Jobs (Public)",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/jobs?workPlace=Remote", "host": ["{{baseUrl}}"], "path": ["api", "jobs"], "query": [{ "key": "workPlace", "value": "Remote" }] } }
+        },
+        {
+          "name": "Create Job",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"companyId\": \"COMPANY_ID\",\n  \"title\": \"Frontend Developer\",\n  \"description\": \"React dev needed\",\n  \"location\": \"Remote\"\n}" }, "url": { "raw": "{{baseUrl}}/api/jobs", "host": ["{{baseUrl}}"], "path": ["api", "jobs"] } }
+        },
+        {
+          "name": "Apply For Job",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"resumeLink\": \"link\",\n  \"coverLetter\": \"Hello...\"\n}" }, "url": { "raw": "{{baseUrl}}/api/jobs/:id/apply", "host": ["{{baseUrl}}"], "path": ["api", "jobs", ":id", "apply"] } }
+        },
+        {
+          "name": "Get Job Applicants",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/jobs/:id/applicants", "host": ["{{baseUrl}}"], "path": ["api", "jobs", ":id", "applicants"] } }
+        },
+        {
+          "name": "Update Application Status",
+          "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"Shortlisted\"\n}" }, "url": { "raw": "{{baseUrl}}/api/jobs/applications/:applicationId/status", "host": ["{{baseUrl}}"], "path": ["api", "jobs", "applications", ":applicationId", "status"] } }
+        },
+        {
+          "name": "Get My Applications",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/jobs/my-applications", "host": ["{{baseUrl}}"], "path": ["api", "jobs", "my-applications"] } }
+        }
+      ]
+    },
+    {
+      "name": "5. 📝 Posts",
+      "item": [
+        { "name": "Create Post", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"content\": \"Hello ProfitConnect!\",\n  \"visibility\": \"public\"\n}" }, "url": { "raw": "{{baseUrl}}/api/posts", "host": ["{{baseUrl}}"], "path": ["api", "posts"] } } },
+        { "name": "Get Posts", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/posts?page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["api", "posts"], "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "10" }] } } },
+        { "name": "Update Post", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"content\": \"Updated content!\"\n}" }, "url": { "raw": "{{baseUrl}}/api/posts/:postId", "host": ["{{baseUrl}}"], "path": ["api", "posts", ":postId"] } } },
+        { "name": "Delete Post", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/posts/:postId", "host": ["{{baseUrl}}"], "path": ["api", "posts", ":postId"] } } },
+        { "name": "Toggle Like", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/posts/:postId/like", "host": ["{{baseUrl}}"], "path": ["api", "posts", ":postId", "like"] } } },
+        { "name": "Add Comment", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"content\": \"Great post!\"\n}" }, "url": { "raw": "{{baseUrl}}/api/posts/:postId/comments", "host": ["{{baseUrl}}"], "path": ["api", "posts", ":postId", "comments"] } } },
+        { "name": "Delete Comment", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/posts/:postId/comments/:commentId", "host": ["{{baseUrl}}"], "path": ["api", "posts", ":postId", "comments", ":commentId"] } } }
+      ]
+    },
+    {
+      "name": "6. 🤝 Network",
+      "item": [
+        { "name": "Get Connections", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/network/connections", "host": ["{{baseUrl}}"], "path": ["api", "network", "connections"] } } },
+        { "name": "Get Pending Requests", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/network/requests", "host": ["{{baseUrl}}"], "path": ["api", "network", "requests"] } } },
+        { "name": "Send Request", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/network/connect/:userId", "host": ["{{baseUrl}}"], "path": ["api", "network", "connect", ":userId"] } } },
+        { "name": "Accept Request", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/network/accept/:requestId", "host": ["{{baseUrl}}"], "path": ["api", "network", "accept", ":requestId"] } } },
+        { "name": "Reject Request", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/network/reject/:requestId", "host": ["{{baseUrl}}"], "path": ["api", "network", "reject", ":requestId"] } } },
+        { "name": "Remove Connection", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/network/remove/:userId", "host": ["{{baseUrl}}"], "path": ["api", "network", "remove", ":userId"] } } }
+      ]
+    },
+    {
+      "name": "7. 💰 Salaries",
+      "item": [
+        { "name": "Get Salaries", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/salaries?title=Frontend", "host": ["{{baseUrl}}"], "path": ["api", "salaries"], "query": [{ "key": "title", "value": "Frontend" }] } } },
+        { "name": "Get Salary Options", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/salaries/options", "host": ["{{baseUrl}}"], "path": ["api", "salaries", "options"] } } },
+        { "name": "Get Salary Stats", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/salaries/stats?title=Frontend", "host": ["{{baseUrl}}"], "path": ["api", "salaries", "stats"], "query": [{ "key": "title", "value": "Frontend" }] } } }
+      ]
+    },
+    {
+      "name": "8. 🛠️ Admin",
+      "item": [
+        { "name": "Get Pending Companies", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/companies/pending", "host": ["{{baseUrl}}"], "path": ["api", "admin", "companies", "pending"] } } },
+        { "name": "Update Company Status", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"Approved\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/companies/:id/status", "host": ["{{baseUrl}}"], "path": ["api", "admin", "companies", ":id", "status"] } } }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000", "type": "string" },
+    { "key": "authToken", "value": "", "type": "string" }
+  ]
+}

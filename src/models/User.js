@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ['Student', 'Professional', 'Admin'],
-      default: 'Student', // جعلنا القيمة الافتراضية محترف، ويمكنك تغييرها
+      default: 'Student',
       required: [true, 'يرجى تحديد نوع الحساب (طالب أو محترف)']
     },
     profile: {
@@ -36,19 +36,18 @@ const userSchema = new mongoose.Schema(
       bio: String,
       avatar: {
         type: String,
-        default: 'default-avatar.png' // صورة افتراضية
+        default: 'default-avatar.png'
       },
       location: String,
       socialLinks: {
         linkedin: { type: String, trim: true, default: '' },
         github: { type: String, trim: true, default: '' },
         website: { type: String, trim: true, default: '' }
-
       },
       followers: [
         {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'User' // ربط هذا الحقل بنموذج المستخدم نفسه
+          ref: 'User'
         }
       ],
       following: [
@@ -79,22 +78,32 @@ const userSchema = new mongoose.Schema(
       yearsOfExperience: Number,
       skills: [String]
     },
-
     isActive: {
       type: Boolean,
-      default: true // الحساب نشط افتراضياً
+      default: true
     },
     isVerified: {
       type: Boolean,
       default: true
     },
-  },
-  { timestamps: true }
+    // 🌟 تم نقل حقل الحالة إلى المكان الصحيح داخل الحقول 🌟
+    status: {
+      type: String,
+      enum: ['active', 'banned'],
+      default: 'active'
+    },
+    // 🌟 تم نقل مصفوفة التنبيهات الذكية إلى المكان الصحيح 🌟
+    warnings: [{
+      content: { type: String, required: true }, // التعليق المخالف
+      reason: { type: String, required: true },  // سبب التحذير القادم من الذكاء الاصطناعي
+      date: { type: Date, default: Date.now }
+    }]
+  }, // 👈 هنا تم إغلاق كائن الحقول بالكامل وبشكل صحيح
+  { timestamps: true } // 👈 هنا المعامل الثاني (الإعدادات)
 );
 
 // تجهيز البيانات وتشفير كلمة المرور قبل الحفظ
 userSchema.pre('save', async function () {
-
   // 1. تحديث الاسم الكامل واسم المستخدم دائماً (إذا توفرت البيانات)
   if (this.profile && this.profile.firstName && this.profile.lastName) {
     this.profile.fullname = `${this.profile.firstName} ${this.profile.lastName}`;
@@ -104,15 +113,17 @@ userSchema.pre('save', async function () {
     this.username = `${this.profile.firstName.toLowerCase()}_${Date.now()}`;
   }
 
-  // 2. إذا لم يتم تعديل كلمة المرور (مثلاً المستخدم يعدل صورته فقط)، تخطى التشفير واخرج
+  // 2. إذا لم يتم تعديل كلمة المرور، تخطى التشفير واخرج
   if (!this.isModified('password')) {
     return;
   }
 
-  // 3. تشفير كلمة المرور (يعمل فقط عند إنشاء حساب جديد أو تغيير الباسورد)
+  // 3. تشفير كلمة المرور
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-});// دالة لمقارنة كلمة المرور عند تسجيل الدخول
+});
+
+// دالة لمقارنة كلمة المرور عند تسجيل الدخول
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

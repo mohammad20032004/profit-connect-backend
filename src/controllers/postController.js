@@ -1,32 +1,22 @@
 const Post = require('../models/Post');
-
+const RScoreService = require('../services/rScoreService');
+const { processDynamicScoring } = require('../services/aiEvaluationService');
 // @desc    إنشاء منشور جديد
 // @route   POST /api/posts
 // @access  Private (يحتاج توكن)
 exports.createPost = async (req, res) => {
-  try {
+ try {
     const { content, image, visibility } = req.body;
+    const newPost = await Post.create({ user: req.user._id, content, image, visibility });
 
-    // إنشاء المنشور وربطه بالمستخدم الحالي (req.user._id)
-    const newPost = await Post.create({
-      user: req.user._id,
-      content,
-      image,
-      visibility
-    });
+    // 🤖 1. تقييم المنشور بالذكاء الاصطناعي في الخلفية
+    if (content) {
+      processDynamicScoring(req.user._id, content, 'CREATE_POST');
+    }
 
-    // جلب بيانات المنشور مع بيانات صاحبه (بدل أن يرجع ID فقط، يرجع اسمه وصورته)
-    const populatedPost = await Post.findById(newPost._id).populate(
-      'user',
-      'profile.firstName profile.lastName profile.headline profile.avatar'
-    );
-
-    res.status(201).json({
-      success: true,
-      data: populatedPost
-    });
+    const populatedPost = await Post.findById(newPost._id).populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar');
+    res.status(201).json({ success: true, data: populatedPost });
   } catch (error) {
-    console.error('Create Post Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إنشاء المنشور' });
   }
 };
@@ -72,43 +62,35 @@ exports.getPosts = async (req, res) => {
 // @desc    تسجيل إعجاب / إلغاء إعجاب بمنشور (Toggle Like)
 // @route   POST /api/posts/:postId/like
 // @access  Private
+// @desc    تسجيل إعجاب / إلغاء إعجاب بمنشور (Toggle Like)
 exports.toggleLike = async (req, res) => {
   try {
-    // 1. البحث عن المنشور باستخدام الـ ID المرر في الرابط
     const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
 
-    if (!post) {
-      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
-    }
-
-    // 2. التحقق مما إذا كان المستخدم قد سجل إعجابه مسبقاً
-    // (نبحث عن الـ ID الخاص بالمستخدم داخل مصفوفة الإعجابات)
     const index = post.likes.indexOf(req.user._id);
     let isLiked = false;
 
     if (index === -1) {
-      // إذا لم نجده (-1)، نقوم بإضافته (إعجاب)
       post.likes.push(req.user._id);
       isLiked = true;
+      
+      // 🌟 3. مكافأة "صاحب المنشور" لأنه حصل على إعجاب جديد (التفاعل الإيجابي)
+      // نتأكد أن المستخدم لا يعطي إعجاب لنفسه لتجنب الغش
+      if (post.user.toString() !== req.user._id.toString()) {
+        await RScoreService.applyScore(post.user.toString(), 'RECEIVE_LIKE', 'حصلت على إعجاب جديد على منشورك');
+      }
+      
     } else {
-      // إذا وجدناه، نقوم بحذفه (إلغاء الإعجاب)
       post.likes.splice(index, 1);
     }
 
-    // 3. حفظ التعديلات في قاعدة البيانات
     await post.save();
-
-    res.status(200).json({
-      success: true,
-      isLiked, // نرجع حالة الإعجاب الحالية للواجهة الأمامية لتغيير لون الزر
-      likesCount: post.likes.length // نرجع العدد الإجمالي للإعجابات
-    });
+    res.status(200).json({ success: true, isLiked, likesCount: post.likes.length });
   } catch (error) {
-    console.error('Like Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء معالجة الإعجاب' });
   }
 };
-
 // @desc    إضافة تعليق على منشور
 // @route   POST /api/posts/:postId/comments
 // @access  Private
@@ -132,10 +114,15 @@ exports.addComment = async (req, res) => {
       content
     };
 
+
     // إضافة التعليق إلى مصفوفة التعليقات في المنشور (في النهاية أو البداية باستخدام unshift)
     post.comments.push(newComment);
 
     await post.save();
+
+
+// 🤖 استدعاء الذكاء الاصطناعي ليعمل في الخلفية بصمت
+processDynamicScoring(req.user._id, content, 'ADD_COMMENT');
 
     res.status(201).json({
       success: true,
