@@ -1,8 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // مفتاحك (مؤقتاً للتجربة)
-const API_KEY = "AQ.Ab8RN6K24OaZ2TyegNR6XHWeg0yuLibQVufCCz0GEP9lcE-5Vg";
-const genAI = new GoogleGenerativeAI(API_KEY);
+const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
 async function testConnection() {
   console.log("⏳ جاري الاتصال بخوادم Google Gemini...");
