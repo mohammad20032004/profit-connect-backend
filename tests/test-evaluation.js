@@ -3,8 +3,8 @@ const { evaluateContent } = require('../src/services/aiEvaluationService');
 async function runTest() {
   console.log("🚀 جاري اختبار الذكاء الاصطناعي المحلي...");
 
-  const testContent = "";
-  
+  const testContent = "شاركت اليوم في ورشة عمل احترافية حول ريادة الأعمال، وتعلمت كيف أبني نموذج عمل مربح من الصفر. الخطوات واضحة والفرص متاحة لمن يبحث عنها بجدية.";
+
   try {
     const score = await evaluateContent(testContent);
     console.log("---------------------------------------");

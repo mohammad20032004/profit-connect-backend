@@ -1,60 +1,57 @@
 const { OpenAI } = require('openai');
 const RScoreService = require('./rScoreService');
 
-// إعداد الاتصال
 const openai = new OpenAI({
-  baseURL: 'http://127.0.0.1:1234/v1',
-  apiKey: 'lm-studio',
+  baseURL: process.env.LM_STUDIO_BASE_URL || 'http://127.0.0.1:1234/v1',
+  apiKey: process.env.LM_STUDIO_API_KEY || 'lm-studio',
 });
 
-// تعريف الدالة كمتغير لضمان رؤيتها في كل مكان في الملف
-const evaluateContent = async (content) => {
-  try {
-    if (!content || content.split(' ').length < 3) return 1;
+const SYSTEM_PROMPT = `أنت خبير تقييم محتوى مهني. قيّم النص التالي:
+- إذا احتوى على شتائم أو كلمات نابية أو تنمر أو محتوى غير لائق: أجب بـ -1 حصراً
+- إذا كان مقبولاً: أجب برقم من 0 إلى 5 حسب الجودة (0=عادي، 5=ممتاز)
+أجب برقم فقط، مثال: -1 أو 3`;
 
+const evaluateContent = async (content) => {
+  if (!content?.trim()) return 1;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+
+  try {
     const completion = await openai.chat.completions.create({
-      model: "local-model",
+      model: process.env.LM_STUDIO_MODEL || 'local-model',
       messages: [
-        { 
-          role: "system", 
-          // 💡 التعديل هنا: تعليمات صريحة بشأن المحتوى النابي
-          content: "أنت خبير تقييم محتوى مهني. إذا كان النص يحتوي على شتائم، كلمات نابية، تنمر، أو محتوى غير لائق، أجب بـ -1 حصراً. إذا كان مقبولاً، أجب برقم من 0 إلى 5 حسب الجودة. أجب برقم فقط." 
-        },
-        { 
-          role: "user", 
-          content: `قيم هذا النص: "${content}"` 
-        }
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: `قيم هذا النص: ${content}` },
       ],
       temperature: 0.1,
       max_tokens: 5,
-    });
+    }, { signal: controller.signal });
 
-    const rawResponse = completion.choices[0].message.content.trim();
-    let score = parseInt(rawResponse);
+    let score = parseInt(completion.choices[0].message.content.trim());
 
-    // 💡 التعديل هنا: السماح بـ -1 وعدم حصرها بـ 0
     if (isNaN(score)) score = 1;
-    if (score < -1) score = -1; // نمنع أي رقم أصغر من -1
+    if (score < -1) score = -1;
     if (score > 5) score = 5;
 
     return score;
   } catch (error) {
-    console.error('[Local AI Evaluation Error]:', error.message);
+    console.error('[AI Evaluation Error]:', error.message);
     return 1;
+  } finally {
+    clearTimeout(timeout);
   }
-};// تعريف دالة المعالجة الخلفية كمتغير أيضاً
+};
+
 const processDynamicScoring = (userId, content, actionKey) => {
   setImmediate(async () => {
     try {
-      const dynamicPoints = await evaluateContent(content);
-      
-      if (dynamicPoints > 0) {
-        await RScoreService.applyScore(
-          userId, 
-          actionKey, 
-          `تقييم الذكاء المحلي لجودة المحتوى: ${dynamicPoints} نقاط`,
-          dynamicPoints 
-        );
+      const score = await evaluateContent(content);
+
+      if (score === -1) {
+        await RScoreService.applyScore(userId, 'bad_content', 'محتوى غير لائق', -5);
+      } else if (score > 0) {
+        await RScoreService.applyScore(userId, actionKey, `جودة المحتوى: ${score} نقاط`, score);
       }
     } catch (error) {
       console.error('[Background Task Error]:', error.message);
@@ -62,8 +59,4 @@ const processDynamicScoring = (userId, content, actionKey) => {
   });
 };
 
-// تصدير الدوال بشكل صحيح وواضح
-module.exports = {
-  evaluateContent,
-  processDynamicScoring
-};
+module.exports = { evaluateContent, processDynamicScoring };
