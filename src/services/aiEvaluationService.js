@@ -59,4 +59,33 @@ const processDynamicScoring = (userId, content, actionKey) => {
   });
 };
 
-module.exports = { evaluateContent, processDynamicScoring };
+// تقييم بسياق مخصص (للملف الشخصي)
+const evaluateWithContext = async (content, systemPrompt) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: process.env.LM_STUDIO_MODEL || 'local-model',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: `قيم هذا النص: ${content}` },
+      ],
+      temperature: 0.1,
+      max_tokens: 5,
+    }, { signal: controller.signal });
+
+    let score = parseInt(completion.choices[0].message.content.trim());
+    if (isNaN(score)) score = 1;
+    if (score < 0) score = 0;
+    if (score > 5) score = 5;
+    return score;
+  } catch (error) {
+    console.error('[AI Context Evaluation Error]:', error.message);
+    return 1;
+  } finally {
+    clearTimeout(timeout);
+  }
+};
+
+module.exports = { evaluateContent, evaluateWithContext, processDynamicScoring };

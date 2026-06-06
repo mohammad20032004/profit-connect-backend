@@ -93,9 +93,10 @@ const userSchema = new mongoose.Schema(
       default: 'active'
     },
     // 🌟 تم نقل مصفوفة التنبيهات الذكية إلى المكان الصحيح 🌟
+    bannedUntil: { type: Date, default: null },
     warnings: [{
-      content: { type: String, required: true }, // التعليق المخالف
-      reason: { type: String, required: true },  // سبب التحذير القادم من الذكاء الاصطناعي
+      content: { type: String, required: true },
+      reason: { type: String, required: true },
       date: { type: Date, default: Date.now }
     }]
   }, // 👈 هنا تم إغلاق كائن الحقول بالكامل وبشكل صحيح

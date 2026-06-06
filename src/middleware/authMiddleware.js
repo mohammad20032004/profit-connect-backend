@@ -28,6 +28,22 @@ exports.protect = async (req, res, next) => {
         });
       }
 
+      // فحص الحظر الدائم
+      if (req.user.status === 'banned') {
+        const now = new Date();
+        const bannedUntil = req.user.bannedUntil;
+
+        // إذا كان الحظر مؤقتاً وانتهت مدته — نرفع الحظر تلقائياً
+        if (bannedUntil && now > bannedUntil) {
+          await User.findByIdAndUpdate(req.user._id, { status: 'active', bannedUntil: null });
+        } else {
+          const message = bannedUntil
+            ? `حسابك موقوف مؤقتاً حتى ${bannedUntil.toLocaleString('ar-SA')}`
+            : 'حسابك موقوف بشكل دائم بسبب تكرار المخالفات';
+          return res.status(403).json({ success: false, message });
+        }
+      }
+
       // 5. السماح للطلب بالمرور إلى الـ Controller التالي
       next();
     } catch (error) {

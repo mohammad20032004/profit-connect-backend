@@ -1,6 +1,7 @@
 const Post = require('../models/Post');
 const RScoreService = require('../services/rScoreService');
-const { processDynamicScoring } = require('../services/aiEvaluationService');
+const { processDynamicScoring, evaluateContent } = require('../services/aiEvaluationService');
+const { applyWarning } = require('../services/moderationService');
 // @desc    إنشاء منشور جديد
 // @route   POST /api/posts
 // @access  Private (يحتاج توكن)
@@ -9,9 +10,21 @@ exports.createPost = async (req, res) => {
     const { content, image, visibility } = req.body;
     const newPost = await Post.create({ user: req.user._id, content, image, visibility });
 
-    // 🤖 1. تقييم المنشور بالذكاء الاصطناعي في الخلفية
+    // 🤖 تقييم المنشور بالذكاء في الخلفية
     if (content) {
-      processDynamicScoring(req.user._id, content, 'CREATE_POST');
+      setImmediate(async () => {
+        try {
+          const score = await evaluateContent(content);
+          if (score === -1) {
+            await Post.findByIdAndDelete(newPost._id);
+            await applyWarning(req.user._id, content, 'محتوى منشور غير لائق');
+          } else if (score > 0) {
+            await RScoreService.applyScore(req.user._id, 'CREATE_POST', `جودة المنشور: ${score} نقاط`, score);
+          }
+        } catch (e) {
+          console.error('[Post AI Error]:', e.message);
+        }
+      });
     }
 
     const populatedPost = await Post.findById(newPost._id).populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar');
@@ -121,8 +134,23 @@ exports.addComment = async (req, res) => {
     await post.save();
 
 
-// 🤖 استدعاء الذكاء الاصطناعي ليعمل في الخلفية بصمت
-processDynamicScoring(req.user._id, content, 'ADD_COMMENT');
+    // 🤖 تقييم التعليق بالذكاء في الخلفية
+    const addedComment = post.comments[post.comments.length - 1];
+    setImmediate(async () => {
+      try {
+        const score = await evaluateContent(content);
+        if (score === -1) {
+          await Post.findByIdAndUpdate(req.params.postId, {
+            $pull: { comments: { _id: addedComment._id } }
+          });
+          await applyWarning(req.user._id, content, 'تعليق غير لائق');
+        } else if (score > 0) {
+          await RScoreService.applyScore(req.user._id, 'ADD_COMMENT', `جودة التعليق: ${score} نقاط`, score);
+        }
+      } catch (e) {
+        console.error('[Comment AI Error]:', e.message);
+      }
+    });
 
     res.status(201).json({
       success: true,
