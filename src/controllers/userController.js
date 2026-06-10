@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Post = require('../models/Post');
 const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
 const { formatUserResponse } = require('../utils/userResponse');
 const RScoreService = require('../services/rScoreService');
@@ -10,14 +11,20 @@ exports.getUserProfile = async (req, res) => {
   try {
     // بفضل حارس البوابة (authMiddleware)، أصبح لدينا الآن req.user جاهزاً!
     // الحارس قام بالفعل بالبحث عن المستخدم في قاعدة البيانات ووضعه هنا.
-    const user = req.user; 
+    const user = await User.findById(req.user._id).select('-password');
 
-    // إذا أردت التأكد من جلب أحدث البيانات (أو جلب بيانات مرتبطة لاحقاً مثل المتابعين)
-    // يمكنك استخدام: await User.findById(req.user._id);
+    const posts = await Post.find({ user: user._id })
+      .sort({ createdAt: -1 })
+      .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar')
+      .populate('comments.user', 'profile.firstName profile.lastName profile.avatar');
+
+    // إرفاق البوستات داخل كائن المستخدم كي يأخذها formatUserResponse
+    const userWithPosts = user.toObject();
+    userWithPosts.posts = posts;
 
     res.status(200).json({
       success: true,
-      data: formatUserResponse(user)
+      data: formatUserResponse(userWithPosts, { includePosts: true })
     });
 
   } catch (error) {
@@ -126,6 +133,107 @@ exports.deleteUserProfile = async (req, res) => {
   }
 };
 
+
+// @desc    جلب إعدادات المستخدم
+// @route   GET /api/user/settings
+// @access  Private
+exports.getSettings = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('settings');
+    res.status(200).json({ success: true, data: user.settings });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+// @desc    تحديث إعدادات المستخدم
+// @route   PUT /api/user/settings
+// @access  Private
+exports.updateSettings = async (req, res) => {
+  try {
+    const allowed = ['language', 'theme', 'emailNotifications', 'pushNotifications', 'profileVisibility', 'showEmail', 'showPhone'];
+    const updates = {};
+
+    for (const key of allowed) {
+      if (req.body[key] !== undefined) updates[`settings.${key}`] = req.body[key];
+    }
+
+    if (!Object.keys(updates).length)
+      return res.status(400).json({ success: false, message: 'لا توجد بيانات للتحديث' });
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({ success: true, message: 'تم تحديث الإعدادات بنجاح', data: user.settings });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث الإعدادات' });
+  }
+};
+
+// @desc    متابعة / إلغاء متابعة مستخدم (Toggle)
+// @route   POST /api/user/:userId/follow
+// @access  Private
+exports.toggleFollow = async (req, res) => {
+  try {
+    const targetId = req.params.userId;
+    const currentId = req.user._id.toString();
+
+    if (targetId === currentId)
+      return res.status(400).json({ success: false, message: 'لا يمكنك متابعة نفسك' });
+
+    const target = await User.findById(targetId);
+    if (!target) return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+
+    const isFollowing = target.profile.followers.map(id => id.toString()).includes(currentId);
+
+    if (isFollowing) {
+      // إلغاء المتابعة
+      await User.findByIdAndUpdate(targetId,  { $pull: { 'profile.followers': currentId }, $inc: { 'profile.followersCount': -1 } });
+      await User.findByIdAndUpdate(currentId, { $pull: { 'profile.following': targetId },  $inc: { 'profile.followingCount': -1 } });
+      return res.status(200).json({ success: true, following: false, message: 'تم إلغاء المتابعة' });
+    } else {
+      // متابعة
+      await User.findByIdAndUpdate(targetId,  { $addToSet: { 'profile.followers': currentId }, $inc: { 'profile.followersCount': 1 } });
+      await User.findByIdAndUpdate(currentId, { $addToSet: { 'profile.following': targetId },  $inc: { 'profile.followingCount': 1 } });
+      return res.status(200).json({ success: true, following: true, message: 'تمت المتابعة بنجاح' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء المتابعة' });
+  }
+};
+
+// @desc    جلب قائمة متابعي مستخدم
+// @route   GET /api/user/:userId/followers
+// @access  Private
+exports.getFollowers = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId)
+      .select('profile.followers profile.followersCount')
+      .populate('profile.followers', 'profile.firstName profile.lastName profile.avatar profile.headline');
+    if (!user) return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    res.status(200).json({ success: true, count: user.profile.followersCount, data: user.profile.followers });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+// @desc    جلب قائمة المتابَعين من قِبل مستخدم
+// @route   GET /api/user/:userId/following
+// @access  Private
+exports.getFollowing = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId)
+      .select('profile.following profile.followingCount')
+      .populate('profile.following', 'profile.firstName profile.lastName profile.avatar profile.headline');
+    if (!user) return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    res.status(200).json({ success: true, count: user.profile.followingCount, data: user.profile.following });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
 
 // @desc    الحصول على بيانات مستخدم آخر بواسطة الـ ID
 // @route   GET /api/user/:userId

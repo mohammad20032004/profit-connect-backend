@@ -7,7 +7,12 @@ const {
   updateUserProfile, 
   deleteUserProfile,
   getUserById,
-  updateUserAvatar
+  updateUserAvatar,
+  getSettings,
+  updateSettings,
+  toggleFollow,
+  getFollowers,
+  getFollowing
 } = require('../controllers/userController');
 
 // 2. استدعاء حارس البوابة
@@ -29,18 +34,13 @@ const avatarUploadHandler = (req, res, next) => {
 
 // مسار الحصول على الملف الشخصي: GET /api/user/profile
 router.get('/profile', protect, getUserProfile);
-
-// مسار تحديث الملف الشخصي: PUT /api/user/profile
 router.put('/profile', protect, updateUserProfile);
-
-// مسار تحديث الصورة الشخصية: PUT /api/user/profile/avatar
 router.put('/profile/avatar', protect, avatarUploadHandler, updateUserAvatar);
-
-// مسار جلب ملف مستخدم آخر (يجب أن يكون أسفل /profile لكي لا يتداخل معه)
+router.get('/settings', protect, getSettings);
+router.put('/settings', protect, updateSettings);
+router.post('/:userId/follow', protect, toggleFollow);
+router.get('/:userId/followers', protect, getFollowers);
+router.get('/:userId/following', protect, getFollowing);
 router.get('/:userId', protect, getUserById);
-
-// مسار حذف الملف الشخصي: DELETE /api/user/profile
-// (نفس الرابط ولكن بطريقة DELETE)
-router.delete('/profile', protect, deleteUserProfile);
 
 module.exports = router;

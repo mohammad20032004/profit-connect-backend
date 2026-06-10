@@ -1,5 +1,6 @@
-const formatUserResponse = (user) => {
-  const userObject = typeof user.toObject === 'function' ? user.toObject() : { ...user };
+const formatUserResponse = (user, options = {}) => {
+  const userObject = typeof user?.toObject === 'function' ? user.toObject() : user || {};
+  const includePosts = options.includePosts === true;
 
   return {
     id: userObject._id || userObject.id,
@@ -8,10 +9,13 @@ const formatUserResponse = (user) => {
     role: userObject.role,
     profile: userObject.profile,
     professional: userObject.professional,
-    isActive: userObject.isActive,
-    isVerified: userObject.isVerified,
-    createdAt: userObject.createdAt,
-    updatedAt: userObject.updatedAt,
+
+    ...(includePosts && userObject.posts ? { posts: userObject.posts } : {}),
+
+    // settings تم إخفاؤه من الاستجابة كما طلبت
+
+    // تم إخفاء الحقول الحساسة/غير المرغوب إظهارها في واجهات المستخدم
+    // isActive, isVerified, createdAt, updatedAt
   };
 };
 

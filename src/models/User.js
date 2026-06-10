@@ -93,6 +93,15 @@ const userSchema = new mongoose.Schema(
       default: 'active'
     },
     // 🌟 تم نقل مصفوفة التنبيهات الذكية إلى المكان الصحيح 🌟
+    settings: {
+      language:          { type: String, enum: ['ar', 'en'], default: 'en' },
+      theme:             { type: String, enum: ['light', 'dark', 'system'], default: 'system' },
+      emailNotifications:{ type: Boolean, default: true },
+      pushNotifications: { type: Boolean, default: true },
+      profileVisibility: { type: String, enum: ['public', 'connections', 'private'], default: 'public' },
+      showEmail:         { type: Boolean, default: false },
+      showPhone:         { type: Boolean, default: false },
+    },
     bannedUntil: { type: Date, default: null },
     warnings: [{
       content: { type: String, required: true },
