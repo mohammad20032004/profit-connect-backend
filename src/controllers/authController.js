@@ -1,5 +1,7 @@
+
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Post = require('../models/Post');
 const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
 const { formatUserResponse } = require('../utils/userResponse');
 
@@ -76,18 +78,16 @@ exports.login = async (req, res) => {
     }
 
     // 2. البحث عن المستخدم في قاعدة البيانات
-    // ملاحظة: استخدمنا .select('+password') لأننا في نموذج المستخدم (Schema) 
-    // قمنا بضبط select: false لكلمة المرور لحمايتها، وهنا نحتاج جلبها للمقارنة
     const user = await User.findOne({ email }).select('+password');
     
     if (!user) {
       return res.status(401).json({ 
         success: false, 
-        message: 'بيانات الدخول غير صحيحة' // نستخدم رسالة مبهمة لدواعي أمنية
+        message: 'بيانات الدخول غير صحيحة'
       });
     }
 
-    // 3. التحقق من تطابق كلمة المرور باستخدام الدالة التي أنشأناها في المودل
+    // 3. التحقق من تطابق كلمة المرور
     const isMatch = await user.matchPassword(password);
     
     if (!isMatch) {
@@ -97,10 +97,10 @@ exports.login = async (req, res) => {
       });
     }
 
-    // 4. إنشاء التوكن (Token)
+    // 4. إنشاء التوكن
     const token = generateToken(user._id);
 
-    // 5. إرجاع الاستجابة المطلوبة للـ Frontend
+    // 5. إرجاع الاستجابة
     res.status(200).json({
       success: true,
       token,
@@ -112,15 +112,36 @@ exports.login = async (req, res) => {
   }
 };
 
-// @desc    التحقق من التوكن وإرجاع المستخدم الحالي
+// @desc    التحقق من التوكن وإرجاع المستخدم الحالي مع بياناته الكاملة
 // @route   GET /api/auth/me
 // @access  Private
 exports.getCurrentUser = async (req, res) => {
   try {
+    const userId = req.user.id;
+
+    // جلب بيانات المستخدم الأساسية والمتابعين والمتابَعين
+    const user = await User.findById(userId)
+      .populate('profile.followers', 'profile.firstName profile.lastName profile.avatar')
+      .populate('profile.following', 'profile.firstName profile.lastName profile.avatar');
+
+    // جلب منشورات المستخدم
+    const posts = await Post.find({ user: userId }).sort({ createdAt: -1 });
+
+    if (!user) {
+        return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    }
+
+    // دمج كل البيانات في استجابة واحدة
+    const userProfile = {
+      ...formatUserResponse(user),
+      posts: posts,
+    };
+
     res.status(200).json({
       success: true,
-      user: formatUserResponse(req.user),
+      user: userProfile,
     });
+
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }

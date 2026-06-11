@@ -1,3 +1,4 @@
+
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
@@ -8,15 +9,15 @@ const path = require('path');
 // استدعاء دالة الاتصال بقاعدة البيانات
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes'); // 👈 استدعاء مسار المستخدم الجديد  
-const postRoutes = require('./routes/postRoutes'); // 👈 استدعاء مسار المنشورات   
-// تحميل متغيرات البيئة من ملف .env
-const companyRoutes = require('./routes/companyRoutes'); // 👈 استدعاء مسار الشركات
-const adminRoutes = require('./routes/adminRoutes'); // تأكد من وجود هذا السطر
+const userRoutes = require('./routes/userRoutes');
+const postRoutes = require('./routes/postRoutes');
+const companyRoutes = require('./routes/companyRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const jobRoutes = require('./routes/jobRoutes');
-const network = require('./routes/connectionRoutes');
 const salaryRoutes = require('./routes/salaryRoutes');
 const messageRoutes = require('./routes/messageRoutes');
+const followRoutes = require('./routes/followRoutes'); // <-- إضافة مسارات المتابعة
+
 dotenv.config();
 
 // الاتصال بقاعدة البيانات
@@ -35,17 +36,17 @@ app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' },
   })
-); // لحماية الترويسات (Headers) مع السماح بعرض الصور من الواجهة
-app.use(cors(corsOptions)); // للسماح للواجهة الأمامية بالاتصال
-app.use(express.json()); // لكي يتمكن السيرفر من قراءة البيانات بصيغة JSON
+);
+app.use(cors(corsOptions));
+app.use(express.json());
 app.use('/uploads', cors(corsOptions), express.static(path.join(__dirname, '../uploads')));
-app.use('/api/auth', authRoutes); 
+app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/users', followRoutes); // <-- تسجيل مسارات المتابعة
 app.use('/api/posts', postRoutes);
-app.use('/api/companies', companyRoutes); // 👈 ربط المسار
+app.use('/api/companies', companyRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/jobs', jobRoutes);
-app.use('/api/network', network);
 app.use('/api/salaries', salaryRoutes);
 app.use('/api/messages', messageRoutes);
 
