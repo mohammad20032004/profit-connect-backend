@@ -34,10 +34,6 @@ exports.getUserProfile = async (req, res) => {
 };
 
 
-// @desc    تحديث بيانات الملف الشخصي للمستخدم الحالي
-// @route   PUT /api/user/profile
-// @access  Private (يحتاج توكن)
-// @desc    تحديث بيانات الملف الشخصي للمستخدم الحالي
 exports.updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

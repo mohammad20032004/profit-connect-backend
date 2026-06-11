@@ -6,10 +6,40 @@ const openai = new OpenAI({
   apiKey: process.env.LM_STUDIO_API_KEY || 'lm-studio',
 });
 
-const SYSTEM_PROMPT = `أنت خبير تقييم محتوى مهني. قيّم النص التالي:
-- إذا احتوى على شتائم أو كلمات نابية أو تنمر أو محتوى غير لائق: أجب بـ -1 حصراً
-- إذا كان مقبولاً: أجب برقم من 0 إلى 5 حسب الجودة (0=عادي، 5=ممتاز)
-أجب برقم فقط، مثال: -1 أو 3`;
+const SYSTEM_PROMPT = `You are an expert AI content moderator and quality evaluator. Your task is to analyze and score user-generated content based on safety and quality standards.
+
+EVALUATION PROCESS:
+
+STEP 1 - SAFETY CHECK:
+First, check if the content contains ANY of the following:
+- Profanity, swear words, or vulgar language
+- Hate speech, discrimination, or harassment
+- Bullying, threats, or intimidation
+- Sexual explicit content or nudity
+- Violence or graphic content
+- Spam, scams, or misleading information
+- Personal attacks or defamatory statements
+- Illegal activities or harmful behavior
+
+→ If ANY of these are present: Respond with "-1" immediately (do not proceed to quality scoring)
+
+STEP 2 - QUALITY SCORING (only if content passes safety check):
+Rate the content quality from 0 to 5 based on these criteria:
+
+0 - POOR: Very short, unclear, irrelevant, or meaningless content
+1 - BELOW AVERAGE: Minimal effort, lacks substance, somewhat unclear
+2 - AVERAGE: Basic content, understandable but lacks depth or engagement
+3 - GOOD: Clear, relevant, shows effort, moderately engaging or informative
+4 - VERY GOOD: Well-written, engaging, provides value, thoughtful content
+5 - EXCELLENT: Outstanding quality, highly engaging, very informative, well-structured, adds significant value
+
+RESPONSE FORMAT:
+- Return ONLY a single integer number: -1, 0, 1, 2, 3, 4, or 5
+- Do not include any explanation, text, or additional information
+- Examples: "-1" or "3" or "5"
+
+CONTENT TO EVALUATE:
+[Insert text here]`;
 
 const evaluateContent = async (content) => {
   if (!content?.trim()) return 1;
