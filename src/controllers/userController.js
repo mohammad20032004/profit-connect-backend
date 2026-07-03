@@ -16,7 +16,8 @@ exports.getUserProfile = async (req, res) => {
     const posts = await Post.find({ user: user._id })
       .sort({ createdAt: -1 })
       .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar')
-      .populate('comments.user', 'profile.firstName profile.lastName profile.avatar');
+      .populate({ path: 'comments.user', select: 'profile.firstName profile.lastName profile.avatar' })
+      .lean();
 
     // إرفاق البوستات داخل كائن المستخدم كي يأخذها formatUserResponse
     const userWithPosts = user.toObject();

@@ -1,0 +1,17 @@
+meta {
+  name: Translate - ترجمة نص
+  method: POST
+  url: {{baseUrl}}/api/translate
+  type: json
+}
+
+headers {
+  Authorization: Bearer {{authToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "text": "Design patterns are reusable solutions to common software design problems. They fall into three categories: creational, structural, and behavioral."
+  }
+}

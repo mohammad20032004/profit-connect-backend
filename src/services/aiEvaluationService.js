@@ -1,66 +1,76 @@
 const { OpenAI } = require('openai');
 const RScoreService = require('./rScoreService');
 
-const openai = new OpenAI({
+const localAI = new OpenAI({
   baseURL: process.env.LM_STUDIO_BASE_URL || 'http://127.0.0.1:1234/v1',
   apiKey: process.env.LM_STUDIO_API_KEY || 'lm-studio',
 });
 
-const SYSTEM_PROMPT = `You are an expert AI content moderator and quality evaluator. Your task is to analyze and score user-generated content based on safety and quality standards.
+const fallbackAI = new OpenAI({
+  baseURL: process.env.FALLBACK_BASE_URL || 'https://api.openai.com/v1',
+  apiKey: process.env.FALLBACK_API_KEY,
+});
 
-EVALUATION PROCESS:
+const AI_CLIENTS = [
+  { client: localAI, model: process.env.LM_STUDIO_MODEL || 'local-model', name: 'local' },
+  { client: fallbackAI, model: process.env.FALLBACK_MODEL || 'gpt-4o-mini', name: 'fallback' },
+];
 
-STEP 1 - SAFETY CHECK:
-First, check if the content contains ANY of the following:
-- Profanity, swear words, or vulgar language
-- Hate speech, discrimination, or harassment
-- Bullying, threats, or intimidation
-- Sexual explicit content or nudity
-- Violence or graphic content
-- Spam, scams, or misleading information
-- Personal attacks or defamatory statements
-- Illegal activities or harmful behavior
+const callAI = async (messages, options = {}) => {
+  const { temperature = 0.0, max_tokens = 5, stop = ['\n', ' ', '.'] } = options;
+  let lastError;
 
-→ If ANY of these are present: Respond with "-1" immediately (do not proceed to quality scoring)
+  for (const { client, model, name } of AI_CLIENTS) {
+    if (!client.apiKey) { console.log(`[AI] Skipping ${name}: no API key`); continue; }
 
-STEP 2 - QUALITY SCORING (only if content passes safety check):
-Rate the content quality from 0 to 5 based on these criteria:
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60000);
 
-0 - POOR: Very short, unclear, irrelevant, or meaningless content
-1 - BELOW AVERAGE: Minimal effort, lacks substance, somewhat unclear
-2 - AVERAGE: Basic content, understandable but lacks depth or engagement
-3 - GOOD: Clear, relevant, shows effort, moderately engaging or informative
-4 - VERY GOOD: Well-written, engaging, provides value, thoughtful content
-5 - EXCELLENT: Outstanding quality, highly engaging, very informative, well-structured, adds significant value
+    try {
+      const completion = await client.chat.completions.create({
+        model,
+        messages,
+        temperature,
+        max_tokens,
+        stop,
+      }, { signal: controller.signal });
 
-RESPONSE FORMAT:
-- Return ONLY a single integer number: -1, 0, 1, 2, 3, 4, or 5
-- Do not include any explanation, text, or additional information
-- Examples: "-1" or "3" or "5"
+      console.log(`[AI] ${name} model responded`);
+      return completion.choices[0].message.content.trim();
+    } catch (error) {
+      lastError = error;
+      console.warn(`[AI] ${name} failed: ${error.message}`);
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
 
-CONTENT TO EVALUATE:
-[Insert text here]`;
+  throw lastError || new Error('All AI providers failed');
+};
+
+// ✅ 1. Prompt قصير جداً ومباشر (النماذج المحلية تفشل مع التعليمات الطويلة)
+const SYSTEM_PROMPT = `You are an AI content moderator.
+Analyze the user's text.
+If it contains insults, profanity, hate speech, or is unsafe, output exactly: -1
+Otherwise, rate its quality from 0 (very poor) to 5 (excellent).
+Output ONLY a single number.`;
 
 const evaluateContent = async (content) => {
   if (!content?.trim()) return 1;
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
-
   try {
-    const completion = await openai.chat.completions.create({
-      model: process.env.LM_STUDIO_MODEL || 'local-model',
-      messages: [
+    const rawResponse = await callAI(
+      [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: `قيم هذا النص: ${content}` },
+        { role: 'user', content },
       ],
-      temperature: 0.1,
-      max_tokens: 5,
-    }, { signal: controller.signal });
+      { temperature: 0.0, max_tokens: 5, stop: ['\n', ' ', '.'] }
+    );
 
-    let score = parseInt(completion.choices[0].message.content.trim());
+    console.log('[AI Raw Response]:', rawResponse);
+    const match = rawResponse.match(/-?\d+/);
+    let score = match ? parseInt(match[0], 10) : 1;
 
-    if (isNaN(score)) score = 1;
     if (score < -1) score = -1;
     if (score > 5) score = 5;
 
@@ -68,8 +78,6 @@ const evaluateContent = async (content) => {
   } catch (error) {
     console.error('[AI Evaluation Error]:', error.message);
     return 1;
-  } finally {
-    clearTimeout(timeout);
   }
 };
 
@@ -91,31 +99,54 @@ const processDynamicScoring = (userId, content, actionKey) => {
 
 // تقييم بسياق مخصص (للملف الشخصي)
 const evaluateWithContext = async (content, systemPrompt) => {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000);
-
   try {
-    const completion = await openai.chat.completions.create({
-      model: process.env.LM_STUDIO_MODEL || 'local-model',
-      messages: [
+    const rawResponse = await callAI(
+      [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: `قيم هذا النص: ${content}` },
+        { role: 'user', content },
       ],
-      temperature: 0.1,
-      max_tokens: 5,
-    }, { signal: controller.signal });
+      { temperature: 0.0, max_tokens: 5, stop: ['\n', ' ', '.'] }
+    );
 
-    let score = parseInt(completion.choices[0].message.content.trim());
-    if (isNaN(score)) score = 1;
+    console.log('[AI Context Raw Response]:', rawResponse);
+    const match = rawResponse.match(/-?\d+/);
+    let score = match ? parseInt(match[0], 10) : 1;
+
     if (score < 0) score = 0;
     if (score > 5) score = 5;
+
     return score;
   } catch (error) {
     console.error('[AI Context Evaluation Error]:', error.message);
     return 1;
-  } finally {
-    clearTimeout(timeout);
   }
 };
 
-module.exports = { evaluateContent, evaluateWithContext, processDynamicScoring };
+const translateContent = async (text) => {
+  if (!text?.trim()) return '';
+
+  try {
+    const translated = await callAI(
+      [
+        {
+          role: 'system',
+          content: `You are a professional English-to-Arabic translator specialized in technical content.
+Translate the following English text to Arabic.
+Preserve all technical terms, programming keywords, and proper nouns in their original form (e.g., API, JavaScript, Node.js, Full-stack, Singleton, Observer).
+Maintain code snippets, variables, and formatting exactly as-is.
+Output ONLY the translated text, no explanations.`,
+        },
+        { role: 'user', content: text },
+      ],
+      { temperature: 0.1, max_tokens: 4096, stop: null }
+    );
+
+    console.log('[Translate Raw Response]:', translated);
+    return translated;
+  } catch (error) {
+    console.error('[Translate Error]:', error.message);
+    throw error;
+  }
+};
+
+module.exports = { evaluateContent, evaluateWithContext, processDynamicScoring, translateContent };

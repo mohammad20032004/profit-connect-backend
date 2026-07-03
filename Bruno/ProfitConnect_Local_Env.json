@@ -1,0 +1,128 @@
+{
+  "name": "ProfitConnect Local",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "targetUserId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "postId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "commentId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "companyId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "jobId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "applicationId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "conversationId",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "email",
+      "value": "test@profitconnect.com",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "password",
+      "value": "password123",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "firstName",
+      "value": "أحمد",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "lastName",
+      "value": "علي",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "role",
+      "value": "Professional",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "phoneNumber",
+      "value": "+966501234567",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "industry",
+      "value": "تقنية معلومات",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "yearsOfExperience",
+      "value": "3",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "skills",
+      "value": "JavaScript, Node.js, React",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2026-07-01T12:00:00.000Z",
+  "_postman_exported_using": "ProfitConnect"
+}

@@ -50,7 +50,8 @@ exports.getPosts = async (req, res) => {
       .skip(skip)
       .limit(limit)
       .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar')
-      .populate('comments.user', 'profile.firstName profile.lastName profile.avatar'); // جلب بيانات أصحاب التعليقات أيضاً
+      .populate({ path: 'comments.user', select: '_id profile.firstName profile.lastName profile.avatar' })
+      .lean()
 
     // جلب العدد الكلي للمنشورات لحساب عدد الصفحات
     const total = await Post.countDocuments();
@@ -110,6 +111,9 @@ exports.toggleLike = async (req, res) => {
 exports.addComment = async (req, res) => {
   try {
     const { content } = req.body;
+    console.log('[AddComment Debug] req.body:', req.body);
+    console.log('[AddComment Debug] req.params.postId:', req.params.postId);
+    console.log('[AddComment Debug] content value:', content);
 
     if (!content) {
       return res.status(400).json({ success: false, message: 'محتوى التعليق مطلوب' });
@@ -132,6 +136,8 @@ exports.addComment = async (req, res) => {
     post.comments.push(newComment);
 
     await post.save();
+    const savedComment = post.comments[post.comments.length - 1];
+    console.log('[AddComment Debug] Saved comment content:', savedComment?.content, '| Post ID:', post._id);
 
 
     // 🤖 تقييم التعليق بالذكاء في الخلفية

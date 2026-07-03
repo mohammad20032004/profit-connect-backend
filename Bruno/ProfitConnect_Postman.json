@@ -1,0 +1,1072 @@
+{
+  "info": {
+    "name": "ProfitConnect API",
+    "_postman_id": "a1b2c3d4-1234-5678-9101-profitconnect",
+    "description": "مجموعة شاملة لجميع واجهات API لمشروع ProfitConnect. تحتوي على 43 endpoint موزعة على 9 مجموعات.\n\n## كيفية الاستخدام:\n1. استورد الملف في Postman\n2. استورد ملف البيئة (Environment) المرفق\n3. اختر environment \"ProfitConnect Local\"\n4. سخّل الدخول أولاً عبر Auth > Login ليتم تعيين التوكن تلقائياً\n5. ابدأ باختبار باقي الـ endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🔐 Auth",
+      "description": "مصادقة المستخدمين - تسجيل، دخول، جلب المستخدم الحالي",
+      "item": [
+        {
+          "name": "Signup - إنشاء حساب",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.success) {",
+                  "    pm.environment.set('authToken', response.token);",
+                  "    pm.environment.set('userId', response.user.id);",
+                  "    pm.environment.set('userEmail', response.user.email);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "firstName", "value": "{{firstName}}", "type": "text" },
+                { "key": "lastName", "value": "{{lastName}}", "type": "text" },
+                { "key": "email", "value": "{{email}}", "type": "text" },
+                { "key": "password", "value": "{{password}}", "type": "text" },
+                { "key": "role", "value": "{{role}}", "type": "text" },
+                { "key": "phoneNumber", "value": "{{phoneNumber}}", "type": "text" },
+                { "key": "industry", "value": "{{industry}}", "type": "text" },
+                { "key": "yearsOfExperience", "value": "{{yearsOfExperience}}", "type": "text" },
+                { "key": "skills", "value": "{{skills}}", "type": "text" },
+                { "key": "avatar", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signup"]
+            },
+            "description": "إنشاء حساب مستخدم جديد. يرسل البيانات كـ multipart/form-data لدعم رفع الصورة."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "body": "{\n  \"success\": true,\n  \"token\": \"eyJhbG...\",\n  \"user\": {\n    \"id\": \"667a...\",\n    \"email\": \"user@example.com\",\n    \"username\": \"ahmed_1234567890\",\n    \"role\": \"Student\",\n    \"profile\": { \"firstName\": \"أحمد\", \"lastName\": \"علي\", ... }\n  }\n}"
+            },
+            {
+              "name": "Email Already Exists",
+              "status": "Bad Request",
+              "code": 400,
+              "header": [],
+              "body": "{\n  \"success\": false,\n  \"message\": \"البريد الإلكتروني مسجل بالفعل\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login - تسجيل الدخول",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.success) {",
+                  "    pm.environment.set('authToken', response.token);",
+                  "    pm.environment.set('userId', response.user.id);",
+                  "    pm.environment.set('userEmail', response.user.email);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "تسجيل الدخول بالبريد الإلكتروني وكلمة المرور. يتم تخزين التوكن تلقائياً في المتغيرات."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"success\": true,\n  \"token\": \"eyJhbG...\",\n  \"user\": { ... }\n}"
+            },
+            {
+              "name": "Invalid Credentials",
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [],
+              "body": "{\n  \"success\": false,\n  \"message\": \"بيانات الدخول غير صحيحة\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Me - المستخدم الحالي",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "جلب بيانات المستخدم الحالي مع منشوراته. يتطلب توكن مصادقة صالح."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "body": "{\n  \"success\": true,\n  \"user\": {\n    \"id\": \"...\",\n    \"email\": \"...\",\n    \"role\": \"...\",\n    \"profile\": { ... },\n    \"professional\": { ... },\n    \"posts\": []\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "👤 User Profile",
+      "description": "إدارة الملف الشخصي والإعدادات",
+      "item": [
+        {
+          "name": "Get Profile - الملف الشخصي",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "profile"]
+            },
+            "description": "جلب الملف الشخصي الكامل للمستخدم الحالي مع المنشورات."
+          }
+        },
+        {
+          "name": "Update Profile - تحديث الملف",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"أحمد\",\n  \"lastName\": \"علي\",\n  \"bio\": \"مطور ويب بخبرة 5 سنوات\",\n  \"headline\": \"مطور Full-Stack\",\n  \"location\": \"الرياض، السعودية\",\n  \"phoneNumber\": \"+966501234567\",\n  \"skills\": [\"JavaScript\", \"Node.js\", \"React\"],\n  \"industry\": \"تقنية معلومات\",\n  \"yearsOfExperience\": 5,\n  \"socialLinks\": {\n    \"linkedin\": \"https://linkedin.com/in/username\",\n    \"github\": \"https://github.com/username\",\n    \"website\": \"https://example.com\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "profile"]
+            },
+            "description": "تحديث بيانات الملف الشخصي. يتم تقييم اكتمال الملف تلقائياً ومنح نقاط."
+          }
+        },
+        {
+          "name": "Update Avatar - تحديث الصورة",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "avatar", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile/avatar",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "profile", "avatar"]
+            },
+            "description": "رفع صورة شخصية جديدة. الصيغ المدعومة: JPG, PNG, WEBP. الحجم الأقصى: 5MB."
+          }
+        },
+        {
+          "name": "Delete Account - حذف الحساب",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "profile"]
+            },
+            "description": "حذف حساب المستخدم الحالي وجميع بياناته بشكل نهائي."
+          }
+        },
+        {
+          "name": "Get Settings - جلب الإعدادات",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "settings"]
+            },
+            "description": "جلب إعدادات المستخدم (اللغة، الثيم، الإشعارات، الخصوصية)."
+          }
+        },
+        {
+          "name": "Update Settings - تحديث الإعدادات",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"language\": \"ar\",\n  \"theme\": \"dark\",\n  \"emailNotifications\": true,\n  \"pushNotifications\": false,\n  \"profileVisibility\": \"public\",\n  \"showEmail\": false,\n  \"showPhone\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/user/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "settings"]
+            },
+            "description": "تحديث إعدادات المستخدم."
+          }
+        },
+        {
+          "name": "Get User By ID - مستخدم محدد",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/{{targetUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "{{targetUserId}}"]
+            },
+            "description": "جلب بيانات مستخدم آخر باستخدام معرف المستخدم (ID)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔄 Follow System",
+      "description": "نظام المتابعة بين المستخدمين والشركات",
+      "item": [
+        {
+          "name": "Toggle Follow - متابعة/إلغاء",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/{{targetUserId}}/follow",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "{{targetUserId}}", "follow"]
+            },
+            "description": "متابعة أو إلغاء متابعة مستخدم (Toggle)."
+          }
+        },
+        {
+          "name": "Get Followers - المتابعين",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/{{targetUserId}}/followers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "{{targetUserId}}", "followers"]
+            },
+            "description": "جلب قائمة متابعي مستخدم معين."
+          }
+        },
+        {
+          "name": "Get Following - المتابَعين",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/{{targetUserId}}/following",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "{{targetUserId}}", "following"]
+            },
+            "description": "جلب قائمة المستخدمين الذين يتابعهم مستخدم معين."
+          }
+        },
+        {
+          "name": "Follow User - متابعة (مباشر)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{targetUserId}}/follow",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "{{targetUserId}}", "follow"]
+            },
+            "description": "متابعة مستخدم (يرجع خطأ إذا كان متابعاً بالفعل)."
+          }
+        },
+        {
+          "name": "Unfollow User - إلغاء متابعة",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{targetUserId}}/follow",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "{{targetUserId}}", "follow"]
+            },
+            "description": "إلغاء متابعة مستخدم."
+          }
+        }
+      ]
+    },
+    {
+      "name": "📝 Posts",
+      "description": "إدارة المنشورات - نشر، تعديل، حذف، إعجابات، تعليقات",
+      "item": [
+        {
+          "name": "Create Post - إنشاء منشور",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.success && response.data._id) {",
+                  "    pm.environment.set('postId', response.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"هذا منشور جديد للاختبار\",\n  \"visibility\": \"public\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts"]
+            },
+            "description": "إنشاء منشور جديد. يتم تقييم المحتوى بالذكاء الاصطناعي تلقائياً."
+          },
+          "response": [
+            {
+              "name": "Created",
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"667a...\",\n    \"user\": { ... },\n    \"content\": \"...\",\n    \"visibility\": \"public\",\n    \"likes\": [],\n    \"comments\": [],\n    \"createdAt\": \"...\",\n    \"updatedAt\": \"...\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Posts - كل المنشورات",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "جلب جميع المنشورات مع دعم التصفح (Pagination)."
+          }
+        },
+        {
+          "name": "Update Post - تعديل منشور",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"تم تعديل محتوى المنشور\",\n  \"visibility\": \"connections\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "{{postId}}"]
+            },
+            "description": "تعديل منشور محدد. فقط صاحب المنشور يمكنه التعديل."
+          }
+        },
+        {
+          "name": "Delete Post - حذف منشور",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "{{postId}}"]
+            },
+            "description": "حذف منشور محدد. فقط صاحب المنشور يمكنه الحذف."
+          }
+        },
+        {
+          "name": "Like Post - إعجاب/إلغاء",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/{{postId}}/like",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "{{postId}}", "like"]
+            },
+            "description": "تبديل حالة الإعجاب بمنشور (إعجاب / إلغاء إعجاب)."
+          }
+        },
+        {
+          "name": "Add Comment - إضافة تعليق",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"هذا تعليق اختباري على المنشور\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/{{postId}}/comments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "{{postId}}", "comments"]
+            },
+            "description": "إضافة تعليق على منشور. الحد الأقصى: 5 تعليقات في الدقيقة."
+          }
+        },
+        {
+          "name": "Delete Comment - حذف تعليق",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/{{postId}}/comments/{{commentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "posts", "{{postId}}", "comments", "{{commentId}}"]
+            },
+            "description": "حذف تعليق محدد. مسموح لصاحب التعليق أو صاحب المنشور."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏢 Companies",
+      "description": "إدارة الشركات - إنشاء، متابعة، مدراء",
+      "item": [
+        {
+          "name": "Create Company - إنشاء شركة",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.success && response.data._id) {",
+                  "    pm.environment.set('companyId', response.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"شركة التقنية المتطورة\",\n  \"description\": \"شركة رائدة في مجال تقنية المعلومات\",\n  \"industry\": \"تقنية معلومات\",\n  \"location\": \"الرياض، السعودية\",\n  \"companySize\": \"51-200\",\n  \"foundedYear\": 2015,\n  \"website\": \"https://example.com\",\n  \"socialLinks\": {\n    \"linkedin\": \"https://linkedin.com/company/example\",\n    \"twitter\": \"https://twitter.com/example\"\n  },\n  \"contactEmail\": \"info@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/companies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "companies"]
+            },
+            "description": "إنشاء شركة جديدة. الشركة تكون بحالة Pending وتنتظر موافقة المشرف."
+          }
+        },
+        {
+          "name": "Get Companies - كل الشركات",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/companies",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "companies"]
+            },
+            "description": "جلب جميع الشركات المسجلة."
+          }
+        },
+        {
+          "name": "Get Company By ID - شركة محددة",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/companies/{{companyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "companies", "{{companyId}}"]
+            },
+            "description": "جلب شركة محددة باستخدام المعرف."
+          }
+        },
+        {
+          "name": "Follow Company - متابعة شركة",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/companies/{{companyId}}/follow",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "companies", "{{companyId}}", "follow"]
+            },
+            "description": "متابعة أو إلغاء متابعة شركة (Toggle)."
+          }
+        },
+        {
+          "name": "Add Company Admin - إضافة مدير",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newAdminId\": \"{{targetUserId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/companies/{{companyId}}/admins",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "companies", "{{companyId}}", "admins"]
+            },
+            "description": "إضافة مدير جديد للشركة. فقط المالك يمكنه إضافة مدراء."
+          }
+        }
+      ]
+    },
+    {
+      "name": "💼 Jobs",
+      "description": "إدارة الوظائف - نشر، تقديم، متابعة الطلبات",
+      "item": [
+        {
+          "name": "Get Jobs - كل الوظائف",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs?type=Full-time&workPlace=Remote&workLevel=Mid",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs"],
+              "query": [
+                { "key": "type", "value": "Full-time" },
+                { "key": "workPlace", "value": "Remote" },
+                { "key": "workLevel", "value": "Mid" }
+              ]
+            },
+            "description": "جلب جميع الوظائف المفتوحة مع فلاتر البحث (نوع العمل، مكان العمل، المستوى)."
+          }
+        },
+        {
+          "name": "Create Job - نشر وظيفة",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.success && response.data._id) {",
+                  "    pm.environment.set('jobId', response.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyId\": \"{{companyId}}\",\n  \"title\": \"مهندس برمجيات\",\n  \"description\": \"نبحث عن مهندس برمجيات متمكن في Node.js و React\",\n  \"location\": \"الرياض\",\n  \"type\": \"Full-time\",\n  \"workLevel\": \"Mid\",\n  \"workPlace\": \"On-site\",\n  \"salary\": {\n    \"min\": 5000,\n    \"max\": 15000\n  },\n  \"requirements\": [\"Node.js\", \"MongoDB\", \"React\", \"Express\"],\n  \"responsibilities\": [\"تطوير واجهات API\", \"إدارة قواعد البيانات\", \"كتابة اختبارات\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs"]
+            },
+            "description": "نشر وظيفة جديدة. يجب أن يكون المستخدم مديراً في الشركة المحددة."
+          }
+        },
+        {
+          "name": "Apply to Job - التقديم",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resumeLink\": \"https://example.com/resume.pdf\",\n  \"coverLetter\": \"أنا مهتم جداً بهذه الفرصة الوظيفية وأمتلك المهارات المطلوبة.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs/{{jobId}}/apply",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs", "{{jobId}}", "apply"]
+            },
+            "description": "التقديم على وظيفة معينة. لا يمكن التقديم مرتين على نفس الوظيفة."
+          }
+        },
+        {
+          "name": "Get Job Applicants - المتقدمين",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs/{{jobId}}/applicants",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs", "{{jobId}}", "applicants"]
+            },
+            "description": "جلب قائمة المتقدمين لوظيفة معينة. فقط مدراء الشركة يمكنهم المشاهدة."
+          }
+        },
+        {
+          "name": "Update Application Status - حالة الطلب",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Shortlisted\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs/applications/{{applicationId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs", "applications", "{{applicationId}}", "status"]
+            },
+            "description": "تحديث حالة طلب توظيف (Pending, Reviewed, Shortlisted, Rejected, Accepted)."
+          }
+        },
+        {
+          "name": "Get My Applications - طلباتي",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs/my-applications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs", "my-applications"]
+            },
+            "description": "جلب جميع الوظائف التي قدم عليها المستخدم الحالي."
+          }
+        }
+      ]
+    },
+    {
+      "name": "💰 Salaries",
+      "description": "بيانات الرواتب - بحث، فلترة، إحصائيات",
+      "item": [
+        {
+          "name": "Get Salaries - بيانات الرواتب",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/salaries?title=Software&country=Saudi%20Arabia&page=1&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "salaries"],
+              "query": [
+                { "key": "title", "value": "Software" },
+                { "key": "country", "value": "Saudi Arabia" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" }
+              ]
+            },
+            "description": "جلب بيانات الرواتب مع دعم البحث الجزئي والفلترة والتصفح."
+          }
+        },
+        {
+          "name": "Get Salary Options - خيارات فلترة",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/salaries/options",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "salaries", "options"]
+            },
+            "description": "جلب القيم الفريدة للفلترة (المسميات الوظيفية، الدول، التصنيفات، مستويات الخبرة)."
+          }
+        },
+        {
+          "name": "Get Salary Stats - إحصائيات",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/salaries/stats?title=Software%20Engineer&country=Saudi%20Arabia",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "salaries", "stats"],
+              "query": [
+                { "key": "title", "value": "Software Engineer" },
+                { "key": "country", "value": "Saudi Arabia" }
+              ]
+            },
+            "description": "جلب إحصائيات الرواتب (متوسط، أدنى، أعلى راتب) مجمعة حسب الدولة أو المسمى الوظيفي."
+          }
+        }
+      ]
+    },
+    {
+      "name": "💬 Messages",
+      "description": "نظام الرسائل الخاصة والمحادثات",
+      "item": [
+        {
+          "name": "Create Conversation - بدء محادثة",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.success && response.data._id) {",
+                  "    pm.environment.set('conversationId', response.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipientId\": \"{{targetUserId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/conversations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "conversations"]
+            },
+            "description": "بدء محادثة جديدة مع مستخدم آخر أو جلب المحادثة الموجودة."
+          }
+        },
+        {
+          "name": "Get Conversations - المحادثات",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/conversations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "conversations"]
+            },
+            "description": "جلب جميع محادثات المستخدم الحالي مرتبة حسب آخر رسالة."
+          }
+        },
+        {
+          "name": "Get Messages - رسائل محادثة",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/conversations/{{conversationId}}?page=1&limit=30",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "conversations", "{{conversationId}}"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "30" }
+              ]
+            },
+            "description": "جلب رسائل محادثة معينة مع دعم التصفح. يتم تحديث حالة القراءة تلقائياً."
+          }
+        },
+        {
+          "name": "Send Message - إرسال رسالة",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"مرحباً، هذه رسالة اختبار\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/conversations/{{conversationId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "conversations", "{{conversationId}}"]
+            },
+            "description": "إرسال رسالة جديدة في محادثة موجودة."
+          }
+        },
+        {
+          "name": "Get Unread Count - غير مقروءة",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/unread",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "unread"]
+            },
+            "description": "جلب عدد الرسائل غير المقروءة للمستخدم الحالي."
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛡️ Admin",
+      "description": "لوحة تحكم المشرف - إدارة الشركات",
+      "item": [
+        {
+          "name": "Get Pending Companies - المعلقة",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/companies/pending",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "companies", "pending"]
+            },
+            "description": "جلب جميع الشركات المعلقة التي تنتظر موافقة المشرف."
+          }
+        },
+        {
+          "name": "Update Company Status - موافقة/رفض",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Approved\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/companies/{{companyId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "companies", "{{companyId}}", "status"]
+            },
+            "description": "الموافقة على شركة (Approved) أو رفضها (Rejected). عند الموافقة تصبح الشركة موثقة."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "id": "baseUrl",
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "id": "authToken",
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "adminToken",
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "userId",
+      "key": "userId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "targetUserId",
+      "key": "targetUserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "postId",
+      "key": "postId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "commentId",
+      "key": "commentId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "companyId",
+      "key": "companyId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "jobId",
+      "key": "jobId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "applicationId",
+      "key": "applicationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "conversationId",
+      "key": "conversationId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "id": "email",
+      "key": "email",
+      "value": "test@example.com",
+      "type": "string"
+    },
+    {
+      "id": "password",
+      "key": "password",
+      "value": "password123",
+      "type": "string"
+    },
+    {
+      "id": "firstName",
+      "key": "firstName",
+      "value": "Test",
+      "type": "string"
+    },
+    {
+      "id": "lastName",
+      "key": "lastName",
+      "value": "User",
+      "type": "string"
+    },
+    {
+      "id": "role",
+      "key": "role",
+      "value": "Student",
+      "type": "string"
+    },
+    {
+      "id": "phoneNumber",
+      "key": "phoneNumber",
+      "value": "+966501234567",
+      "type": "string"
+    },
+    {
+      "id": "industry",
+      "key": "industry",
+      "value": "تقنية معلومات",
+      "type": "string"
+    },
+    {
+      "id": "yearsOfExperience",
+      "key": "yearsOfExperience",
+      "value": "3",
+      "type": "string"
+    },
+    {
+      "id": "skills",
+      "key": "skills",
+      "value": "JavaScript, Node.js",
+      "type": "string"
+    }
+  ]
+}

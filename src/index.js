@@ -1,6 +1,8 @@
 
-const express = require('express');
 const dotenv = require('dotenv');
+dotenv.config(); // <-- يجب تحميل .env قبل أي شيء يقرأ process.env
+
+const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -17,8 +19,7 @@ const jobRoutes = require('./routes/jobRoutes');
 const salaryRoutes = require('./routes/salaryRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const followRoutes = require('./routes/followRoutes'); // <-- إضافة مسارات المتابعة
-
-dotenv.config();
+const translateRoutes = require('./routes/translateRoutes');
 
 // الاتصال بقاعدة البيانات
 connectDB();
@@ -27,7 +28,7 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true,
 };
 
@@ -49,6 +50,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/salaries', salaryRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/translate', translateRoutes);
 
 // تسجيل الطلبات في موجه الأوامر أثناء التطوير
 if (process.env.NODE_ENV === 'development') {
