@@ -9,10 +9,9 @@ const formatUserResponse = (user, options = {}) => {
     role: userObject.role,
     profile: userObject.profile,
     professional: userObject.professional,
+    settings: userObject.settings,
 
     ...(includePosts && userObject.posts ? { posts: userObject.posts } : {}),
-
-    // settings تم إخفاؤه من الاستجابة كما طلبت
 
     // تم إخفاء الحقول الحساسة/غير المرغوب إظهارها في واجهات المستخدم
     // isActive, isVerified, createdAt, updatedAt

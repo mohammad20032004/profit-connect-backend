@@ -12,17 +12,30 @@ const {
 } = require('../controllers/postController');
 
 const { protect } = require('../middleware/authMiddleware');
+const { uploadPostMedia } = require('../middleware/uploadMiddleware');
 
-router.use(protect); // حماية جميع المسارات
+const postMediaUpload = (req, res, next) => {
+  uploadPostMedia.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'video', maxCount: 1 },
+  ])(req, res, (error) => {
+    if (error) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+    next();
+  });
+};
+
+router.use(protect);
 
 // مسار المنشورات العام
 router.route('/')
-  .post(createPost)
+  .post(postMediaUpload, createPost)
   .get(getPosts);
 
 // مسار لمنشور محدد (تعديل وحذف)
 router.route('/:postId')
-  .put(updatePost)
+  .put(postMediaUpload, updatePost)
   .delete(deletePost);
 
 // مسار التفاعلات (الإعجاب والتعليق)

@@ -1,8 +1,9 @@
 const path = require('path');
 const multer = require('multer');
-const { avatarsDir, allowedMimeTypes } = require('../utils/avatarStorage');
+const { avatarsDir, allowedMimeTypes: avatarMimeTypes } = require('../utils/avatarStorage');
+const { postsDir, videosDir, allowedImageMimeTypes, allowedVideoMimeTypes } = require('../utils/postImageStorage');
 
-const storage = multer.diskStorage({
+const avatarStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, avatarsDir);
   },
@@ -13,22 +14,88 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req, file, cb) => {
-  if (!allowedMimeTypes.includes(file.mimetype)) {
+const avatarFileFilter = (req, file, cb) => {
+  if (!avatarMimeTypes.includes(file.mimetype)) {
     return cb(new Error('نوع الملف غير مدعوم. الرجاء رفع صورة بصيغة JPG أو PNG أو WEBP'));
   }
-
   cb(null, true);
 };
 
 const uploadAvatar = multer({
-  storage,
-  limits: {
-    fileSize: 5 * 1024 * 1024,
+  storage: avatarStorage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: avatarFileFilter,
+});
+
+const postImageStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, postsDir);
   },
-  fileFilter,
+  filename: (req, file, cb) => {
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    cb(null, `post-${req.user ? req.user._id : 'new'}-${uniqueSuffix}${fileExtension}`);
+  },
+});
+
+const postImageFileFilter = (req, file, cb) => {
+  if (!allowedImageMimeTypes.includes(file.mimetype)) {
+    return cb(new Error('نوع الملف غير مدعوم. الرجاء رفع صورة بصيغة JPG أو PNG أو WEBP أو GIF'));
+  }
+  cb(null, true);
+};
+
+const uploadPostImage = multer({
+  storage: postImageStorage,
+  limits: { fileSize: 20 * 1024 * 1024 },
+  fileFilter: postImageFileFilter,
+});
+
+const postVideoFileFilter = (req, file, cb) => {
+  if (!allowedVideoMimeTypes.includes(file.mimetype)) {
+    return cb(new Error('نوع الملف غير مدعوم. الرجاء رفع فيديو بصيغة MP4 أو WebM أو MOV أو AVI'));
+  }
+  cb(null, true);
+};
+
+// combined media upload — routes image to postsDir, video to videosDir
+const postMediaStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (file.fieldname === 'video') {
+      cb(null, videosDir);
+    } else {
+      cb(null, postsDir);
+    }
+  },
+  filename: (req, file, cb) => {
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    const prefix = file.fieldname === 'video' ? 'video' : 'post';
+    cb(null, `${prefix}-${req.user ? req.user._id : 'new'}-${uniqueSuffix}${fileExtension}`);
+  },
+});
+
+const postMediaFileFilter = (req, file, cb) => {
+  if (file.fieldname === 'video') {
+    if (!allowedVideoMimeTypes.includes(file.mimetype)) {
+      return cb(new Error('نوع الملف غير مدعوم. الرجاء رفع فيديو بصيغة MP4 أو WebM أو MOV أو AVI'));
+    }
+  } else {
+    if (!allowedImageMimeTypes.includes(file.mimetype)) {
+      return cb(new Error('نوع الملف غير مدعوم. الرجاء رفع صورة بصيغة JPG أو PNG أو WEBP أو GIF'));
+    }
+  }
+  cb(null, true);
+};
+
+const uploadPostMedia = multer({
+  storage: postMediaStorage,
+  limits: { fileSize: 200 * 1024 * 1024 },
+  fileFilter: postMediaFileFilter,
 });
 
 module.exports = {
   uploadAvatar,
+  uploadPostImage,
+  uploadPostMedia,
 };

@@ -6,6 +6,11 @@ coverage/
 npm-debug.log
 dist/
 
-# Ignore uploaded avatars
+# Ignore uploaded files
 uploads/avatars/*
 !uploads/avatars/.gitkeep
+uploads/posts/*
+!uploads/posts/.gitkeep
+!uploads/posts/videos/
+uploads/posts/videos/*
+!uploads/posts/videos/.gitkeep

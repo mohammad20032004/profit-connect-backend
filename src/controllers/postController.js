@@ -2,13 +2,18 @@ const Post = require('../models/Post');
 const RScoreService = require('../services/rScoreService');
 const { processDynamicScoring, evaluateContent } = require('../services/aiEvaluationService');
 const { applyWarning } = require('../services/moderationService');
+const { buildPostImageUrl, deletePostImage, buildPostVideoUrl, deletePostVideo } = require('../utils/postImageStorage');
+
 // @desc    إنشاء منشور جديد
 // @route   POST /api/posts
 // @access  Private (يحتاج توكن)
 exports.createPost = async (req, res) => {
  try {
-    const { content, image, visibility } = req.body;
-    const newPost = await Post.create({ user: req.user._id, content, image, visibility });
+    const { content, visibility } = req.body;
+    const files = req.files || {};
+    const image = files.image?.[0] ? buildPostImageUrl(req, files.image[0].filename) : null;
+    const video = files.video?.[0] ? buildPostVideoUrl(req, files.video[0].filename) : null;
+    const newPost = await Post.create({ user: req.user._id, content, image, video, visibility });
 
     // 🤖 تقييم المنشور بالذكاء في الخلفية
     if (content) {
@@ -184,11 +189,21 @@ exports.updatePost = async (req, res) => {
       return res.status(403).json({ success: false, message: 'غير مصرح لك بتعديل هذا المنشور' });
     }
 
-    // تحديث المنشور
+    const files = req.files || {};
+
+    if (files.image?.[0]) {
+      await deletePostImage(post.image);
+    }
+    if (files.video?.[0]) {
+      await deletePostVideo(post.video);
+    }
+
+    const image = files.image?.[0] ? buildPostImageUrl(req, files.image[0].filename) : req.body.image;
+    const video = files.video?.[0] ? buildPostVideoUrl(req, files.video[0].filename) : req.body.video;
     post = await Post.findByIdAndUpdate(
       req.params.postId,
-      { $set: { content: req.body.content, image: req.body.image, visibility: req.body.visibility } },
-      { new: true, runValidators: true } // new: true لكي يرجع المنشور بعد التحديث
+      { $set: { content: req.body.content, image, video, visibility: req.body.visibility } },
+      { new: true, runValidators: true }
     ).populate('user', 'profile.firstName profile.lastName profile.avatar');
 
     res.status(200).json({ success: true, data: post });
@@ -213,6 +228,8 @@ exports.deletePost = async (req, res) => {
       return res.status(403).json({ success: false, message: 'غير مصرح لك بحذف هذا المنشور' });
     }
 
+    await deletePostImage(post.image);
+    await deletePostVideo(post.video);
     await post.deleteOne();
 
     res.status(200).json({ success: true, message: 'تم حذف المنشور بنجاح' });

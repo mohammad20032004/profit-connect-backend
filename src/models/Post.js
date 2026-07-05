@@ -17,6 +17,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       default: null
     },
+    video: {
+      type: String,
+      default: null
+    },
     visibility: {
       type: String,
       enum: ['public', 'private', 'connections'],
