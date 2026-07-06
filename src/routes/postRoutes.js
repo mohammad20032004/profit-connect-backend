@@ -4,6 +4,7 @@ const { commentLimiter } = require('../middleware/rateLimiter');
 const { 
   createPost, 
   getPosts, 
+  getPost,
   toggleLike, 
   addComment,
   updatePost,    
@@ -33,8 +34,9 @@ router.route('/')
   .post(postMediaUpload, createPost)
   .get(getPosts);
 
-// مسار لمنشور محدد (تعديل وحذف)
+// مسار لمنشور محدد (عرض، تعديل، حذف)
 router.route('/:postId')
+  .get(getPost)
   .put(postMediaUpload, updatePost)
   .delete(deletePost);
 

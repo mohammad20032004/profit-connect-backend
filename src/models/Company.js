@@ -79,9 +79,46 @@ const companySchema = new mongoose.Schema(
     followersCount: { // لحل مشكلة الأداء عند عرض عدد المتابعين
       type: Number,
       default: 0
+    },
+    ratings: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+          required: true
+        },
+        rating: {
+          type: Number,
+          required: true,
+          min: 1,
+          max: 5
+        },
+        review: {
+          type: String,
+          trim: true,
+          default: ''
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now
+        }
+      }
+    ],
+    averageRating: {
+      type: Number,
+      default: 0
     }
   },
   { timestamps: true }
 );
+
+companySchema.methods.calcAverageRating = function () {
+  if (!this.ratings.length) {
+    this.averageRating = 0;
+    return;
+  }
+  const total = this.ratings.reduce((sum, r) => sum + r.rating, 0);
+  this.averageRating = Math.round((total / this.ratings.length) * 10) / 10;
+};
 
 module.exports = mongoose.model('Company', companySchema);

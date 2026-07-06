@@ -1,4 +1,5 @@
 const Company = require('../models/Company');
+const Job = require('../models/Job');
 
 // @desc    إنشاء صفحة شركة جديدة
 // @route   POST /api/companies
@@ -45,18 +46,49 @@ exports.createCompany = async (req, res) => {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إنشاء الشركة' });
   }
 };
-// @desc    جلب جميع الشركات
+// @desc    جلب جميع الشركات (مع Pagination و Filtering)
 // @route   GET /api/companies
-// @access  Private (أو Public حسب رغبتك، سنجعلها Private حالياً)
+// @access  Private
 exports.getCompanies = async (req, res) => {
   try {
-    // نجلب الشركات ومعها بيانات المالك الأساسية
-    const companies = await Company.find()
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+
+    if (req.query.industry) {
+      filter.industry = { $regex: req.query.industry, $options: 'i' };
+    }
+    if (req.query.status) {
+      filter.status = req.query.status;
+    }
+    if (req.query.search) {
+      filter.name = { $regex: req.query.search, $options: 'i' };
+    }
+
+    let sortOption = { createdAt: -1 };
+    if (req.query.sort === 'top') {
+      sortOption = { averageRating: -1, 'ratings': -1 };
+      filter['ratings.1'] = { $exists: true };
+    } else if (req.query.sort === 'popular') {
+      sortOption = { followersCount: -1 };
+    }
+
+    const companies = await Company.find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit)
       .populate('owner', 'profile.firstName profile.lastName profile.avatar');
+
+    const total = await Company.countDocuments(filter);
 
     res.status(200).json({
       success: true,
       count: companies.length,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
       data: companies
     });
   } catch (error) {
@@ -70,13 +102,26 @@ exports.getCompanies = async (req, res) => {
 exports.getCompanyById = async (req, res) => {
   try {
     const company = await Company.findById(req.params.id)
-      .populate('owner', 'profile.firstName profile.lastName profile.avatar');
+      .populate('owner', 'profile.firstName profile.lastName profile.avatar profile.headline')
+      .populate('admins', 'profile.firstName profile.lastName profile.avatar')
+      .populate('followers', 'profile.firstName profile.lastName profile.avatar profile.headline')
+      .populate('ratings.user', 'profile.firstName profile.lastName profile.avatar profile.headline');
 
     if (!company) {
       return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
     }
 
-    res.status(200).json({ success: true, data: company });
+    const jobsCount = await Job.countDocuments({ company: company._id });
+    const recentJobs = await Job.find({ company: company._id })
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select('title location type workLevel workPlace salary createdAt status');
+
+    const responseData = company.toObject();
+    responseData.jobsCount = jobsCount;
+    responseData.recentJobs = recentJobs;
+
+    res.status(200).json({ success: true, data: responseData });
   } catch (error) {
     if (error.kind === 'ObjectId') {
       return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
@@ -170,5 +215,228 @@ exports.addCompanyAdmin = async (req, res) => {
   } catch (error) {
     console.error('Add Admin Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إضافة المدير' });
+  }
+};
+
+// @desc    تحديث بيانات الشركة
+// @route   PUT /api/companies/:id
+// @access  Private (owner or admin)
+exports.updateCompany = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id);
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+
+    const isOwner = company.owner.toString() === req.user._id.toString();
+    const isAdmin = company.admins.some(a => a.toString() === req.user._id.toString());
+    if (!isOwner && !isAdmin) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بتعديل هذه الشركة' });
+    }
+
+    const allowed = ['name', 'description', 'industry', 'location', 'companySize', 'foundedYear', 'website', 'socialLinks', 'contactEmail', 'logo', 'coverPhoto'];
+    for (const field of allowed) {
+      if (req.body[field] !== undefined) {
+        company[field] = req.body[field];
+      }
+    }
+
+    await company.save();
+    res.status(200).json({ success: true, data: company });
+  } catch (error) {
+    console.error('Update Company Error:', error.message);
+    if (error.code === 11000) {
+      return res.status(400).json({ success: false, message: 'اسم الشركة مستخدم بالفعل' });
+    }
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث الشركة' });
+  }
+};
+
+// @desc    حذف شركة
+// @route   DELETE /api/companies/:id
+// @access  Private (owner only)
+exports.deleteCompany = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id);
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+
+    if (company.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك! المالك فقط يمكنه حذف الشركة' });
+    }
+
+    await company.deleteOne();
+    res.status(200).json({ success: true, message: 'تم حذف الشركة بنجاح' });
+  } catch (error) {
+    console.error('Delete Company Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء حذف الشركة' });
+  }
+};
+
+// @desc    تغيير حالة الشركة (Pending → Approved / Rejected)
+// @route   PATCH /api/companies/:id/status
+// @access  Private (owner or admin)
+exports.updateCompanyStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!['Pending', 'Approved', 'Rejected'].includes(status)) {
+      return res.status(400).json({ success: false, message: 'حالة غير صالحة. الحالات المسموحة: Pending, Approved, Rejected' });
+    }
+
+    const company = await Company.findById(req.params.id);
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+
+    const isOwner = company.owner.toString() === req.user._id.toString();
+    const isAdmin = company.admins.some(a => a.toString() === req.user._id.toString());
+    if (!isOwner && !isAdmin) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بتغيير حالة الشركة' });
+    }
+
+    company.status = status;
+    if (status === 'Approved') {
+      company.isVerified = true;
+    }
+    await company.save();
+
+    res.status(200).json({ success: true, message: 'تم تحديث حالة الشركة بنجاح', data: { status: company.status, isVerified: company.isVerified } });
+  } catch (error) {
+    console.error('Update Status Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تحديث الحالة' });
+  }
+};
+
+// @desc    جلب متابعي شركة
+// @route   GET /api/companies/:id/followers
+// @access  Private
+exports.getCompanyFollowers = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id)
+      .populate('followers', 'profile.firstName profile.lastName profile.avatar profile.headline');
+
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+
+    res.status(200).json({
+      success: true,
+      count: company.followers.length,
+      data: company.followers,
+    });
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+    console.error('Get Followers Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+// @desc    إضافة / تحديث تقييم لشركة
+// @route   POST /api/companies/:id/ratings
+// @access  Private
+exports.addRating = async (req, res) => {
+  try {
+    const { rating, review } = req.body;
+
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ success: false, message: 'التقييم يجب أن يكون بين 1 و 5' });
+    }
+
+    const company = await Company.findById(req.params.id);
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+
+    const existingIndex = company.ratings.findIndex(
+      r => r.user.toString() === req.user._id.toString()
+    );
+
+    if (existingIndex > -1) {
+      company.ratings[existingIndex].rating = rating;
+      company.ratings[existingIndex].review = review || '';
+    } else {
+      company.ratings.push({
+        user: req.user._id,
+        rating,
+        review: review || '',
+      });
+    }
+
+    company.calcAverageRating();
+    await company.save();
+
+    res.status(200).json({
+      success: true,
+      message: existingIndex > -1 ? 'تم تحديث التقييم بنجاح' : 'تمت إضافة التقييم بنجاح',
+      averageRating: company.averageRating,
+      ratingsCount: company.ratings.length,
+    });
+  } catch (error) {
+    console.error('Add Rating Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء إضافة التقييم' });
+  }
+};
+
+// @desc    جلب تقييمات شركة
+// @route   GET /api/companies/:id/ratings
+// @access  Private
+exports.getCompanyRatings = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id)
+      .populate('ratings.user', 'profile.firstName profile.lastName profile.avatar');
+
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+
+    res.status(200).json({
+      success: true,
+      averageRating: company.averageRating,
+      ratingsCount: company.ratings.length,
+      data: company.ratings,
+    });
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+    console.error('Get Ratings Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+// @desc    حذف تقييم المستخدم لشركة
+// @route   DELETE /api/companies/:id/ratings
+// @access  Private
+exports.deleteRating = async (req, res) => {
+  try {
+    const company = await Company.findById(req.params.id);
+    if (!company) {
+      return res.status(404).json({ success: false, message: 'الشركة غير موجودة' });
+    }
+
+    const index = company.ratings.findIndex(
+      r => r.user.toString() === req.user._id.toString()
+    );
+
+    if (index === -1) {
+      return res.status(404).json({ success: false, message: 'ليس لديك تقييم لهذه الشركة' });
+    }
+
+    company.ratings.splice(index, 1);
+    company.calcAverageRating();
+    await company.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'تم حذف التقييم بنجاح',
+      averageRating: company.averageRating,
+      ratingsCount: company.ratings.length,
+    });
+  } catch (error) {
+    console.error('Delete Rating Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء حذف التقييم' });
   }
 };

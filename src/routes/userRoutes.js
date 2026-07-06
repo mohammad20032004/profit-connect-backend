@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// 1. استدعاء المتحكمات (أضفنا deleteUserProfile)
 const { 
   getUserProfile, 
   updateUserProfile, 
@@ -12,7 +11,9 @@ const {
   updateSettings,
   toggleFollow,
   getFollowers,
-  getFollowing
+  getFollowing,
+  changePassword,
+  exportData
 } = require('../controllers/userController');
 
 // 2. استدعاء حارس البوابة
@@ -35,7 +36,10 @@ const avatarUploadHandler = (req, res, next) => {
 // مسار الحصول على الملف الشخصي: GET /api/user/profile
 router.get('/profile', protect, getUserProfile);
 router.put('/profile', protect, updateUserProfile);
+router.delete('/profile', protect, deleteUserProfile);
 router.put('/profile/avatar', protect, avatarUploadHandler, updateUserAvatar);
+router.put('/change-password', protect, changePassword);
+router.get('/export-data', protect, exportData);
 router.get('/settings', protect, getSettings);
 router.put('/settings', protect, updateSettings);
 router.post('/:userId/follow', protect, toggleFollow);

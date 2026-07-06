@@ -5,8 +5,15 @@ const {
   createCompany, 
   getCompanies, 
   getCompanyById,
-  toggleFollowCompany, // 👈 استدعاء دالة المتابعة
-  addCompanyAdmin      // 👈 استدعاء دالة إضافة المدير
+  toggleFollowCompany,
+  addCompanyAdmin,
+  updateCompany,
+  deleteCompany,
+  updateCompanyStatus,
+  getCompanyFollowers,
+  addRating,
+  getCompanyRatings,
+  deleteRating
 } = require('../controllers/companyController');
 
 const { protect } = require('../middleware/authMiddleware');
@@ -20,7 +27,15 @@ router.route('/')
   .get(getCompanies);
 
 router.route('/:id')
-  .get(getCompanyById);
+  .get(getCompanyById)
+  .put(updateCompany)
+  .delete(deleteCompany);
+router.patch('/:id/status', updateCompanyStatus);
+router.get('/:id/followers', getCompanyFollowers);
 router.post('/:id/follow', toggleFollowCompany);
 router.post('/:id/admins', addCompanyAdmin);
+router.route('/:id/ratings')
+  .post(addRating)
+  .get(getCompanyRatings)
+  .delete(deleteRating);
 module.exports = router;

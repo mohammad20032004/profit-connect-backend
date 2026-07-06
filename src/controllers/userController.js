@@ -108,17 +108,15 @@ exports.updateUserAvatar = async (req, res) => {
 // @access  Private (يحتاج توكن)
 exports.deleteUserProfile = async (req, res) => {
   try {
-    // 1. نبحث عن المستخدم بواسطة الـ ID الخاص به (المستخرج من التوكن)
     const user = await User.findById(req.user._id);
-
     if (!user) {
       return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
     }
 
-    // 2. نقوم بحذف المستخدم من قاعدة البيانات
+    await deleteAvatarFile(user.profile?.avatar);
+    await Post.deleteMany({ user: user._id });
     await user.deleteOne();
 
-    // 3. إرجاع رسالة نجاح
     res.status(200).json({
       success: true,
       message: 'تم حذف الحساب وبياناته بنجاح'
@@ -130,6 +128,87 @@ exports.deleteUserProfile = async (req, res) => {
   }
 };
 
+// @desc    تغيير كلمة المرور
+// @route   PUT /api/user/change-password
+// @access  Private
+exports.changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: 'كلمة المرور الحالية والجديدة مطلوبتان' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: 'كلمة المرور الجديدة يجب أن تكون 6 أحرف على الأقل' });
+    }
+
+    const user = await User.findById(req.user._id).select('+password');
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+    }
+
+    const isMatch = await user.matchPassword(currentPassword);
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: 'كلمة المرور الحالية غير صحيحة' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ success: true, message: 'تم تغيير كلمة المرور بنجاح' });
+  } catch (error) {
+    console.error('Change Password Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تغيير كلمة المرور' });
+  }
+};
+
+// @desc    تصدير بيانات المستخدم
+// @route   GET /api/user/export-data
+// @access  Private
+exports.exportData = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    const posts = await Post.find({ user: req.user._id }).sort({ createdAt: -1 }).lean();
+    const postsCount = await Post.countDocuments({ user: req.user._id });
+    const likesReceived = await Post.aggregate([
+      { $match: { user: req.user._id } },
+      { $project: { likesCount: { $size: '$likes' } } },
+      { $group: { _id: null, total: { $sum: '$likesCount' } } },
+    ]);
+    const commentsCount = await Post.aggregate([
+      { $match: { user: req.user._id } },
+      { $project: { commentsCount: { $size: '$comments' } } },
+      { $group: { _id: null, total: { $sum: '$commentsCount' } } },
+    ]);
+
+    const exportData = {
+      exportedAt: new Date().toISOString(),
+      account: {
+        id: user._id,
+        email: user.email,
+        username: user.username,
+        role: user.role,
+        createdAt: user.createdAt,
+        status: user.status,
+      },
+      profile: user.profile,
+      professional: user.professional,
+      settings: user.settings,
+      stats: {
+        postsCount,
+        totalLikesReceived: likesReceived[0]?.total || 0,
+        totalCommentsOnPosts: commentsCount[0]?.total || 0,
+      },
+      posts,
+    };
+
+    res.status(200).json({ success: true, data: exportData });
+  } catch (error) {
+    console.error('Export Data Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تصدير البيانات' });
+  }
+};
 
 // @desc    جلب إعدادات المستخدم
 // @route   GET /api/user/settings

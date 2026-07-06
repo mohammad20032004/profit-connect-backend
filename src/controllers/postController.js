@@ -77,6 +77,29 @@ exports.getPosts = async (req, res) => {
   }
 };
 
+// @desc    الحصول على منشور محدد (للمشاركة)
+// @route   GET /api/posts/:postId
+// @access  Private
+exports.getPost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId)
+      .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar')
+      .populate({ path: 'comments.user', select: '_id profile.firstName profile.lastName profile.avatar' })
+      .lean();
+
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+    }
+
+    res.status(200).json({ success: true, data: post });
+  } catch (error) {
+    console.error('Get Post Error:', error.message);
+    if (error.kind === 'ObjectId') {
+      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+    }
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
 
 // @desc    تسجيل إعجاب / إلغاء إعجاب بمنشور (Toggle Like)
 // @route   POST /api/posts/:postId/like
