@@ -20,6 +20,8 @@ const salaryRoutes = require('./routes/salaryRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const followRoutes = require('./routes/followRoutes'); // <-- إضافة مسارات المتابعة
 const translateRoutes = require('./routes/translateRoutes');
+const projectRoutes = require('./routes/projectRoutes');
+const improveRoutes = require('./routes/improveRoutes');
 
 // الاتصال بقاعدة البيانات
 connectDB();
@@ -51,6 +53,8 @@ app.use('/api/jobs', jobRoutes);
 app.use('/api/salaries', salaryRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/translate', translateRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/improve', improveRoutes);
 
 // تسجيل الطلبات في موجه الأوامر أثناء التطوير
 if (process.env.NODE_ENV === 'development') {

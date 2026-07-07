@@ -122,6 +122,39 @@ const evaluateWithContext = async (content, systemPrompt) => {
   }
 };
 
+const improveContent = async (text) => {
+  if (!text?.trim()) return '';
+
+  try {
+    const improved = await callAI(
+      [
+        {
+          role: 'system',
+          content: `You are an expert content improver and proofreader for both Arabic and English.
+Improve the following text by:
+1. Detecting the input language automatically (Arabic or English)
+2. Correcting spelling and grammatical errors (even if the original has typos, infer the intended words)
+3. Enhancing clarity, professionalism, and scientific accuracy
+4. Preserving technical terms exactly (e.g., Frontend, API, Node.js, Full-stack, React, AI)
+5. Keeping proper nouns, numbers, and code unchanged
+6. Maintaining the original meaning and intent — do NOT change what the user is asking for
+7. Using professional modern language (formal Arabic or proper English)
+
+Output ONLY the corrected and improved text in the same language as the input, no explanations, no prefixes, no comments.`,
+        },
+        { role: 'user', content: text },
+      ],
+      { temperature: 0.3, max_tokens: 4096, stop: null }
+    );
+
+    console.log('[Improve Raw Response]:', improved);
+    return improved;
+  } catch (error) {
+    console.error('[Improve Error]:', error.message);
+    throw error;
+  }
+};
+
 const translateContent = async (text) => {
   if (!text?.trim()) return '';
 
@@ -149,4 +182,4 @@ Output ONLY the translated text, no explanations.`,
   }
 };
 
-module.exports = { evaluateContent, evaluateWithContext, processDynamicScoring, translateContent };
+module.exports = { evaluateContent, evaluateWithContext, processDynamicScoring, translateContent, improveContent };

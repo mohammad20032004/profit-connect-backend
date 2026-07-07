@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['Student', 'Professional', 'Admin'],
+      enum: ['Student', 'Professional', 'Admin', 'Client'],
       default: 'Student',
       required: [true, 'يرجى تحديد نوع الحساب (طالب أو محترف)']
     },
