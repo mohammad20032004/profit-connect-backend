@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const Proposal = require('../models/Proposal');
+const User = require('../models/User');
 
 exports.createProject = async (req, res) => {
   try {
@@ -33,6 +34,8 @@ exports.getProjects = async (req, res) => {
 
     if (req.query.mine === 'true') {
       filter.client = req.user._id;
+    } else {
+      filter.client = { $ne: req.user._id };
     }
 
     const page = parseInt(req.query.page) || 1;
@@ -226,6 +229,10 @@ exports.acceptProposal = async (req, res) => {
       return res.status(400).json({ success: false, message: 'هذا العرض لا ينتمي لهذا المشروع' });
     }
 
+    const otherProposals = await Proposal.find(
+      { project: project._id, _id: { $ne: proposal._id } }
+    );
+
     await Proposal.updateMany(
       { project: project._id, _id: { $ne: proposal._id } },
       { status: 'Rejected' }
@@ -233,6 +240,34 @@ exports.acceptProposal = async (req, res) => {
 
     proposal.status = 'Accepted';
     await proposal.save();
+
+    const clientName = `${req.user.profile.firstName} ${req.user.profile.lastName}`;
+
+    for (const other of otherProposals) {
+      await User.findByIdAndUpdate(other.freelancer, {
+        $push: {
+          notifications: {
+            type: 'proposal_rejected',
+            projectName: project.title,
+            clientName,
+            projectId: project._id,
+            createdAt: new Date(),
+          },
+        },
+      });
+    }
+
+    await User.findByIdAndUpdate(proposal.freelancer, {
+      $push: {
+        notifications: {
+          type: 'proposal_accepted',
+          projectName: project.title,
+          clientName,
+          projectId: project._id,
+          createdAt: new Date(),
+        },
+      },
+    });
 
     project.status = 'InProgress';
     project.assignedTo = proposal.freelancer;
@@ -266,5 +301,123 @@ exports.completeProject = async (req, res) => {
   } catch (error) {
     console.error('Complete Project Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إنهاء المشروع' });
+  }
+};
+
+exports.rejectProposal = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'المشروع غير موجود' });
+    }
+    if (project.client.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك. فقط صاحب المشروع يمكنه رفض العروض' });
+    }
+
+    const proposal = await Proposal.findById(req.params.proposalId);
+    if (!proposal) {
+      return res.status(404).json({ success: false, message: 'العرض غير موجود' });
+    }
+    if (proposal.project.toString() !== project._id.toString()) {
+      return res.status(400).json({ success: false, message: 'هذا العرض لا ينتمي لهذا المشروع' });
+    }
+    if (proposal.status !== 'Pending') {
+      return res.status(400).json({ success: false, message: 'يمكن رفض العروض المعلقة فقط' });
+    }
+
+    proposal.status = 'Rejected';
+    await proposal.save();
+
+    const clientName = `${req.user.profile.firstName} ${req.user.profile.lastName}`;
+    await User.findByIdAndUpdate(proposal.freelancer, {
+      $push: {
+        notifications: {
+          type: 'proposal_rejected',
+          projectName: project.title,
+          clientName,
+          projectId: project._id,
+          createdAt: new Date(),
+        },
+      },
+    });
+
+    res.status(200).json({ success: true, message: 'تم رفض العرض', data: proposal });
+  } catch (error) {
+    console.error('Reject Proposal Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء رفض العرض' });
+  }
+};
+
+exports.getNotifications = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('notifications');
+    const notifications = (user.notifications || []).reverse();
+    res.status(200).json({ success: true, count: notifications.length, data: notifications });
+  } catch (error) {
+    console.error('Get Notifications Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+exports.getRecentNotifications = async (req, res) => {
+  try {
+    const tenMinutesAgo = new Date(Date.now() - 15 * 1000);
+    const user = await User.findById(req.user._id).select('notifications');
+    const notifications = (user.notifications || []).filter(
+      n => new Date(n.createdAt) >= tenMinutesAgo
+    ).reverse();
+    res.status(200).json({ success: true, count: notifications.length, data: notifications });
+  } catch (error) {
+    console.error('Get Recent Notifications Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+exports.markNotificationRead = async (req, res) => {
+  try {
+    const { notificationId } = req.params;
+    const user = await User.findById(req.user._id);
+    const notification = user.notifications.id(notificationId);
+    if (!notification) {
+      return res.status(404).json({ success: false, message: 'الإشعار غير موجود' });
+    }
+    notification.read = true;
+    await user.save();
+    res.status(200).json({ success: true, data: notification });
+  } catch (error) {
+    console.error('Mark Notification Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+exports.getMyProjectsWithProposals = async (req, res) => {
+  try {
+    const projects = await Project.find({ client: req.user._id })
+      .sort({ createdAt: -1 })
+      .lean({ virtuals: true });
+
+    const projectIds = projects.map(p => p._id);
+    const proposals = await Proposal.find({ project: { $in: projectIds } })
+      .populate('freelancer', 'profile.firstName profile.lastName profile.avatar profile.headline professional')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const proposalsByProject = {};
+    for (const prop of proposals) {
+      const pid = prop.project.toString();
+      if (!proposalsByProject[pid]) proposalsByProject[pid] = [];
+      proposalsByProject[pid].push(prop);
+    }
+
+    const data = projects.map(p => ({
+      ...p,
+      proposals: proposalsByProject[p._id.toString()] || [],
+      proposalsCount: proposalsByProject[p._id.toString()]?.length || 0,
+    }));
+
+    res.status(200).json({ success: true, count: data.length, data });
+  } catch (error) {
+    console.error('Get My Projects With Proposals Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
   }
 };

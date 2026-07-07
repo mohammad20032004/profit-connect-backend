@@ -11,7 +11,12 @@ const {
   getProposalsByProject,
   getMyProposals,
   acceptProposal,
+  rejectProposal,
   completeProject,
+  getMyProjectsWithProposals,
+  getNotifications,
+  getRecentNotifications,
+  markNotificationRead,
 } = require('../controllers/projectController');
 
 const { protect } = require('../middleware/authMiddleware');
@@ -23,6 +28,11 @@ router.route('/')
   .get(getProjects);
 
 router.get('/my-proposals', getMyProposals);
+router.get('/my-projects-with-proposals', getMyProjectsWithProposals);
+
+router.get('/notifications', getNotifications);
+router.get('/notifications/recent', getRecentNotifications);
+router.put('/notifications/:notificationId/read', markNotificationRead);
 
 router.route('/:id')
   .get(getProjectById)
@@ -32,6 +42,7 @@ router.route('/:id')
 router.post('/:id/proposals', submitProposal);
 router.get('/:id/proposals', getProposalsByProject);
 router.post('/:id/proposals/:proposalId/accept', acceptProposal);
+router.post('/:id/proposals/:proposalId/reject', rejectProposal);
 router.patch('/:id/complete', completeProject);
 
 module.exports = router;

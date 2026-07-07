@@ -107,6 +107,14 @@ const userSchema = new mongoose.Schema(
       content: { type: String, required: true },
       reason: { type: String, required: true },
       date: { type: Date, default: Date.now }
+    }],
+    notifications: [{
+      type: { type: String, enum: ['proposal_accepted', 'proposal_rejected'], required: true },
+      projectName: { type: String, required: true },
+      clientName: { type: String, required: true },
+      projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
+      read: { type: Boolean, default: false },
+      createdAt: { type: Date, default: Date.now }
     }]
   }, // 👈 هنا تم إغلاق كائن الحقول بالكامل وبشكل صحيح
   { timestamps: true } // 👈 هنا المعامل الثاني (الإعدادات)
