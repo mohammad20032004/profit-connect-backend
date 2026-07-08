@@ -101,6 +101,7 @@ const userSchema = new mongoose.Schema(
       profileVisibility: { type: String, enum: ['public', 'connections', 'private'], default: 'public' },
       showEmail:         { type: Boolean, default: false },
       showPhone:         { type: Boolean, default: false },
+      animationEnabled:  { type: Boolean, default: true },
     },
     bannedUntil: { type: Date, default: null },
     warnings: [{
@@ -113,6 +114,7 @@ const userSchema = new mongoose.Schema(
       projectName: { type: String, required: true },
       clientName: { type: String, required: true },
       projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
+      proposalStatus: { type: String, enum: ['accepted', 'rejected'], required: true },
       read: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now }
     }]

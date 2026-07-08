@@ -189,7 +189,10 @@ exports.addComment = async (req, res) => {
     res.status(201).json({
       success: true,
       message: 'تمت إضافة التعليق بنجاح',
-      commentsCount: post.comments.length
+      commentsCount: post.comments.length,
+      username: req.user.username,
+      fullname: req.user.profile.fullname,
+      avatar: req.user.profile.avatar
     });
   } catch (error) {
     console.error('Comment Error:', error.message);

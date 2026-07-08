@@ -227,7 +227,7 @@ exports.getSettings = async (req, res) => {
 // @access  Private
 exports.updateSettings = async (req, res) => {
   try {
-    const allowed = ['language', 'theme', 'emailNotifications', 'pushNotifications', 'profileVisibility', 'showEmail', 'showPhone'];
+    const allowed = ['language', 'theme', 'emailNotifications', 'pushNotifications', 'profileVisibility', 'showEmail', 'showPhone', 'animationEnabled'];
     const updates = {};
 
     for (const key of allowed) {
@@ -334,5 +334,18 @@ exports.getUserById = async (req, res) => {
       return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
     }
     res.status(500).json({ success: false, message: 'حدث خطأ في الخادم' });
+  }
+};
+
+// @desc    جلب نقاط السمعة (r-score)
+// @route   GET /api/user/reputation-score
+// @access  Private
+exports.getReputationScore = async (req, res) => {
+  try {
+    const { score, level } = await RScoreService.getUserScoreDetails(req.user._id);
+    res.status(200).json({ success: true, data: { score, level } });
+  } catch (error) {
+    console.error('Get Reputation Score Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب نقاط السمعة' });
   }
 };

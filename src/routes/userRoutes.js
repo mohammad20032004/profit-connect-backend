@@ -13,7 +13,8 @@ const {
   getFollowers,
   getFollowing,
   changePassword,
-  exportData
+  exportData,
+  getReputationScore
 } = require('../controllers/userController');
 
 // 2. استدعاء حارس البوابة
@@ -45,6 +46,7 @@ router.put('/settings', protect, updateSettings);
 router.post('/:userId/follow', protect, toggleFollow);
 router.get('/:userId/followers', protect, getFollowers);
 router.get('/:userId/following', protect, getFollowing);
+router.get('/reputation-score', protect, getReputationScore);
 router.get('/:userId', protect, getUserById);
 
 module.exports = router;
