@@ -117,7 +117,8 @@ const userSchema = new mongoose.Schema(
       proposalStatus: { type: String, enum: ['accepted', 'rejected'], required: true },
       read: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now }
-    }]
+    }],
+    savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
   }, // 👈 هنا تم إغلاق كائن الحقول بالكامل وبشكل صحيح
   { timestamps: true } // 👈 هنا المعامل الثاني (الإعدادات)
 );

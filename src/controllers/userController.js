@@ -340,6 +340,66 @@ exports.getUserById = async (req, res) => {
 // @desc    جلب نقاط السمعة (r-score)
 // @route   GET /api/user/reputation-score
 // @access  Private
+// @desc    حفظ منشور
+// @route   POST /api/user/saved-posts/:postId
+// @access  Private
+exports.savePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $addToSet: { savedPosts: req.params.postId } },
+      { new: true }
+    );
+
+    if (!user) return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+
+    res.status(200).json({ success: true, message: 'تم حفظ المنشور بنجاح' });
+  } catch (error) {
+    console.error('Save Post Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء حفظ المنشور' });
+  }
+};
+
+// @desc    إلغاء حفظ منشور
+// @route   DELETE /api/user/saved-posts/:postId
+// @access  Private
+exports.unsavePost = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { $pull: { savedPosts: req.params.postId } },
+      { new: true }
+    );
+
+    if (!user) return res.status(404).json({ success: false, message: 'المستخدم غير موجود' });
+
+    res.status(200).json({ success: true, message: 'تم إلغاء حفظ المنشور بنجاح' });
+  } catch (error) {
+    console.error('Unsave Post Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء إلغاء حفظ المنشور' });
+  }
+};
+
+// @desc    جلب المنشورات المحفوظة
+// @route   GET /api/user/saved-posts
+// @access  Private
+exports.getSavedPosts = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate({
+      path: 'savedPosts',
+      populate: { path: 'user', select: 'profile.firstName profile.lastName profile.headline profile.avatar' }
+    });
+
+    res.status(200).json({ success: true, count: user.savedPosts.length, data: user.savedPosts });
+  } catch (error) {
+    console.error('Get Saved Posts Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب المنشورات المحفوظة' });
+  }
+};
+
 exports.getReputationScore = async (req, res) => {
   try {
     const { score, level } = await RScoreService.getUserScoreDetails(req.user._id);
