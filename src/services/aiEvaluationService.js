@@ -1,5 +1,6 @@
 const { OpenAI } = require('openai');
 const RScoreService = require('./rScoreService');
+const { stripHtml } = require('../utils/sanitizeContent');
 
 const localAI = new OpenAI({
   baseURL: process.env.LM_STUDIO_BASE_URL || 'http://127.0.0.1:1234/v1',
@@ -56,13 +57,14 @@ Otherwise, rate its quality from 0 (very poor) to 5 (excellent).
 Output ONLY a single number.`;
 
 const evaluateContent = async (content) => {
-  if (!content?.trim()) return 1;
+  const plainText = stripHtml(content);
+  if (!plainText?.trim()) return 1;
 
   try {
     const rawResponse = await callAI(
       [
         { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content },
+        { role: 'user', content: plainText },
       ],
       { temperature: 0.0, max_tokens: 5, stop: ['\n', ' ', '.'] }
     );

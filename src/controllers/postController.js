@@ -1,8 +1,10 @@
 const Post = require('../models/Post');
+const User = require('../models/User');
 const RScoreService = require('../services/rScoreService');
 const { processDynamicScoring, evaluateContent } = require('../services/aiEvaluationService');
 const { applyWarning } = require('../services/moderationService');
 const { buildPostImageUrl, deletePostImage, buildPostVideoUrl, deletePostVideo } = require('../utils/postImageStorage');
+const { sanitizePostContent } = require('../utils/sanitizeContent');
 
 // @desc    إنشاء منشور جديد
 // @route   POST /api/posts
@@ -10,10 +12,14 @@ const { buildPostImageUrl, deletePostImage, buildPostVideoUrl, deletePostVideo }
 exports.createPost = async (req, res) => {
  try {
     const { content, visibility } = req.body;
+    const sanitizedContent = sanitizePostContent(content);
     const files = req.files || {};
     const image = files.image?.[0] ? buildPostImageUrl(req, files.image[0].filename) : null;
     const video = files.video?.[0] ? buildPostVideoUrl(req, files.video[0].filename) : null;
-    const newPost = await Post.create({ user: req.user._id, content, image, video, visibility });
+    const newPost = await Post.create({ user: req.user._id, content: sanitizedContent, image, video, visibility });
+
+    // زيادة عداد المنشورات للمستخدم
+    await User.findByIdAndUpdate(req.user._id, { $inc: { 'profile.postsCount': 1 } });
 
     // 🤖 تقييم المنشور بالذكاء في الخلفية
     if (content) {
@@ -22,6 +28,7 @@ exports.createPost = async (req, res) => {
           const score = await evaluateContent(content);
           if (score === -1) {
             await Post.findByIdAndDelete(newPost._id);
+            await User.findByIdAndUpdate(req.user._id, { $inc: { 'profile.postsCount': -1 } });
             await applyWarning(req.user._id, content, 'محتوى منشور غير لائق');
           } else if (score > 0) {
             await RScoreService.applyScore(req.user._id, 'CREATE_POST', `جودة المنشور: ${score} نقاط`, score);
@@ -226,9 +233,10 @@ exports.updatePost = async (req, res) => {
 
     const image = files.image?.[0] ? buildPostImageUrl(req, files.image[0].filename) : req.body.image;
     const video = files.video?.[0] ? buildPostVideoUrl(req, files.video[0].filename) : req.body.video;
+    const sanitizedContent = sanitizePostContent(req.body.content);
     post = await Post.findByIdAndUpdate(
       req.params.postId,
-      { $set: { content: req.body.content, image, video, visibility: req.body.visibility } },
+      { $set: { content: sanitizedContent, image, video, visibility: req.body.visibility } },
       { new: true, runValidators: true }
     ).populate('user', 'profile.firstName profile.lastName profile.avatar');
 
@@ -256,6 +264,7 @@ exports.deletePost = async (req, res) => {
 
     await deletePostImage(post.image);
     await deletePostVideo(post.video);
+    await User.findByIdAndUpdate(req.user._id, { $inc: { 'profile.postsCount': -1 } });
     await post.deleteOne();
 
     res.status(200).json({ success: true, message: 'تم حذف المنشور بنجاح' });
