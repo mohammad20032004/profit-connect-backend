@@ -17,7 +17,31 @@ const generateToken = (id) => {
 // @access  Public
 exports.signup = async (req, res) => {
   try {
-    const { firstName, lastName, email, password,role, phoneNumber, industry, yearsOfExperience, skills ,rScore} = req.body;
+    const { firstName, lastName, email, password, role, phoneNumber, industry, yearsOfExperience, skills ,rScore } = req.body;
+
+    // الدور عند التسجيل: يسمح فقط بـ (صاحب عمل / باحث عن عمل / صاحب مشروع حر)،
+    // ولا يُسمح بتمرير Admin من التسجيل (يُمنح عبر الإدارة فقط)
+    const allowedSignupRoles = ['Employer', 'JobSeeker', 'FreelanceClient'];
+    const safeRole = allowedSignupRoles.includes(role) ? role : 'JobSeeker';
+
+    // بناء الملف حسب الدور:
+    // - صاحب عمل / صاحب مشروع حر => أسئلة تبني صفحة الشركة (لا مهارات/خبرة)
+    // - باحث عن عمل => الملف المهني (مجال/خبرة/مهارات)
+    const isEmployerType = safeRole === 'Employer' || safeRole === 'FreelanceClient';
+    const employerProfile = isEmployerType
+      ? {
+          companyName: req.body.companyName,
+          companyDescription: req.body.companyDescription,
+          industry: req.body.companyIndustry,
+          companyLocation: req.body.companyLocation,
+          website: req.body.website,
+          companySize: req.body.companySize,
+          foundedYear: req.body.foundedYear ? Number(req.body.foundedYear) : undefined,
+        }
+      : undefined;
+    const professional = !isEmployerType
+      ? { industry, yearsOfExperience, skills }
+      : undefined;
 
     // 1. التحقق من وجود المستخدم مسبقاً
     let user = await User.findOne({ email });
@@ -29,18 +53,15 @@ exports.signup = async (req, res) => {
     user = await User.create({
       email,
       password,
-      role,
+      role: safeRole,
       profile: {
         firstName,
         lastName,
         phoneNumber,
         ...(req.file ? { avatar: buildAvatarUrl(req, req.file.filename) } : {}),
       },
-      professional: {
-        industry,
-        yearsOfExperience,
-        skills
-      }
+      ...(professional ? { professional } : {}),
+      ...(employerProfile ? { employerProfile } : {})
     });
 
     // 3. إنشاء التوكن

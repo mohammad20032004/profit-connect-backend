@@ -54,6 +54,15 @@ const companySchema = new mongoose.Schema(
       type: Boolean,
       default: false // يتغير إلى true عندما تتحقق الإدارة من أوراق الشركة
     },
+    verificationDocs: [
+      {
+        type: String // مسارات ملفات التحقق المرفوعة (سجل تجاري، رخصة، ...)
+      }
+    ],
+    rejectionReason: {
+      type: String,
+      default: ''
+    },
     status: {
       type: String,
       enum: ['Pending', 'Approved', 'Rejected'],

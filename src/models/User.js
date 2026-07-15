@@ -23,9 +23,9 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['Student', 'Professional', 'Admin', 'Client'],
-      default: 'Student',
-      required: [true, 'يرجى تحديد نوع الحساب (طالب أو محترف)']
+      enum: ['Employer', 'JobSeeker', 'Admin', 'FreelanceClient'],
+      default: 'JobSeeker',
+      required: [true, 'يرجى تحديد نوع الحساب (صاحب عمل أو باحث عن عمل)']
     },
     profile: {
       firstName: { type: String, required: true, trim: true },
@@ -78,6 +78,19 @@ const userSchema = new mongoose.Schema(
       yearsOfExperience: Number,
       skills: [String]
     },
+    // ملف صاحب العمل/صاحب المشروع الحر: بيانات تبني صفحة شركته (لا علاقة لها بالمهارات/الخبرة)
+    employerProfile: {
+      companyName: { type: String, trim: true },
+      companyDescription: { type: String, trim: true },
+      industry: { type: String, trim: true },
+      companyLocation: { type: String, trim: true },
+      website: { type: String, trim: true },
+      companySize: {
+        type: String,
+        enum: ['1-10', '11-50', '51-200', '201-500', '501-1000', '1000+']
+      },
+      foundedYear: { type: Number }
+    },
     isActive: {
       type: Boolean,
       default: true
@@ -110,11 +123,14 @@ const userSchema = new mongoose.Schema(
       date: { type: Date, default: Date.now }
     }],
     notifications: [{
-      type: { type: String, enum: ['proposal_accepted', 'proposal_rejected'], required: true },
-      projectName: { type: String, required: true },
-      clientName: { type: String, required: true },
+      type: { type: String, enum: ['proposal_accepted', 'proposal_rejected', 'ai_detected'], required: true },
+      projectName: { type: String },
+      clientName: { type: String },
       projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
-      proposalStatus: { type: String, enum: ['accepted', 'rejected'], required: true },
+      proposalStatus: { type: String, enum: ['accepted', 'rejected'] },
+      postId: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
+      aiProbability: { type: Number },
+      message: { type: String },
       read: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now }
     }],

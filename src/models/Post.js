@@ -51,7 +51,27 @@ const postSchema = new mongoose.Schema(
           default: Date.now
         }
       }
-    ]
+    ],
+    // نسبة احتمال أن يكون المحتوى مكتوباً بالذكاء الاصطناعي (0-100)، تُحسب عبر الطبقات الدفاعية + النموذج المحلي
+    aiProbability: {
+      type: Number,
+      min: 0,
+      max: 100,
+      default: null
+    },
+    // تفاصيل التحليل (الطبقات + لغة النص + قيمة النموذج) لعرض الأسباب في الواجهة
+    aiDetails: {
+      language: { type: String, enum: ['ar', 'en'] },
+      modelProbability: { type: Number },
+      layers: {
+        phrase: { type: Number },
+        structure: { type: Number },
+        linguistic: { type: Number },
+        vocabulary: { type: Number },
+        ruleScore: { type: Number }
+      },
+      signals: [{ type: String }]
+    }
   },
   { timestamps: true }
 );

@@ -75,3 +75,15 @@ exports.admin = (req, res, next) => {
     });
   }
 };
+
+// حارس بوابة لأصحاب العمل (Employer) فقط — مَن يُسمح لهم بإنشاء شركة
+exports.employerOnly = (req, res, next) => {
+  if (req.user && req.user.role === 'Employer') {
+    next();
+  } else {
+    return res.status(403).json({
+      success: false,
+      message: 'غير مصرح لك! إنشاء الشركات مقتصر على أصحاب العمل (Employer) المعتمدين فقط'
+    });
+  }
+};

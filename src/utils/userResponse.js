@@ -9,6 +9,7 @@ const formatUserResponse = (user, options = {}) => {
     role: userObject.role,
     profile: userObject.profile,
     professional: userObject.professional,
+    employerProfile: userObject.employerProfile,
     settings: userObject.settings,
 
     ...(includePosts && userObject.posts ? { posts: userObject.posts } : {}),

@@ -2,6 +2,7 @@ const path = require('path');
 const multer = require('multer');
 const { avatarsDir, allowedMimeTypes: avatarMimeTypes } = require('../utils/avatarStorage');
 const { postsDir, videosDir, allowedImageMimeTypes, allowedVideoMimeTypes } = require('../utils/postImageStorage');
+const { companyDocsDir, allowedDocMimeTypes } = require('../utils/companyStorage');
 
 const avatarStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -94,8 +95,31 @@ const uploadPostMedia = multer({
   fileFilter: postMediaFileFilter,
 });
 
+const companyDocStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, companyDocsDir),
+  filename: (req, file, cb) => {
+    const fileExtension = path.extname(file.originalname).toLowerCase();
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    cb(null, `doc-${req.user ? req.user._id : 'new'}-${uniqueSuffix}${fileExtension}`);
+  },
+});
+
+const companyDocFileFilter = (req, file, cb) => {
+  if (!allowedDocMimeTypes.includes(file.mimetype)) {
+    return cb(new Error('نوع الملف غير مدعوم. الرجاء رفع صورة (JPG/PNG/WEBP) أو ملف PDF'));
+  }
+  cb(null, true);
+};
+
+const uploadCompanyDocs = multer({
+  storage: companyDocStorage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: companyDocFileFilter,
+});
+
 module.exports = {
   uploadAvatar,
   uploadPostImage,
   uploadPostMedia,
+  uploadCompanyDocs,
 };

@@ -1,5 +1,6 @@
 const Company = require('../models/Company');
 const Job = require('../models/Job');
+const { buildCompanyDocUrl } = require('../utils/companyStorage');
 
 // @desc    إنشاء صفحة شركة جديدة
 // @route   POST /api/companies
@@ -9,7 +10,16 @@ const Job = require('../models/Job');
 // @access  Private
 exports.createCompany = async (req, res) => {
   try {
-    // 1. جلب جميع الحقول الجديدة من الطلب
+    // 🔒 بوابة الدور: فقط صاحب عمل (Employer) يمكنه إنشاء شركة
+    if (req.user.role !== 'Employer') {
+      return res.status(403).json({
+        success: false,
+        message: 'غير مصرح لك! إنشاء الشركات مقتصر على أصحاب العمل المعتمدين'
+      });
+    }
+
+    // 1. جلب جميع الحقول الجديدة من الطلب (مع الرجوع لملف صاحب العمل إن غابت)
+    const ep = req.user.employerProfile || {};
     const { 
       name, 
       description, 
@@ -22,22 +32,43 @@ exports.createCompany = async (req, res) => {
       contactEmail     // 👈 جديد
     } = req.body;
 
-    // 2. إنشاء الشركة 
+    const companyName = name || ep.companyName;
+    const companyDescription = description || ep.companyDescription;
+    const companyIndustry = industry || ep.industry;
+    const companyLocation = location || ep.companyLocation;
+    const companyWebsite = website || ep.website;
+    const companySizeVal = companySize || ep.companySize;
+    const companyFounded = foundedYear || ep.foundedYear;
+
+    if (!companyName) {
+      return res.status(400).json({ success: false, message: 'اسم الشركة مطلوب' });
+    }
+
+    // 2. حفظ مسارات مستندات التحقق المرفوعة (سجل تجاري، رخصة، ...)
+    const verificationDocs = (req.files || []).map(f => buildCompanyDocUrl(req, f.filename));
+
+    // 3. إنشاء الشركة (تبقى Pending حتى يوافق عليها الإداري)
     const company = await Company.create({
-      name,
-      description,
-      industry,
-      location,
-      companySize,
-      foundedYear,
-      website,
+      name: companyName,
+      description: companyDescription,
+      industry: companyIndustry,
+      location: companyLocation,
+      companySize: companySizeVal,
+      foundedYear: companyFounded,
+      website: companyWebsite,
       socialLinks,
       contactEmail,
+      verificationDocs,
       owner: req.user._id,
-      admins: [req.user._id] // 💡 حركة احترافية: نجعل المالك هو أول مدير (Admin) للشركة تلقائياً
+      admins: [req.user._id], // 💡 المالك هو أول مدير للشركة
+      status: 'Pending' // 👈 لا تظهر للعموم ولا توثّق إلا بعد موافقة الإدارة
     });
 
-    res.status(201).json({ success: true, data: company });
+    res.status(201).json({
+      success: true,
+      message: 'تم إرسال طلب إنشاء الشركة، وهي قيد المراجعة من فريق الدعم',
+      data: company
+    });
   } catch (error) {
     console.error('Create Company Error:', error.message);
     if (error.code === 11000) {
@@ -57,11 +88,16 @@ exports.getCompanies = async (req, res) => {
 
     const filter = {};
 
-    if (req.query.industry) {
-      filter.industry = { $regex: req.query.industry, $options: 'i' };
-    }
+    // افتراضياً لا تظهر في الدليل العام إلا الشركات المعتمدة (Approved)
+    // يستطيع الإداري تجاوز ذلك بتمرير ?status=Pending
     if (req.query.status) {
       filter.status = req.query.status;
+    } else {
+      filter.status = 'Approved';
+    }
+
+    if (req.query.industry) {
+      filter.industry = { $regex: req.query.industry, $options: 'i' };
     }
     if (req.query.search) {
       filter.name = { $regex: req.query.search, $options: 'i' };

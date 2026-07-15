@@ -2,6 +2,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const RScoreService = require('../services/rScoreService');
 const { processDynamicScoring, evaluateContent } = require('../services/aiEvaluationService');
+const aiDetector = require('../middleware/aiDetector');
 const { applyWarning } = require('../services/moderationService');
 const { buildPostImageUrl, deletePostImage, buildPostVideoUrl, deletePostVideo } = require('../utils/postImageStorage');
 const { sanitizePostContent } = require('../utils/sanitizeContent');
@@ -30,8 +31,30 @@ exports.createPost = async (req, res) => {
             await Post.findByIdAndDelete(newPost._id);
             await User.findByIdAndUpdate(req.user._id, { $inc: { 'profile.postsCount': -1 } });
             await applyWarning(req.user._id, content, 'محتوى منشور غير لائق');
+            return;
           } else if (score > 0) {
             await RScoreService.applyScore(req.user._id, 'CREATE_POST', `جودة المنشور: ${score} نقاط`, score);
+          }
+
+          // تقدير نسبة الذكاء الاصطناعي في المحتوى (الطبقات الدفاعية + النموذج المحلي)
+          const analysis = await aiDetector.run(content);
+          await Post.findByIdAndUpdate(newPost._id, {
+            $set: { aiProbability: analysis.probability, aiDetails: analysis }
+          });
+
+          // إشعار عند تجاوز احتمال الذكاء الاصطناعي 50%
+          if (analysis.probability > 50) {
+            await User.findByIdAndUpdate(req.user._id, {
+              $push: {
+                notifications: {
+                  type: 'ai_detected',
+                  postId: newPost._id,
+                  aiProbability: analysis.probability,
+                  message: `تم رصد أن منشورك يحتمل أن يكون مولّداً بالذكاء الاصطناعي بنسبة ${analysis.probability}%`,
+                  read: false
+                }
+              }
+            });
           }
         } catch (e) {
           console.error('[Post AI Error]:', e.message);
@@ -239,6 +262,35 @@ exports.updatePost = async (req, res) => {
       { $set: { content: sanitizedContent, image, video, visibility: req.body.visibility } },
       { new: true, runValidators: true }
     ).populate('user', 'profile.firstName profile.lastName profile.avatar');
+
+    // 🤖 تقدير نسبة الذكاء الاصطناعي في الخلفية عند التعديل
+    if (req.body.content) {
+      setImmediate(async () => {
+        try {
+          const analysis = await aiDetector.run(req.body.content);
+          await Post.findByIdAndUpdate(req.params.postId, {
+            $set: { aiProbability: analysis.probability, aiDetails: analysis }
+          });
+
+          // إشعار عند تجاوز احتمال الذكاء الاصطناعي 50%
+          if (analysis.probability > 50) {
+            await User.findByIdAndUpdate(req.user._id, {
+              $push: {
+                notifications: {
+                  type: 'ai_detected',
+                  postId: req.params.postId,
+                  aiProbability: analysis.probability,
+                  message: `تم رصد أن منشورك يحتمل أن يكون مولّداً بالذكاء الاصطناعي بنسبة ${analysis.probability}%`,
+                  read: false
+                }
+              }
+            });
+          }
+        } catch (e) {
+          console.error('[Post AI Detect Error]:', e.message);
+        }
+      });
+    }
 
     res.status(200).json({ success: true, data: post });
   } catch (error) {

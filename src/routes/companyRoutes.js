@@ -5,32 +5,31 @@ const {
   createCompany, 
   getCompanies, 
   getCompanyById,
-  toggleFollowCompany,
-  addCompanyAdmin,
-  updateCompany,
-  deleteCompany,
-  updateCompanyStatus,
-  getCompanyFollowers,
-  addRating,
-  getCompanyRatings,
+  toggleFollowCompany, 
+  addCompanyAdmin, 
+  updateCompany, 
+  deleteCompany, 
+  getCompanyFollowers, 
+  addRating, 
+  getCompanyRatings, 
   deleteRating
 } = require('../controllers/companyController');
 
-const { protect } = require('../middleware/authMiddleware');
+const { protect, employerOnly } = require('../middleware/authMiddleware');
+const { uploadCompanyDocs } = require('../middleware/uploadMiddleware');
 
 // تطبيق الحماية
 router.use(protect);
 
 // مسارات الشركات
 router.route('/')
-  .post(createCompany)
+  .post(protect, employerOnly, uploadCompanyDocs.array('documents', 5), createCompany)
   .get(getCompanies);
 
 router.route('/:id')
   .get(getCompanyById)
   .put(updateCompany)
   .delete(deleteCompany);
-router.patch('/:id/status', updateCompanyStatus);
 router.get('/:id/followers', getCompanyFollowers);
 router.post('/:id/follow', toggleFollowCompany);
 router.post('/:id/admins', addCompanyAdmin);
