@@ -1,14 +1,45 @@
 const express = require('express');
 const router = express.Router();
 
-const { getPendingCompanies, updateCompanyStatus, setUserRole } = require('../controllers/adminController');
+const {
+  getStats,
+  getUsers,
+  getUserById,
+  updateUserStatus,
+  deleteUser,
+  setUserRole,
+  getCompanies,
+  getPendingCompanies,
+  getCompanyById,
+  updateCompanyStatus,
+  deleteCompany,
+  getPosts,
+  deletePost,
+} = require('../controllers/adminController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
 // تطبيق الحارسين على جميع المسارات في هذا الملف
 router.use(protect, admin);
 
-router.get('/companies/pending', getPendingCompanies);
-router.put('/companies/:id/status', updateCompanyStatus);
+// ===== الإحصائيات =====
+router.get('/stats', getStats);
+
+// ===== المستخدمون =====
+router.get('/users', getUsers);
+router.get('/users/:id', getUserById);
 router.put('/users/:id/role', setUserRole);
+router.put('/users/:id/status', updateUserStatus);
+router.delete('/users/:id', deleteUser);
+
+// ===== الشركات =====
+router.get('/companies', getCompanies);
+router.get('/companies/pending', getPendingCompanies);
+router.get('/companies/:id', getCompanyById);
+router.put('/companies/:id/status', updateCompanyStatus);
+router.delete('/companies/:id', deleteCompany);
+
+// ===== المحتوى (المنشورات) =====
+router.get('/posts', getPosts);
+router.delete('/posts/:id', deletePost);
 
 module.exports = router;
