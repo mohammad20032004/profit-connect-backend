@@ -123,7 +123,7 @@ const userSchema = new mongoose.Schema(
       date: { type: Date, default: Date.now }
     }],
     notifications: [{
-      type: { type: String, enum: ['proposal_accepted', 'proposal_rejected', 'ai_detected'], required: true },
+      type: { type: String, enum: ['proposal_accepted', 'proposal_rejected', 'ai_detected', 'company_setup'], required: true },
       projectName: { type: String },
       clientName: { type: String },
       projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },

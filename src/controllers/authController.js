@@ -64,6 +64,16 @@ exports.signup = async (req, res) => {
       ...(employerProfile ? { employerProfile } : {})
     });
 
+    // 2.1 إشعار ترحيبي لصاحب العمل/صاحب المشروع الحر لبدء إعداد صفحة شركته
+    if (isEmployerType) {
+      user.notifications.push({
+        type: 'company_setup',
+        message: 'مرحباً! أكمل إعداد صفحة شركتك لنشر وظائفك ومشاريعك بسهولة.',
+        read: false
+      });
+      await user.save();
+    }
+
     // 3. إنشاء التوكن
     const token = generateToken(user._id);
 
