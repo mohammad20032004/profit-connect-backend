@@ -29,8 +29,19 @@ connectDB();
 // تهيئة تطبيق Express
 const app = express();
 
+const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173,http://localhost:5174')
+  .split(',')
+  .map((o) => o.trim());
+
 const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // السماح للطلبات بدون أصل (مثل أدوات مثل Postman) أو الأصول المسموحة فقط
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('غير مسموح بطلب من هذا الأصل (CORS)'));
+    }
+  },
   credentials: true,
 };
 
