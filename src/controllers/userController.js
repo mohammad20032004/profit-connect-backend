@@ -97,7 +97,6 @@ exports.updateUserAvatar = async (req, res) => {
     // 🌟 1. مكافأة رفع الصورة لأول مرة (ONCE)
     if (oldAvatar === 'default-avatar.png') {
        await RScoreService.applyScore(user._id, 'UPLOAD_AVATAR', 'مكافأة إكمال الملف الشخصي: صورة العرض');
-       user.profile.rScore += 10; // تحديث فوري للرد
     }
 
     const updatedUser = await user.save();

@@ -80,6 +80,10 @@ const userSchema = new mongoose.Schema(
       rScore:{
         type: Number,
         default: 0
+      },
+      reportsCount: {
+        type: Number,
+        default: 0
       }
     },
     professional: {
@@ -166,7 +170,7 @@ const userSchema = new mongoose.Schema(
       totalWithdrawn: { type: Number, default: 0 },     // إجمالي ما سحبه المستخدم
     },
     notifications: [{
-      type: { type: String, enum: ['proposal_accepted', 'proposal_rejected', 'proposal_received', 'ai_detected', 'company_setup', 'company_status', 'employee_added', 'employee_removed', 'job_application_status', 'connection_request', 'connection_accepted', 'connection_rejected', 'follow', 'payment_deposited', 'payment_released', 'payment_refunded', 'withdrawal_approved', 'withdrawal_rejected'], required: true },
+      type: { type: String, enum: ['proposal_accepted', 'proposal_rejected', 'proposal_received', 'ai_detected', 'company_setup', 'company_status', 'employee_added', 'employee_removed', 'job_application_status', 'connection_request', 'connection_accepted', 'connection_rejected', 'follow', 'payment_deposited', 'payment_released', 'payment_refunded', 'withdrawal_approved', 'withdrawal_rejected', 'post_reported', 'post_hidden', 'account_banned'], required: true },
       projectName: { type: String },
       clientName: { type: String },
       projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },

@@ -1,5 +1,6 @@
 const Connection = require('../models/Connection');
 const User = require('../models/User');
+const RScoreService = require('../services/rScoreService');
 
 const isValidId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
@@ -60,6 +61,12 @@ exports.sendConnectionRequest = async (req, res) => {
 
     await pushNotification(recipientId, 'connection_request', 'لديك طلب اتصال جديد', requesterId);
 
+    // 🌟 منح نقاط لإرسال طلب اتصال
+    await RScoreService.applyScore(requesterId, 'SEND_CONNECTION_REQUEST', 'إرسال طلب اتصال');
+
+    // 🌟 منح نقاط لاستقبال طلب اتصال
+    await RScoreService.applyScore(recipientId, 'RECEIVE_CONNECTION_REQUEST', 'استقبال طلب اتصال');
+
     res.status(201).json({ success: true, message: 'تم إرسال طلب الاتصال بنجاح', data: connection });
   } catch (error) {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إرسال طلب الاتصال' });
@@ -89,6 +96,10 @@ exports.acceptConnectionRequest = async (req, res) => {
     await connection.save();
 
     await pushNotification(connection.requester, 'connection_accepted', 'تم قبول طلب الاتصال الخاص بك', req.user.id);
+
+    // 🌟 منح نقاط لقبول طلب اتصال لكلا الطرفين
+    await RScoreService.applyScore(connection.requester, 'CONNECTION_ACCEPTED', 'قبول طلب اتصال');
+    await RScoreService.applyScore(req.user.id, 'CONNECTION_ACCEPTED', 'قبول طلب اتصال');
 
     res.status(200).json({ success: true, message: 'تم قبول طلب الاتصال، أنتما الآن متصلان!' });
   } catch (error) {

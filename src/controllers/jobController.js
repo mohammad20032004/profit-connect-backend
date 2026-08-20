@@ -2,6 +2,7 @@ const Job = require('../models/Job');
 const Company = require('../models/Company');
 const JobApplication = require('../models/JobApplication');
 const { buildResumeUrl, deleteResumeFile } = require('../utils/resumeStorage');
+const RScoreService = require('../services/rScoreService');
 
 // ==========================================
 // @desc    نشر وظيفة جديدة
@@ -41,6 +42,9 @@ exports.createJob = async (req, res) => {
       company: companyId,
       postedBy: req.user._id
     });
+
+    // 🌟 منح نقاط لنشر وظيفة جديدة
+    await RScoreService.applyScore(req.user._id, 'POST_JOB', `نشر وظيفة جديدة: ${job.title}`);
 
     res.status(201).json({ success: true, data: job });
   } catch (error) {
@@ -177,6 +181,12 @@ exports.applyForJob = async (req, res) => {
       resume: resumeUrl
     });
 
+    // 🌟 منح نقاط للمتقدم على الوظيفة
+    await RScoreService.applyScore(req.user._id, 'APPLY_FOR_JOB', `التقديم على وظيفة: ${job.title}`);
+
+    // 🌟 منح نقاط لصاحب الشركة/الوظيفة من استقبال طلب
+    await RScoreService.applyScore(job.postedBy, 'RECEIVE_JOB_APPLICATION', `استقبال طلب توظيف جديد`);
+
     res.status(201).json({
       success: true,
       message: 'تم إرسال طلب التقديم بنجاح! حظاً موفقاً',
@@ -273,6 +283,16 @@ exports.updateApplicationStatus = async (req, res) => {
     // 4. تحديث الحالة وحفظها
     application.status = status;
     await application.save();
+
+    // 🌟 منح نقاط بناءً على حالة الطلب
+    const applicantId = application.applicant;
+    if (status === 'Accepted') {
+      await RScoreService.applyScore(applicantId, 'APPLICATION_ACCEPTED', `تم قبول طلبك في وظيفة: ${application.job.title}`);
+    } else if (status === 'Rejected') {
+      await RScoreService.applyScore(applicantId, 'APPLICATION_REJECTED', `تم رفض طلبك في وظيفة: ${application.job.title}`);
+    } else if (status === 'Shortlisted') {
+      await RScoreService.applyScore(applicantId, 'APPLICATION_SHORTLISTED', `تم اختيارك في القائمة المختصرة لوظيفة: ${application.job.title}`);
+    }
 
     res.status(200).json({
       success: true,

@@ -2,6 +2,7 @@ const Company = require('../models/Company');
 const Job = require('../models/Job');
 const { buildCompanyDocUrl } = require('../utils/companyStorage');
 const { buildCompanyMediaUrl, deleteCompanyMediaFile } = require('../utils/companyMedia');
+const RScoreService = require('../services/rScoreService');
 
 // @desc    إنشاء صفحة شركة جديدة
 // @route   POST /api/companies
@@ -108,6 +109,10 @@ exports.createCompany = async (req, res) => {
       message: 'تم إرسال طلب إنشاء الشركة، وهي قيد المراجعة من فريق الدعم',
       data: company
     });
+
+    // 🌟 منح نقاط لإنشاء صفحة شركة
+    await RScoreService.applyScore(req.user._id, 'CREATE_COMPANY', 'إنشاء صفحة شركة جديدة');
+
   } catch (error) {
     console.error('Create Company Error:', error.message);
     if (error.code === 11000) {
@@ -230,6 +235,7 @@ exports.toggleFollowCompany = async (req, res) => {
       company.followers.push({ user: req.user._id, followedAt: new Date() });
       company.followersCount += 1;
       isFollowing = true;
+      await RScoreService.applyScore(req.user._id, 'FOLLOW_COMPANY', `متابعة شركة: ${company.name}`);
     } else {
       // إذا كان يتابعها مسبقاً، نقوم بإلغاء المتابعة
       company.followers.splice(followerIndex, 1);
@@ -504,6 +510,11 @@ exports.addRating = async (req, res) => {
 
     company.calcAverageRating();
     await company.save();
+
+    // 🌟 منح نقاط لتقييم شركة (فقط عند التقييم الأول)
+    if (existingIndex === -1) {
+      await RScoreService.applyScore(req.user._id, 'RATE_COMPANY', `تقييم شركة: ${company.name}`);
+    }
 
     res.status(200).json({
       success: true,

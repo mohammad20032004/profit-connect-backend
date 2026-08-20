@@ -10,6 +10,7 @@
  */
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 const dotenv = require('dotenv');
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
@@ -133,16 +134,20 @@ const generateEmail = (first, last, i) => {
 };
 
 function printProgress(current, total, label) {
-  const pct = Math.round((current / total) * 100);
-  const bar = '█'.repeat(Math.floor(pct / 5)) + '░'.repeat(20 - Math.floor(pct / 5));
-  process.stdout.write(`\r  ${bar} ${pct}% ${label} (${current}/${total})`);
-  if (current === total) console.log('');
+  if (current % Math.max(1, Math.floor(total / 20)) === 0 || current === total) {
+    const pct = Math.round((current / total) * 100);
+    const bar = '█'.repeat(Math.floor(pct / 5)) + '░'.repeat(20 - Math.floor(pct / 5));
+    process.stdout.write(`\r  ${bar} ${pct}% ${label} (${current}/${total})`);
+    if (current === total) console.log('');
+  }
 }
 
 // ─── مولدات البيانات ──────────────────────────────────────
 
 async function seedUsers(count) {
   console.log(`\n🔹 جاري حقن ${count} مستخدم...`);
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash('password123', salt);
   const users = [];
   const roleDistribution = [
     { role: 'JobSeeker', weight: 50 },
@@ -168,7 +173,7 @@ async function seedUsers(count) {
 
     const user = {
       email: generateEmail(firstName, lastName, i),
-      password: 'password123',
+      password: hashedPassword,
       username,
       role,
       profile: {
@@ -232,6 +237,7 @@ async function seedUsers(count) {
       status: 'active',
       isActive: true,
       isVerified: Math.random() > 0.3,
+      createdAt: randDate(new Date('2024-01-01'), new Date()),
     };
 
     if (role === 'Employer') {
@@ -251,7 +257,7 @@ async function seedUsers(count) {
     printProgress(i + 1, count, 'المستخدمين');
   }
 
-  const created = await User.create(users);
+  const created = await User.insertMany(users, { ordered: false });
   console.log(`  ✅ تم إنشاء ${created.length} مستخدم`);
   return created;
 }
@@ -274,11 +280,13 @@ async function seedCompanies(users, count) {
   ];
 
   const companies = [];
+  const employerUpdates = [];
   for (let i = 0; i < Math.min(count, employers.length); i++) {
     const owner = employers[i];
     const statusPool = ['Approved', 'Approved', 'Approved', 'Pending', 'Rejected'];
+    const companyName = companyNames[i % companyNames.length] + (i >= companyNames.length ? ` ${Math.floor(i / companyNames.length) + 1}` : '');
     const company = {
-      name: companyNames[i % companyNames.length] + (i >= companyNames.length ? ` ${Math.floor(i / companyNames.length) + 1}` : ''),
+      name: companyName,
       description: pick([
         'شركة متخصصة في تطوير الحلول التقنية المبتكرة. نقدم خدمات تطوير الويب والموبايل والذكاء الاصطناعي.',
         'وكالة تسويق رقمي رائدة في المنطقة. نساعد الشركات على النمو عبر القنوات الرقمية.',
@@ -296,8 +304,8 @@ async function seedCompanies(users, count) {
       },
       companySize: pick(['1-10', '11-50', '51-200', '201-500', '501-1000']),
       foundedYear: rand(2010, 2025),
-      website: `https://${companyNames[i % companyNames.length].toLowerCase().replace(/\s/g, '')}.com`,
-      contactEmail: `info@${companyNames[i % companyNames.length].toLowerCase().replace(/\s/g, '')}.com`,
+      website: `https://${companyName.toLowerCase().replace(/\s/g, '')}.com`,
+      contactEmail: `info@${companyName.toLowerCase().replace(/\s/g, '')}.com`,
       status: pick(statusPool),
       isVerified: Math.random() > 0.4,
       owner: owner._id,
@@ -305,19 +313,20 @@ async function seedCompanies(users, count) {
       averageRating: randFloat(2.5, 5.0),
     };
     companies.push(company);
+    employerUpdates.push({
+      updateOne: {
+        filter: { _id: owner._id },
+        update: { $set: { 'employerProfile.companyName': companyName } }
+      }
+    });
     printProgress(i + 1, count, 'الشركات');
   }
 
-  const created = await Company.insertMany(companies);
-  console.log(`  ✅ تم إنشاء ${created.length} شركة`);
-
-  // ربط أصحاب العمل بالشركات
-  for (let i = 0; i < Math.min(count, employers.length); i++) {
-    await User.findByIdAndUpdate(employers[i]._id, {
-      $set: { 'employerProfile.companyName': created[i].name }
-    });
+  const created = await Company.insertMany(companies, { ordered: false });
+  if (employerUpdates.length > 0) {
+    await User.bulkWrite(employerUpdates, { ordered: false });
   }
-
+  console.log(`  ✅ تم إنشاء ${created.length} شركة`);
   return created;
 }
 
@@ -874,46 +883,65 @@ async function seedPlatformSettings() {
     { key: 'support_email', value: 'support@profitconnect.com' },
   ];
 
-  for (const s of settings) {
-    await Setting.findOneAndUpdate({ key: s.key }, s, { upsert: true, new: true });
-  }
+  const bulkOps = settings.map(s => ({
+    updateOne: { filter: { key: s.key }, update: { $set: s }, upsert: true }
+  }));
+  await Setting.bulkWrite(bulkOps, { ordered: false });
   console.log(`  ✅ تم إنشاء ${settings.length} إعداد منصة`);
 }
 
 async function updateFollowCounts(users) {
   console.log(`\n🔹 جاري تحديث عدادات المتابعين...`);
-  const connections = await Connection.find({ status: 'accepted' });
+  const connections = await Connection.find({ status: 'accepted' }).lean();
+  const bulkOps = [];
   for (const conn of connections) {
-    await User.findByIdAndUpdate(conn.requester, {
-      $addToSet: { 'profile.following': conn.recipient },
-      $inc: { 'profile.followingCount': 1 }
+    bulkOps.push({
+      updateOne: {
+        filter: { _id: conn.requester },
+        update: { $addToSet: { 'profile.following': conn.recipient }, $inc: { 'profile.followingCount': 1 } }
+      }
     });
-    await User.findByIdAndUpdate(conn.recipient, {
-      $addToSet: { 'profile.followers': conn.requester },
-      $inc: { 'profile.followersCount': 1 }
+    bulkOps.push({
+      updateOne: {
+        filter: { _id: conn.recipient },
+        update: { $addToSet: { 'profile.followers': conn.requester }, $inc: { 'profile.followersCount': 1 } }
+      }
     });
+  }
+  if (bulkOps.length > 0) {
+    await User.bulkWrite(bulkOps, { ordered: false });
   }
   console.log(`  ✅ تم تحديث العدادات بناءً على ${connections.length} اتصال مقبول`);
 }
 
 async function updatePortfolioCounts(users, portfolioItems) {
   console.log(`\n🔹 جاري تحديث عدادات المحفظة...`);
-  for (const user of users) {
-    const count = portfolioItems.filter(p => p.user.toString() === user._id.toString()).length;
-    if (count > 0) {
-      await User.findByIdAndUpdate(user._id, { $set: { 'profile.portfolioCount': count } });
-    }
+  const counts = {};
+  for (const item of portfolioItems) {
+    const userId = item.user.toString();
+    counts[userId] = (counts[userId] || 0) + 1;
+  }
+  const bulkOps = Object.entries(counts).map(([userId, count]) => ({
+    updateOne: { filter: { _id: userId }, update: { $set: { 'profile.portfolioCount': count } } }
+  }));
+  if (bulkOps.length > 0) {
+    await User.bulkWrite(bulkOps, { ordered: false });
   }
   console.log(`  ✅ تم تحديث عدادات المحفظة`);
 }
 
 async function updatePostCounts(users, posts) {
   console.log(`\n🔹 جاري تحديث عدادات المنشورات...`);
-  for (const user of users) {
-    const count = posts.filter(p => p.user.toString() === user._id.toString()).length;
-    if (count > 0) {
-      await User.findByIdAndUpdate(user._id, { $set: { 'profile.postsCount': count } });
-    }
+  const counts = {};
+  for (const post of posts) {
+    const userId = post.user.toString();
+    counts[userId] = (counts[userId] || 0) + 1;
+  }
+  const bulkOps = Object.entries(counts).map(([userId, count]) => ({
+    updateOne: { filter: { _id: userId }, update: { $set: { 'profile.postsCount': count } } }
+  }));
+  if (bulkOps.length > 0) {
+    await User.bulkWrite(bulkOps, { ordered: false });
   }
   console.log(`  ✅ تم تحديث عدادات المنشورات`);
 }

@@ -1,5 +1,6 @@
 const Conversation = require('../models/Conversation');
 const Message = require('../models/Message');
+const RScoreService = require('../services/rScoreService');
 
 // @desc   بدء أو جلب محادثة مع مستخدم آخر
 // @route  POST /api/messages/conversations
@@ -109,6 +110,17 @@ exports.sendMessage = async (req, res) => {
     });
 
     const populated = await message.populate('sender', 'profile.firstName profile.lastName profile.avatar');
+
+    // 🌟 منح نقاط إرسال رسالة
+    await RScoreService.applyScore(req.user._id, 'SEND_MESSAGE', 'إرسال رسالة جديدة');
+
+    // 🌟 منح نقاط استلام رسالة للمستقبل
+    const recipient = conversation.participants.find(
+      p => p._id.toString() !== req.user._id.toString()
+    );
+    if (recipient) {
+      await RScoreService.applyScore(recipient._id, 'RECEIVE_MESSAGE', 'استلام رسالة جديدة');
+    }
 
     res.status(201).json({ success: true, data: populated });
   } catch (error) {

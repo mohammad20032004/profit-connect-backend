@@ -79,6 +79,9 @@ exports.createItem = async (req, res) => {
     // زيادة عداد أعمال المعرض للمستخدم
     await User.findByIdAndUpdate(req.user._id, { $inc: { 'profile.portfolioCount': 1 } });
 
+    // 🌟 منح نقاط لإضافة عمل للمعرض
+    await RScoreService.applyScore(req.user._id, 'ADD_PORTFOLIO_ITEM', `إضافة عمل جديد: ${title}`);
+
     // 🤖 تقييم الوصف بالذكاء في الخلفية
     if (description) {
       setImmediate(async () => {
@@ -205,6 +208,7 @@ exports.getItemById = async (req, res) => {
     if (item.user._id.toString() !== req.user._id.toString()) {
       await PortfolioItem.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } });
       item.views = (item.views || 0) + 1;
+      await RScoreService.applyScore(item.user._id.toString(), 'RECEIVE_PORTFOLIO_VIEW', 'شخص شاهد عملاً في معرضك');
     }
 
     res.status(200).json({ success: true, data: item });

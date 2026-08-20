@@ -104,10 +104,13 @@ class RScoreService {
       
       // نظام مستويات ديناميكي بناءً على النقاط (Gamification)
       let level = 'Beginner'; // مبتدئ
-      if (score >= 50) level = 'Active'; // نشط
-      if (score >= 200) level = 'Pro'; // محترف
-      if (score >= 1000) level = 'Expert'; // خبير
-      if (score >= 5000) level = 'Thought Leader'; // قائد فكر (أعلى مستوى)
+      if (score >= 50) level = 'Starter'; // مبادر
+      if (score >= 200) level = 'Active'; // نشط
+      if (score >= 500) level = 'Contributor'; // مساهم
+      if (score >= 1000) level = 'Pro'; // محترف
+      if (score >= 2500) level = 'Expert'; // خبير
+      if (score >= 5000) level = 'Leader'; // قائد
+      if (score >= 10000) level = 'Thought Leader'; // قائد فكر (أعلى مستوى)
 
       return { score, level };
     } catch (error) {

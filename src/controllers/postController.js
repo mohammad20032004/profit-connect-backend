@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
+const PostReport = require('../models/PostReport');
 const RScoreService = require('../services/rScoreService');
 const { processDynamicScoring, evaluateContent } = require('../services/aiEvaluationService');
 const aiDetector = require('../middleware/aiDetector');
@@ -79,8 +80,9 @@ exports.getPosts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    // جلب المنشورات وترتيبها من الأحدث للأقدم
-    const posts = await Post.find()
+    // جلب المنشورات وترتيبها من الأحدث للأقدم (إخفاء المنشورات المحذوفة/المخفية)
+    const activeFilter = { $or: [{ status: 'active' }, { status: { $exists: false } }, { status: null }] };
+    const posts = await Post.find(activeFilter)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
@@ -88,8 +90,8 @@ exports.getPosts = async (req, res) => {
       .populate({ path: 'comments.user', select: '_id profile.firstName profile.lastName profile.avatar' })
       .lean()
 
-    // جلب العدد الكلي للمنشورات لحساب عدد الصفحات
-    const total = await Post.countDocuments();
+    // جلب العدد الكلي للمنشورات النشطة لحساب عدد الصفحات
+    const total = await Post.countDocuments(activeFilter);
 
     res.status(200).json({
       success: true,
@@ -118,6 +120,12 @@ exports.getPost = async (req, res) => {
       .lean();
 
     if (!post) {
+      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+    }
+
+    // إخفاء المنشور المحذوف أو المخفي (إلا إذا كان صاحبه يعرضه)
+    const isActive = !post.status || post.status === 'active';
+    if (!isActive && post.user._id.toString() !== req.user._id.toString()) {
       return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
     }
 
@@ -363,5 +371,175 @@ exports.deleteComment = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء حذف التعليق' });
+  }
+};
+
+// ============================================================
+// نظام البلاغات
+// ============================================================
+
+const REPORT_THRESHOLDS = {
+  HIDE_POST: 10,       // إخفاء المنشور تلقائياً عند 10 بلاغات
+  BAN_USER: 30,         // حظر المستخدم عند 30 بلاغة على منشوراته
+};
+
+// @desc    الإبلاغ عن منشور
+// @route   POST /api/posts/:postId/report
+// @access  Private
+exports.reportPost = async (req, res) => {
+  try {
+    const { reason, description } = req.body;
+    const postId = req.params.postId;
+
+    // التحقق من صحة سبب البلاغ
+    const validReasons = ['spam', 'nudity', 'violence', 'hate_speech', 'misinformation', 'harassment', 'copyright', 'self_harm', 'other'];
+    if (!reason || !validReasons.includes(reason)) {
+      return res.status(400).json({ success: false, message: 'سبب البلاغ مطلوب ويجب أن يكون من القائمة المحددة' });
+    }
+
+    // جلب المنشور
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ success: false, message: 'المنشور غير موجود' });
+    }
+
+    // منع الإبلاغ على المنشورات غير النشطة
+    const isPostActive = !post.status || post.status === 'active';
+    if (!isPostActive) {
+      return res.status(400).json({ success: false, message: 'هذا المنشور غير متاح حالياً' });
+    }
+
+    // منع صاحب المنشور من الإبلاغ على منشوره
+    if (post.user.toString() === req.user._id.toString()) {
+      return res.status(400).json({ success: false, message: 'لا يمكنك الإبلاغ على منشورك الخاص' });
+    }
+
+    // التحقق من عدم تكرار البلاغ من نفس المستخدم على نفس المنشور
+    const existingReport = await PostReport.findOne({ post: postId, reportedBy: req.user._id });
+    if (existingReport) {
+      return res.status(400).json({ success: false, message: 'لقد قمت بالإبلاغ على هذا المنشور مسبقاً' });
+    }
+
+    // إنشاء سجل البلاغ
+    await PostReport.create({
+      post: postId,
+      reportedBy: req.user._id,
+      postOwner: post.user,
+      reason,
+      description: description || ''
+    });
+
+    // تحديث عداد البلاغات على المنشور
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { $inc: { reportsCount: 1 } },
+      { new: true }
+    );
+
+    // تحديث عداد البلاغات الكلي على صاحب المنشور
+    await User.findByIdAndUpdate(post.user, { $inc: { 'profile.reportsCount': 1 } });
+
+    // خصم نقاط من صاحب المنشور بسبب البلاغ
+    await RScoreService.applyScore(post.user, 'PENALTY_POST_REPORTED', `البلاغ على منشور: ${reasonLabels[reason] || reason}`);
+
+    // إشعار لصاحب المنشور
+    const reporterName = `${req.user.profile.firstName} ${req.user.profile.lastName}`;
+    const reasonLabels = {
+      spam: 'محتوى مزعج (سبام)',
+      nudity: 'محتوى غير لائق',
+      violence: 'محتوى عنيف',
+      hate_speech: 'كلام كراهية',
+      misinformation: 'معلومات خاطئة',
+      harassment: 'تحرش أو إزعاج',
+      copyright: 'انتهاك حقوق ملكية',
+      self_harm: 'إيذاء ذاتي',
+      other: 'أخرى'
+    };
+
+    await User.findByIdAndUpdate(post.user, {
+      $push: {
+        notifications: {
+          type: 'post_reported',
+          postId: post._id,
+          senderId: req.user._id,
+          message: `تم الإبلاغ على منشورك من قبل ${reporterName} بسبب: ${reasonLabels[reason] || reason}`,
+          read: false
+        }
+      }
+    });
+
+    // ═══ الحذف التلقائي عند الوصول لحد البلاغات ═══
+    const isStillActive = !updatedPost.status || updatedPost.status === 'active';
+    if (updatedPost.reportsCount >= REPORT_THRESHOLDS.HIDE_POST && isStillActive) {
+      await Post.findByIdAndUpdate(postId, { status: 'hidden' });
+
+      await User.findByIdAndUpdate(post.user, {
+        $push: {
+          notifications: {
+            type: 'post_hidden',
+            postId: post._id,
+            message: `تم إخفاء منشورك تلقائياً بسبب تلقي ${updatedPost.reportsCount} بلاغات. يمكنك الاستئناف من الدعم.`,
+            read: false
+          }
+        }
+      });
+
+      console.warn(`[Moderation] Post ${postId} hidden automatically after ${updatedPost.reportsCount} reports.`);
+    }
+
+    // ═══ حظر المستخدم عند تكرار البلاغات الكبيرة ═══
+    const userReportCount = (await User.findById(post.user))?.profile?.reportsCount || 0;
+    if (userReportCount >= REPORT_THRESHOLDS.BAN_USER) {
+      const user = await User.findByIdAndUpdate(post.user, {
+        status: 'banned',
+        isActive: false
+      }, { new: true });
+
+      await RScoreService.applyScore(post.user, 'PENALTY_VIOLATION', 'حظر حساب بسبب تكرار البلاغات على المنشورات');
+
+      await User.findByIdAndUpdate(post.user, {
+        $push: {
+          notifications: {
+            type: 'account_banned',
+            message: 'تم حظر حسابك بشكل دائم بسبب تكرار البلاغات على منشوراتك.',
+            read: false
+          }
+        }
+      });
+
+      console.warn(`[Moderation] User ${post.user} permanently banned after ${userReportCount} total post reports.`);
+    }
+
+    res.status(201).json({
+      success: true,
+      message: 'تم استلام بلاغك وسنراجعه في أقرب وقت. شكراً لمساهمتك في تحسين المجتمع.',
+      reportsCount: updatedPost.reportsCount
+    });
+
+  } catch (error) {
+    console.error('Report Post Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء إرسال البلاغ' });
+  }
+};
+
+// @desc    جلب البلاغات على منشور معين (للإدارة)
+// @route   GET /api/posts/:postId/reports
+// @access  Private (Admin)
+exports.getPostReports = async (req, res) => {
+  try {
+    const postId = req.params.postId;
+
+    const reports = await PostReport.find({ post: postId })
+      .populate('reportedBy', 'profile.firstName profile.lastName profile.avatar')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: reports.length,
+      data: reports
+    });
+  } catch (error) {
+    console.error('Get Post Reports Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب البلاغات' });
   }
 };

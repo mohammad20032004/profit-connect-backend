@@ -1,6 +1,7 @@
 const Project = require('../models/Project');
 const Proposal = require('../models/Proposal');
 const User = require('../models/User');
+const RScoreService = require('../services/rScoreService');
 
 exports.createProject = async (req, res) => {
   try {
@@ -9,6 +10,9 @@ exports.createProject = async (req, res) => {
       title, description, category, skills, budget, deadline,
       client: req.user._id,
     });
+
+    // 🌟 منح نقاط لنشر مشروع جديد
+    await RScoreService.applyScore(req.user._id, 'POST_PROJECT', `نشر مشروع جديد: ${title}`);
 
     res.status(201).json({ success: true, data: project });
   } catch (error) {
@@ -212,6 +216,9 @@ exports.submitProposal = async (req, res) => {
       }
     });
 
+    // 🌟 منح نقاط لتقديم عرض سعر
+    await RScoreService.applyScore(req.user._id, 'SUBMIT_PROPOSAL', `تقديم عرض على مشروع: ${project.title}`);
+
     res.status(201).json({ success: true, data: proposal });
   } catch (error) {
     console.error('Submit Proposal Error:', error.message);
@@ -310,6 +317,12 @@ exports.acceptProposal = async (req, res) => {
     project.assignedTo = proposal.freelancer;
     await project.save();
 
+    // 🌟 منح نقاط لصاحب المشروع من استقبال عرض
+    await RScoreService.applyScore(req.user._id, 'RECEIVE_PROPOSAL', `استقبال عرض سعر لمشروع: ${project.title}`);
+
+    // 🌟 منح نقاط للمستقل الذي قُبل عرضه
+    await RScoreService.applyScore(proposal.freelancer, 'PROPOSAL_ACCEPTED', `قبول عرضك في مشروع: ${project.title}`);
+
     res.status(200).json({
       success: true,
       message: 'تم قبول العرض. المشروع قيد التنفيذ',
@@ -338,6 +351,16 @@ exports.completeProject = async (req, res) => {
       if (m.status === 'Working') m.status = 'Completed';
     });
     await project.save();
+
+    // 🌟 منح نقاط لصاحب المشروع لإكمال المشروع
+    await RScoreService.applyScore(req.user._id, 'COMPLETE_PROJECT', `إكمال مشروع: ${project.title}`);
+
+    // 🌟 منح نقاط لأعضاء الفريق الذين أكملوا العمل
+    for (const member of project.team) {
+      if (member.status === 'Completed') {
+        await RScoreService.applyScore(member.freelancer, 'COMPLETE_PROJECT', `إكمال العمل في مشروع: ${project.title}`);
+      }
+    }
 
     res.status(200).json({ success: true, message: 'تم تأكيد اكتمال المشروع', data: project });
   } catch (error) {
@@ -383,6 +406,9 @@ exports.rejectProposal = async (req, res) => {
         },
       },
     });
+
+    // 🌟 خصم نقاط بسيط من المستقل الذي رُفض عرضه
+    await RScoreService.applyScore(proposal.freelancer, 'PROPOSAL_REJECTED', `رفض عرضك في مشروع: ${project.title}`);
 
     res.status(200).json({ success: true, message: 'تم رفض العرض', data: proposal });
   } catch (error) {

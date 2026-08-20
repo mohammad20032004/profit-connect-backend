@@ -1,6 +1,7 @@
 
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
+const RScoreService = require('../services/rScoreService');
 
 // @desc    Follow a user
 // @route   POST /api/users/:userId/follow
@@ -38,6 +39,10 @@ exports.followUser = asyncHandler(async (req, res) => {
 
   await currentUser.save();
   await userToFollow.save();
+
+  // 🌟 منح نقاط للمتابِع والمتابَع
+  await RScoreService.applyScore(currentUserId, 'FOLLOW_USER', `متابعة مستخدم جديد`);
+  await RScoreService.applyScore(userIdToFollow, 'RECEIVE_USER_FOLLOW', `حصلت على متابع جديد`);
 
   // إشعار للمتابَع: شخص جديد يتابعه
   const followerName = `${currentUser.profile.firstName} ${currentUser.profile.lastName}`.trim();

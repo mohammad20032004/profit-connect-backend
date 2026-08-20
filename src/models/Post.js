@@ -59,6 +59,17 @@ const postSchema = new mongoose.Schema(
       max: 100,
       default: null
     },
+    // حالة المنشور (للتحكم في الإظهار/الإخفاء بعد البلاغات)
+    status: {
+      type: String,
+      enum: ['active', 'hidden', 'deleted'],
+      default: 'active'
+    },
+    // عدد البلاغات المستلمة على هذا المنشور
+    reportsCount: {
+      type: Number,
+      default: 0
+    },
     // تفاصيل التحليل (الطبقات + لغة النص + قيمة النموذج) لعرض الأسباب في الواجهة
     aiDetails: {
       language: { type: String, enum: ['ar', 'en'] },

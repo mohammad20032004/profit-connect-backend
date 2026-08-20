@@ -9,7 +9,9 @@ const {
   addComment,
   updatePost,    
   deletePost,    
-  deleteComment  
+  deleteComment,
+  reportPost,
+  getPostReports
 } = require('../controllers/postController');
 
 const { protect } = require('../middleware/authMiddleware');
@@ -46,5 +48,9 @@ router.post('/:postId/comments', commentLimiter, addComment);
 
 // مسار حذف تعليق محدد
 router.delete('/:postId/comments/:commentId', deleteComment);
+
+// مسار البلاغات
+router.post('/:postId/report', reportPost);
+router.get('/:postId/reports', getPostReports);
 
 module.exports = router;
