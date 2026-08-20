@@ -383,6 +383,18 @@ const REPORT_THRESHOLDS = {
   BAN_USER: 30,         // حظر المستخدم عند 30 بلاغة على منشوراته
 };
 
+const REASON_LABELS = {
+  spam: 'محتوى مزعج (سبام)',
+  nudity: 'محتوى غير لائق',
+  violence: 'محتوى عنيف',
+  hate_speech: 'كلام كراهية',
+  misinformation: 'معلومات خاطئة',
+  harassment: 'تحرش أو إزعاج',
+  copyright: 'انتهاك حقوق ملكية',
+  self_harm: 'إيذاء ذاتي',
+  other: 'أخرى'
+};
+
 // @desc    الإبلاغ عن منشور
 // @route   POST /api/posts/:postId/report
 // @access  Private
@@ -392,7 +404,7 @@ exports.reportPost = async (req, res) => {
     const postId = req.params.postId;
 
     // التحقق من صحة سبب البلاغ
-    const validReasons = ['spam', 'nudity', 'violence', 'hate_speech', 'misinformation', 'harassment', 'copyright', 'self_harm', 'other'];
+    const validReasons = Object.keys(REASON_LABELS);
     if (!reason || !validReasons.includes(reason)) {
       return res.status(400).json({ success: false, message: 'سبب البلاغ مطلوب ويجب أن يكون من القائمة المحددة' });
     }
@@ -440,21 +452,10 @@ exports.reportPost = async (req, res) => {
     await User.findByIdAndUpdate(post.user, { $inc: { 'profile.reportsCount': 1 } });
 
     // خصم نقاط من صاحب المنشور بسبب البلاغ
-    await RScoreService.applyScore(post.user, 'PENALTY_POST_REPORTED', `البلاغ على منشور: ${reasonLabels[reason] || reason}`);
+    await RScoreService.applyScore(post.user, 'PENALTY_POST_REPORTED', `البلاغ على منشور: ${REASON_LABELS[reason]}`);
 
     // إشعار لصاحب المنشور
     const reporterName = `${req.user.profile.firstName} ${req.user.profile.lastName}`;
-    const reasonLabels = {
-      spam: 'محتوى مزعج (سبام)',
-      nudity: 'محتوى غير لائق',
-      violence: 'محتوى عنيف',
-      hate_speech: 'كلام كراهية',
-      misinformation: 'معلومات خاطئة',
-      harassment: 'تحرش أو إزعاج',
-      copyright: 'انتهاك حقوق ملكية',
-      self_harm: 'إيذاء ذاتي',
-      other: 'أخرى'
-    };
 
     await User.findByIdAndUpdate(post.user, {
       $push: {
@@ -462,7 +463,7 @@ exports.reportPost = async (req, res) => {
           type: 'post_reported',
           postId: post._id,
           senderId: req.user._id,
-          message: `تم الإبلاغ على منشورك من قبل ${reporterName} بسبب: ${reasonLabels[reason] || reason}`,
+          message: `تم الإبلاغ على منشورك من قبل ${reporterName} بسبب: ${REASON_LABELS[reason]}`,
           read: false
         }
       }
@@ -490,10 +491,10 @@ exports.reportPost = async (req, res) => {
     // ═══ حظر المستخدم عند تكرار البلاغات الكبيرة ═══
     const userReportCount = (await User.findById(post.user))?.profile?.reportsCount || 0;
     if (userReportCount >= REPORT_THRESHOLDS.BAN_USER) {
-      const user = await User.findByIdAndUpdate(post.user, {
+      await User.findByIdAndUpdate(post.user, {
         status: 'banned',
         isActive: false
-      }, { new: true });
+      });
 
       await RScoreService.applyScore(post.user, 'PENALTY_VIOLATION', 'حظر حساب بسبب تكرار البلاغات على المنشورات');
 
@@ -527,6 +528,10 @@ exports.reportPost = async (req, res) => {
 // @access  Private (Admin)
 exports.getPostReports = async (req, res) => {
   try {
+    if (req.user.role !== 'Admin') {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك. هذه خاصة بالمدراء فقط' });
+    }
+
     const postId = req.params.postId;
 
     const reports = await PostReport.find({ post: postId })
@@ -541,5 +546,108 @@ exports.getPostReports = async (req, res) => {
   } catch (error) {
     console.error('Get Post Reports Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب البلاغات' });
+  }
+};
+
+// @desc    جلب كل البلاغات على المنصة (لوحة تحكم المدراء)
+// @route   GET /api/posts/admin/reports
+// @access  Private (Admin)
+exports.getAllReports = async (req, res) => {
+  try {
+    if (req.user.role !== 'Admin') {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك. هذه خاصة بالمدراء فقط' });
+    }
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const filter = {};
+    if (req.query.status) {
+      filter.status = req.query.status;
+    }
+    if (req.query.reason) {
+      filter.reason = req.query.reason;
+    }
+
+    const reports = await PostReport.find(filter)
+      .populate('reportedBy', 'profile.firstName profile.lastName profile.avatar')
+      .populate('postOwner', 'profile.firstName profile.lastName profile.avatar')
+      .populate('post', 'content status reportsCount')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await PostReport.countDocuments(filter);
+
+    res.status(200).json({
+      success: true,
+      count: reports.length,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+      data: reports
+    });
+  } catch (error) {
+    console.error('Get All Reports Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء جلب البلاغات' });
+  }
+};
+
+// @desc    مراجعة بلاغ (تحديث حالته)
+// @route   PUT /api/posts/reports/:reportId/review
+// @access  Private (Admin)
+exports.reviewReport = async (req, res) => {
+  try {
+    if (req.user.role !== 'Admin') {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك. هذه خاصة بالمدراء فقط' });
+    }
+
+    const { status } = req.body;
+    if (!status || !['reviewed', 'dismissed'].includes(status)) {
+      return res.status(400).json({ success: false, message: 'الحالة يجب أن تكون reviewed أو dismissed' });
+    }
+
+    const report = await PostReport.findById(req.params.reportId);
+    if (!report) {
+      return res.status(404).json({ success: false, message: 'البلاغ غير موجود' });
+    }
+
+    report.status = status;
+    await report.save();
+
+    // إشعار للمبلّغ بنتيجة المراجعة
+    if (status === 'dismissed') {
+      await User.findByIdAndUpdate(report.reportedBy, {
+        $push: {
+          notifications: {
+            type: 'post_reported',
+            postId: report.post,
+            message: 'تم مراجعة بلاغك وتم رفضه لأنه لا يخالف سياسات المجتمع.',
+            read: false
+          }
+        }
+      });
+    } else {
+      await User.findByIdAndUpdate(report.reportedBy, {
+        $push: {
+          notifications: {
+            type: 'post_reported',
+            postId: report.post,
+            message: 'تم مراجعة بلاغك واتخاذ الإجراء المناسب. شكراً لمساهمتك.',
+            read: false
+          }
+        }
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: status === 'reviewed' ? 'تمت مراجعة البلاغ واتخاذ الإجراء' : 'تم رفض البلاغ',
+      data: report
+    });
+  } catch (error) {
+    console.error('Review Report Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء مراجعة البلاغ' });
   }
 };

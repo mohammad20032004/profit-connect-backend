@@ -9,3 +9,13 @@ exports.commentLimiter = rateLimit({
     message: 'لقد قمت بكتابة الكثير من التعليقات بسرعة. يرجى الانتظار قليلاً.'
   }
 });
+
+// منع المستخدم من إرسال أكثر من 3 بلاغات في الدقيقة الواحدة
+exports.reportLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 3,
+  message: {
+    success: false,
+    message: 'لقد قمت بإرسال الكثير من البلاغات بسرعة. يرجى الانتظار قليلاً.'
+  }
+});

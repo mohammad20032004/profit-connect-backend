@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { commentLimiter } = require('../middleware/rateLimiter');
+const { commentLimiter, reportLimiter } = require('../middleware/rateLimiter');
 const { 
   createPost, 
   getPosts, 
@@ -11,7 +11,9 @@ const {
   deletePost,    
   deleteComment,
   reportPost,
-  getPostReports
+  getPostReports,
+  getAllReports,
+  reviewReport
 } = require('../controllers/postController');
 
 const { protect } = require('../middleware/authMiddleware');
@@ -36,6 +38,9 @@ router.route('/')
   .post(postMediaUpload, createPost)
   .get(getPosts);
 
+// مسار لوحة تحكم البلاغات (Admin) - قبل :postId لتجنب التعارض
+router.get('/admin/reports', getAllReports);
+
 // مسار لمنشور محدد (عرض، تعديل، حذف)
 router.route('/:postId')
   .get(getPost)
@@ -50,7 +55,10 @@ router.post('/:postId/comments', commentLimiter, addComment);
 router.delete('/:postId/comments/:commentId', deleteComment);
 
 // مسار البلاغات
-router.post('/:postId/report', reportPost);
+router.post('/:postId/report', reportLimiter, reportPost);
 router.get('/:postId/reports', getPostReports);
+
+// مراجعة بلاغ (Admin)
+router.put('/reports/:reportId/review', reviewReport);
 
 module.exports = router;
