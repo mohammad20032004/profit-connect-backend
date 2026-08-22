@@ -63,7 +63,7 @@ exports.createPost = async (req, res) => {
       });
     }
 
-    const populatedPost = await Post.findById(newPost._id).populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar');
+    const populatedPost = await Post.findById(newPost._id).populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar profile.gender');
     res.status(201).json({ success: true, data: populatedPost });
   } catch (error) {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إنشاء المنشور' });
@@ -86,8 +86,8 @@ exports.getPosts = async (req, res) => {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
-      .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar')
-      .populate({ path: 'comments.user', select: '_id profile.firstName profile.lastName profile.avatar' })
+      .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar profile.gender')
+      .populate({ path: 'comments.user', select: '_id profile.firstName profile.lastName profile.avatar profile.gender' })
       .lean()
 
     // جلب العدد الكلي للمنشورات النشطة لحساب عدد الصفحات
@@ -115,8 +115,8 @@ exports.getPosts = async (req, res) => {
 exports.getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId)
-      .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar')
-      .populate({ path: 'comments.user', select: '_id profile.firstName profile.lastName profile.avatar' })
+      .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar profile.gender')
+      .populate({ path: 'comments.user', select: '_id profile.firstName profile.lastName profile.avatar profile.gender' })
       .lean();
 
     if (!post) {
@@ -269,7 +269,7 @@ exports.updatePost = async (req, res) => {
       req.params.postId,
       { $set: { content: sanitizedContent, image, video, visibility: req.body.visibility } },
       { new: true, runValidators: true }
-    ).populate('user', 'profile.firstName profile.lastName profile.avatar');
+    ).populate('user', 'profile.firstName profile.lastName profile.avatar profile.gender');
 
     // 🤖 تقدير نسبة الذكاء الاصطناعي في الخلفية عند التعديل
     if (req.body.content) {
@@ -535,7 +535,7 @@ exports.getPostReports = async (req, res) => {
     const postId = req.params.postId;
 
     const reports = await PostReport.find({ post: postId })
-      .populate('reportedBy', 'profile.firstName profile.lastName profile.avatar')
+      .populate('reportedBy', 'profile.firstName profile.lastName profile.avatar profile.gender')
       .sort({ createdAt: -1 });
 
     res.status(200).json({
@@ -571,8 +571,8 @@ exports.getAllReports = async (req, res) => {
     }
 
     const reports = await PostReport.find(filter)
-      .populate('reportedBy', 'profile.firstName profile.lastName profile.avatar')
-      .populate('postOwner', 'profile.firstName profile.lastName profile.avatar')
+      .populate('reportedBy', 'profile.firstName profile.lastName profile.avatar profile.gender')
+      .populate('postOwner', 'profile.firstName profile.lastName profile.avatar profile.gender')
       .populate('post', 'content status reportsCount')
       .sort({ createdAt: -1 })
       .skip(skip)
