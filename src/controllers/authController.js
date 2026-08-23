@@ -4,6 +4,8 @@ const crypto = require('crypto');
 const User = require('../models/User');
 const Post = require('../models/Post');
 const RefreshToken = require('../models/RefreshToken');
+const PasswordReset = require('../models/PasswordReset');
+const { sendResetCode } = require('../services/emailService');
 const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
 const { formatUserResponse } = require('../utils/userResponse');
 
@@ -330,5 +332,196 @@ exports.logout = async (req, res) => {
     res.status(200).json({ success: true, message: 'تم تسجيل الخروج وإبطال الجلسة بنجاح' });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// ============================================================
+// إعادة تعيين كلمة المرور عبر البريد الإلكتروني (EmailJS)
+// ============================================================
+
+const RESET_CODE_EXPIRY_MINUTES = 10;
+
+// توليد كود عشوائي من 6 أرقام
+function generateResetCode() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+// @desc    طلب إعادة تعيين كلمة المرور (إرسال كود)
+// @route   POST /api/auth/forgot-password
+// @access  Public
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني مطلوب' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'البريد الإلكتروني غير مسجل في المنصة'
+      });
+    }
+
+    // حذف أي طلبات قديمة لنفس المستخدم
+    await PasswordReset.deleteMany({ user: user._id, purpose: 'password_reset' });
+
+    // توليد كود جديد
+    const code = generateResetCode();
+    const expiresAt = new Date(Date.now() + RESET_CODE_EXPIRY_MINUTES * 60 * 1000);
+
+    await PasswordReset.create({
+      user: user._id,
+      code,
+      purpose: 'password_reset',
+      expiresAt,
+    });
+
+    // إرسال الكود عبر EmailJS
+    const sent = await sendResetCode(user.email, code, user.profile.firstName);
+
+    if (!sent) {
+      return res.status(500).json({
+        success: false,
+        message: 'حدث خطأ أثناء إرسال البريد الإلكتروني، يرجى المحاولة لاحقاً'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'تم إرسال كود إعادة التعيين إلى بريدك الإلكتروني'
+    });
+
+  } catch (error) {
+    console.error('Forgot Password Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء معالجة الطلب' });
+  }
+};
+
+// @desc    التحقق من كود إعادة تعيين كلمة المرور
+// @route   POST /api/auth/verify-reset-code
+// @access  Public
+exports.verifyResetCode = async (req, res) => {
+  try {
+    const { email, code } = req.body;
+
+    if (!email || !code) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني والكود مطلوبان' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني غير صحيح' });
+    }
+
+    // البحث عن الكود غير المستخدم وغير منتهي الصلاحية
+    const resetRecord = await PasswordReset.findOne({
+      user: user._id,
+      purpose: 'password_reset',
+      verified: false,
+      expiresAt: { $gt: new Date() },
+    }).sort({ createdAt: -1 });
+
+    if (!resetRecord) {
+      return res.status(400).json({
+        success: false,
+        message: 'لا يوجد كود صالح، يرجى طلب كود جديد'
+      });
+    }
+
+    if (resetRecord.code !== code) {
+      return res.status(400).json({ success: false, message: 'الكود غير صحيح' });
+    }
+
+    // تعليم الكود كمحقق منه
+    resetRecord.verified = true;
+    await resetRecord.save();
+
+    // إنشاء توكن مؤقت صالح لمدة 10 دقائق فقط لاستخدامه في إعادة التعيين
+    const resetToken = jwt.sign(
+      { id: user._id, purpose: 'password_reset', resetId: resetRecord._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '10m' }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'تم التحقق من الكود بنجاح',
+      resetToken,
+    });
+
+  } catch (error) {
+    console.error('Verify Reset Code Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء التحقق من الكود' });
+  }
+};
+
+// @desc    إعادة تعيين كلمة المرور
+// @route   POST /api/auth/reset-password
+// @access  Public (يحمل resetToken)
+exports.resetPassword = async (req, res) => {
+  try {
+    const { resetToken, newPassword } = req.body;
+
+    if (!resetToken || !newPassword) {
+      return res.status(400).json({ success: false, message: 'التوكن وكلمة المرور الجديدة مطلوبان' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل' });
+    }
+
+    // فك تشفير التوكن والتحقق من صحته
+    let decoded;
+    try {
+      decoded = jwt.verify(resetToken, process.env.JWT_SECRET);
+    } catch (e) {
+      return res.status(400).json({ success: false, message: 'التوكن غير صالح أو منتهي الصلاحية' });
+    }
+
+    // التأكد من أن التوكن مخصص لإعادة التعيين
+    if (decoded.purpose !== 'password_reset') {
+      return res.status(400).json({ success: false, message: 'التوكن غير صالح لهذا الغرض' });
+    }
+
+    // التحقق من أن السجل لم يتم التحقق منه مسبقاً
+    const resetRecord = await PasswordReset.findOne({
+      _id: decoded.resetId,
+      user: decoded.id,
+      verified: true,
+    });
+
+    if (!resetRecord) {
+      return res.status(400).json({ success: false, message: 'سجل إعادة التعيين غير صالح' });
+    }
+
+    // تحديث كلمة المرور (pre-save hook سيشفرها تلقائياً)
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(400).json({ success: false, message: 'المستخدم غير موجود' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    // حذف جميع أكواد إعادة التعيين لهذا المستخدم
+    await PasswordReset.deleteMany({ user: user._id });
+
+    // إبطال جميع الريفرش توكنز (أمان إضافي)
+    await RefreshToken.updateMany(
+      { user: user._id, revokedAt: null },
+      { revokedAt: new Date() }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'تم إعادة تعيين كلمة المرور بنجاح، يرجى تسجيل الدخول بكلمة المرور الجديدة'
+    });
+
+  } catch (error) {
+    console.error('Reset Password Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء إعادة تعيين كلمة المرور' });
   }
 };

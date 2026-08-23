@@ -3,7 +3,7 @@ const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
 const { uploadAvatar } = require('../middleware/uploadMiddleware');
 // استدعاء دوال المصادقة
-const { signup, login, getCurrentUser, refresh, logout } = require('../controllers/authController');
+const { signup, login, getCurrentUser, refresh, logout, forgotPassword, verifyResetCode, resetPassword } = require('../controllers/authController');
 
 const signupAvatarUploadHandler = (req, res, next) => {
   uploadAvatar.single('avatar')(req, res, (error) => {
@@ -32,5 +32,10 @@ router.post('/refresh', refresh);
 
 // مسار تسجيل الخروج وإبطال الجلسة: POST /api/auth/logout
 router.post('/logout', logout);
+
+// مسارات إعادة تعيين كلمة المرور
+router.post('/forgot-password', forgotPassword);
+router.post('/verify-reset-code', verifyResetCode);
+router.post('/reset-password', resetPassword);
 
 module.exports = router;
