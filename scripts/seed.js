@@ -86,6 +86,26 @@ const LAST_NAMES = ['العتيبي', 'القحطاني', 'الشمري', 'ال�
 const LAST_NAMES_EN = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Anderson', 'Taylor', 'Thomas', 'Hernandez', 'Moore', 'Martin', 'Jackson', 'Thompson', 'White', 'Lopez'];
 const CITIES_SA = ['الرياض', 'جدة', 'مكة', 'المدينة', 'الدمام', 'الظهران', 'الخبر', 'الأحساء', 'القصيم', 'تبوك', 'حائل', 'أبها', 'جيزان', 'نجران', 'الباحة', 'عسير'];
 const CITIES_GLOBAL = ['Dubai', 'Abu Dhabi', 'Cairo', 'Amman', 'Beirut', 'Istanbul', 'London', 'New York', 'San Francisco', 'Berlin'];
+
+// إحداثيات المدن السعودية [خط العرض, خط الطول] لحقنها في شركات/مستخدمي صاحب العمل
+const CITY_COORDS_SA = {
+  'الرياض':  [24.7136, 46.6753],
+  'جدة':     [21.4858, 39.1925],
+  'مكة':     [21.3891, 39.8579],
+  'المدينة': [24.5247, 39.5692],
+  'الدمام':  [26.4207, 50.0888],
+  'الظهران': [26.2891, 50.1506],
+  'الخبر':   [26.2794, 50.2083],
+  'الأحساء': [25.3791, 49.5860],
+  'القصيم':  [26.3333, 43.9667],
+  'تبوك':    [28.3835, 36.5662],
+  'حائل':    [27.5114, 41.7209],
+  'أبها':    [18.2164, 42.5053],
+  'جيزان':   [16.8892, 42.5706],
+  'نجران':   [17.4923, 44.1277],
+  'الباحة':  [20.0124, 41.4674],
+  'عسير':    [18.2164, 42.5053],
+};
 const INDUSTRIES = ['تكنولوجيا', 'صحة', 'تعليم', 'مالية', 'تسويق', 'تصميم', '.engineering', 'قانون', 'عقارات', 'تجارة إلكترونية', 'سياحة', 'زراعة', '_energy', 'نقل', 'إعلام'];
 const SKILLS = ['JavaScript', 'Python', 'React', 'Node.js', 'TypeScript', 'MongoDB', 'Docker', 'AWS', 'Figma', 'Photoshop', 'UI/UX', 'Project Management', 'Data Analysis', 'Machine Learning', 'Flutter', 'Swift', 'Kotlin', 'Java', 'C#', 'PHP', 'Laravel', 'Django', 'PostgreSQL', 'Redis', 'GraphQL', 'DevOps', 'Cyber Security', 'Blockchain', 'AR/VR', 'Content Writing'];
 const POST_CONTENTS = [
@@ -245,10 +265,22 @@ async function seedUsers(count) {
         companyName: pick(['Tech Saudi', 'Digital Wave', 'Smart Solutions', 'Code Valley', 'Innovate Hub', 'Saudi Tech', 'Gulf Digital', 'Riyadh Labs', 'Desert Code', 'Oasis Tech']),
         companyDescription: pick(['شركة رائدة في مجال الحلول الرقمية', 'startup ناشئة في مجال الذكاء الاصطناعي', 'شركة تطوير برمجيات متخصصة', 'وكالة تسويق رقمي']),
         industry: pick(INDUSTRIES),
-        companyLocation: {
-          country: 'Saudi Arabia',
-          city: pick(CITIES_SA),
-        },
+        companyLocation: (() => {
+          const eCity = pick(CITIES_SA);
+          const eBase = CITY_COORDS_SA[eCity] || [24.7136, 46.6753];
+          const eLat = parseFloat((eBase[0] + (Math.random() - 0.5) * 0.1).toFixed(6));
+          const eLng = parseFloat((eBase[1] + (Math.random() - 0.5) * 0.1).toFixed(6));
+          return {
+            country: 'Saudi Arabia',
+            city: eCity,
+            street: pick(['شارع التحلية', 'شارع الأمير سلطان', 'شارع الملك فهد', 'شارع العليا', 'شارع الخزان']),
+            buildingNumber: String(rand(1, 200)),
+            coordinates: {
+              type: 'Point',
+              coordinates: [eLng, eLat],
+            },
+          };
+        })(),
         companySize: pick(['1-10', '11-50', '51-200', '201-500']),
       };
     }
@@ -285,6 +317,11 @@ async function seedCompanies(users, count) {
     const owner = employers[i];
     const statusPool = ['Approved', 'Approved', 'Approved', 'Pending', 'Rejected'];
     const companyName = companyNames[i % companyNames.length] + (i >= companyNames.length ? ` ${Math.floor(i / companyNames.length) + 1}` : '');
+    const city = pick(CITIES_SA);
+    const baseCoords = CITY_COORDS_SA[city] || [24.7136, 46.6753];
+    // إزاحة عشوائية صغيرة حول مركز المدينة لإضفاء واقعية (±0.05 درجة تقريباً)
+    const lat = parseFloat((baseCoords[0] + (Math.random() - 0.5) * 0.1).toFixed(6));
+    const lng = parseFloat((baseCoords[1] + (Math.random() - 0.5) * 0.1).toFixed(6));
     const company = {
       name: companyName,
       description: pick([
@@ -298,9 +335,13 @@ async function seedCompanies(users, count) {
       industry: pick(INDUSTRIES),
       location: {
         country: 'Saudi Arabia',
-        city: pick(CITIES_SA),
+        city,
         street: pick(['شارع التحلية', 'شارع الأمير سلطان', 'شارع الملك فهد', 'شارع العليا', 'شارع الخزان']),
         buildingNumber: String(rand(1, 200)),
+        coordinates: {
+          type: 'Point',
+          coordinates: [lng, lat],
+        },
       },
       companySize: pick(['1-10', '11-50', '51-200', '201-500', '501-1000']),
       foundedYear: rand(2010, 2025),
