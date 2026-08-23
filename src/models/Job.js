@@ -9,7 +9,7 @@ const jobSchema = new mongoose.Schema(
     type: { type: String, enum: ['Full-time', 'Part-time', 'Contract', 'Internship', 'Freelance'], default: 'Full-time' },
     workLevel: { type: String, enum: ['Entry', 'Mid', 'Senior', 'Director', 'VP'], default: 'Entry' },
     workPlace: { type: String, enum: ['On-site', 'Remote', 'Hybrid'], default: 'On-site' },
-    salary: { min: Number, max: Number, currency: { type: String, default: 'USD' } },
+    salary: { min: Number, max: Number, currency: { type: String, default: 'USD', enum: ['USD'] } },
     requirements: [String],
     responsibilities: [String],
     status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },

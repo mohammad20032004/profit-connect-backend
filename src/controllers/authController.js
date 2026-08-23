@@ -5,7 +5,8 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 const RefreshToken = require('../models/RefreshToken');
 const PasswordReset = require('../models/PasswordReset');
-const { sendResetCode } = require('../services/emailService');
+const EmailVerification = require('../models/EmailVerification');
+const { sendResetCode, sendVerificationCode } = require('../services/emailService');
 const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
 const { formatUserResponse } = require('../utils/userResponse');
 
@@ -137,11 +138,23 @@ exports.signup = async (req, res) => {
     const token = generateToken(user._id);
     const refreshToken = await createStoredRefreshToken(user._id, req);
 
-    // 4. إرجاع الاستجابة حسب الهيكلة المطلوبة
+    // 4. إرسال كود تأكيد البريد الإلكتروني
+    const verificationCode = generateResetCode();
+    const verificationExpires = new Date(Date.now() + 15 * 60 * 1000);
+    await EmailVerification.create({
+      user: user._id,
+      code: verificationCode,
+      expiresAt: verificationExpires,
+    });
+    await sendVerificationCode(user.email, verificationCode, user.profile.firstName);
+
+    // 5. إرجاع الاستجابة
     res.status(201).json({
       success: true,
       token,
       refreshToken,
+      requiresEmailVerification: true,
+      message: 'تم إنشاء الحساب بنجاح. يرجى التحقق من بريدك الإلكتروني لإكمال التسجيل.',
       user: formatUserResponse(user)
     });
 
@@ -189,11 +202,21 @@ exports.login = async (req, res) => {
       });
     }
 
-    // 4. إنشاء التوكن
+    // 4. التحقق من تأكيد البريد الإلكتروني
+    if (!user.isVerified) {
+      return res.status(403).json({
+        success: false,
+        message: 'لم يتم تأكيد البريد الإلكتروني بعد',
+        requiresEmailVerification: true,
+        email: user.email
+      });
+    }
+
+    // 5. إنشاء التوكن
     const token = generateToken(user._id);
     const refreshToken = await createStoredRefreshToken(user._id, req);
 
-    // 5. إرجاع الاستجابة
+    // 6. إرجاع الاستجابة
     res.status(200).json({
       success: true,
       token,
@@ -523,5 +546,176 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     console.error('Reset Password Error:', error.message);
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء إعادة تعيين كلمة المرور' });
+  }
+};
+
+// ============================================================
+// تأكيد البريد الإلكتروني
+// ============================================================
+
+const EMAIL_VERIFY_EXPIRY_MINUTES = 15;
+
+// @desc    إرسال كود تأكيد البريد الإلكتروني
+// @route   POST /api/auth/send-verification
+// @access  Public
+exports.sendVerification = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني مطلوب' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'البريد الإلكتروني غير مسجل في المنصة' });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني مؤكد بالفعل' });
+    }
+
+    // حذف أي أكواد قديمة
+    await EmailVerification.deleteMany({ user: user._id });
+
+    // توليد كود جديد
+    const code = generateResetCode();
+    const expiresAt = new Date(Date.now() + EMAIL_VERIFY_EXPIRY_MINUTES * 60 * 1000);
+
+    await EmailVerification.create({
+      user: user._id,
+      code,
+      expiresAt,
+    });
+
+    // إرسال الكود
+    const sent = await sendVerificationCode(user.email, code, user.profile.firstName);
+
+    if (!sent) {
+      return res.status(500).json({
+        success: false,
+        message: 'حدث خطأ أثناء إرسال البريد الإلكتروني، يرجى المحاولة لاحقاً'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'تم إرسال كود التأكيد إلى بريدك الإلكتروني'
+    });
+
+  } catch (error) {
+    console.error('Send Verification Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء إرسال كود التأكيد' });
+  }
+};
+
+// @desc    التحقق من كود تأكيد البريد الإلكتروني
+// @route   POST /api/auth/verify-email
+// @access  Public
+exports.verifyEmail = async (req, res) => {
+  try {
+    const { email, code } = req.body;
+
+    if (!email || !code) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني والكود مطلوبان' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'البريد الإلكتروني غير مسجل في المنصة' });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني مؤكد بالفعل' });
+    }
+
+    // البحث عن الكود
+    const verificationRecord = await EmailVerification.findOne({
+      user: user._id,
+      verified: false,
+      expiresAt: { $gt: new Date() },
+    }).sort({ createdAt: -1 });
+
+    if (!verificationRecord) {
+      return res.status(400).json({
+        success: false,
+        message: 'لا يوجد كود صالح، يرجى طلب كود جديد'
+      });
+    }
+
+    if (verificationRecord.code !== code) {
+      return res.status(400).json({ success: false, message: 'الكود غير صحيح' });
+    }
+
+    // تأكيد البريد
+    user.isVerified = true;
+    user.emailVerifiedAt = new Date();
+    await user.save();
+
+    // حذف جميع أكواد التأكيد
+    await EmailVerification.deleteMany({ user: user._id });
+
+    res.status(200).json({
+      success: true,
+      message: 'تم تأكيد البريد الإلكتروني بنجاح'
+    });
+
+  } catch (error) {
+    console.error('Verify Email Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء تأكيد البريد الإلكتروني' });
+  }
+};
+
+// @desc    إعادة إرسال كود تأكيد البريد الإلكتروني
+// @route   POST /api/auth/resend-verification
+// @access  Public
+exports.resendVerification = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني مطلوب' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'البريد الإلكتروني غير مسجل في المنصة' });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ success: false, message: 'البريد الإلكتروني مؤكد بالفعل' });
+    }
+
+    // حذف أي أكواد قديمة
+    await EmailVerification.deleteMany({ user: user._id });
+
+    // توليد كود جديد
+    const code = generateResetCode();
+    const expiresAt = new Date(Date.now() + EMAIL_VERIFY_EXPIRY_MINUTES * 60 * 1000);
+
+    await EmailVerification.create({
+      user: user._id,
+      code,
+      expiresAt,
+    });
+
+    // إرسال الكود
+    const sent = await sendVerificationCode(user.email, code, user.profile.firstName);
+
+    if (!sent) {
+      return res.status(500).json({
+        success: false,
+        message: 'حدث خطأ أثناء إرسال البريد الإلكتروني، يرجى المحاولة لاحقاً'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'تم إعادة إرسال كود التأكيد إلى بريدك الإلكتروني'
+    });
+
+  } catch (error) {
+    console.error('Resend Verification Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء إعادة إرسال كود التأكيد' });
   }
 };

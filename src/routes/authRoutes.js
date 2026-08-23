@@ -3,7 +3,7 @@ const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
 const { uploadAvatar } = require('../middleware/uploadMiddleware');
 // استدعاء دوال المصادقة
-const { signup, login, getCurrentUser, refresh, logout, forgotPassword, verifyResetCode, resetPassword } = require('../controllers/authController');
+const { signup, login, getCurrentUser, refresh, logout, forgotPassword, verifyResetCode, resetPassword, sendVerification, verifyEmail, resendVerification } = require('../controllers/authController');
 
 const signupAvatarUploadHandler = (req, res, next) => {
   uploadAvatar.single('avatar')(req, res, (error) => {
@@ -37,5 +37,10 @@ router.post('/logout', logout);
 router.post('/forgot-password', forgotPassword);
 router.post('/verify-reset-code', verifyResetCode);
 router.post('/reset-password', resetPassword);
+
+// مسارات تأكيد البريد الإلكتروني
+router.post('/send-verification', sendVerification);
+router.post('/verify-email', verifyEmail);
+router.post('/resend-verification', resendVerification);
 
 module.exports = router;

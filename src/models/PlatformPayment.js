@@ -31,10 +31,15 @@ const platformPaymentSchema = new mongoose.Schema(
       required: [true, 'مبلغ الدفعة مطلوب'],
       min: 1,
     },
+    currency: {
+      type: String,
+      default: 'USD',
+      enum: ['USD'],
+    },
     method: {
       // طريقة الدفع التي اختارها العميل عند إرسال الدفعة
       type: String,
-      enum: ['PayPal', 'Visa', 'Mastercard', 'American Express', 'Apple Pay'],
+      enum: ['PayPal', 'Visa', 'Mastercard', 'American Express', 'Apple Pay', 'ShamCash'],
       required: [true, 'طريقة الدفع مطلوبة'],
     },
     fee: {

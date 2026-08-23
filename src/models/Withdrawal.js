@@ -13,6 +13,11 @@ const withdrawalSchema = new mongoose.Schema(
       required: [true, 'مبلغ السحب مطلوب'],
       min: 1,
     },
+    currency: {
+      type: String,
+      default: 'USD',
+      enum: ['USD'],
+    },
     method: {
       type: String,
       enum: ['bank_transfer', 'cash', 'other'],

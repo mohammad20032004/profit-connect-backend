@@ -137,7 +137,11 @@ const userSchema = new mongoose.Schema(
     },
     isVerified: {
       type: Boolean,
-      default: true
+      default: false
+    },
+    emailVerifiedAt: {
+      type: Date,
+      default: null
     },
     // 🌟 تم نقل حقل الحالة إلى المكان الصحيح داخل الحقول 🌟
     status: {
@@ -164,10 +168,11 @@ const userSchema = new mongoose.Schema(
     }],
     // ===== المحفظة المالية =====
     wallet: {
-      balance:    { type: Number, default: 0, min: 0 }, // رصيد متاح للسحب
-      holding:    { type: Number, default: 0, min: 0 }, // مبلغ محجوز (طلب سحب قيد المراجعة)
-      totalEarned:    { type: Number, default: 0 },     // إجمالي ما كسبه المستخدم
-      totalWithdrawn: { type: Number, default: 0 },     // إجمالي ما سحبه المستخدم
+      balance:    { type: Number, default: 0, min: 0 },
+      holding:    { type: Number, default: 0, min: 0 },
+      totalEarned:    { type: Number, default: 0 },
+      totalWithdrawn: { type: Number, default: 0 },
+      currency:       { type: String, default: 'USD', enum: ['USD'] },
     },
     notifications: [{
       type: { type: String, enum: ['proposal_accepted', 'proposal_rejected', 'proposal_received', 'ai_detected', 'company_setup', 'company_status', 'employee_added', 'employee_removed', 'job_application_status', 'connection_request', 'connection_accepted', 'connection_rejected', 'follow', 'payment_deposited', 'payment_released', 'payment_refunded', 'withdrawal_approved', 'withdrawal_rejected', 'post_reported', 'post_hidden', 'account_banned'], required: true },

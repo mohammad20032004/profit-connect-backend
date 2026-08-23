@@ -63,4 +63,19 @@ async function sendResetCode(email, code, firstName) {
   );
 }
 
-module.exports = { sendEmail, sendResetCode };
+/**
+ * إرسال كود تأكيد البريد الإلكتروني
+ */
+async function sendVerificationCode(email, code, firstName) {
+  return sendEmail(
+    process.env.EMAILJS_VERIFICATION_TEMPLATE || 'email_verification',
+    {
+      to_name: firstName || 'المستخدم',
+      verification_code: code,
+      message: `كود تأكيد بريدك الإلكتروني هو: ${code}`,
+    },
+    email
+  );
+}
+
+module.exports = { sendEmail, sendResetCode, sendVerificationCode };

@@ -19,6 +19,11 @@ const moneyTransactionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    currency: {
+      type: String,
+      default: 'USD',
+      enum: ['USD'],
+    },
     balanceAfter: {
       // رصيد (wallet.balance) بعد العملية — لأغراض التدقيق
       type: Number,

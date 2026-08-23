@@ -69,7 +69,7 @@ const projectSchema = new mongoose.Schema({
   budget: {
     min: { type: Number, default: 0 },
     max: { type: Number, default: 0 },
-    currency: { type: String, default: 'SAR' },
+    currency: { type: String, default: 'USD', enum: ['USD'] },
   },
   deadline: Date,
   status: {

@@ -29,7 +29,7 @@ exports.createDeposit = async (req, res) => {
       return res.status(400).json({ success: false, message: 'معرّف المشروع غير صالح' });
     }
 
-    const PAYMENT_METHODS = ['PayPal', 'Visa', 'Mastercard', 'American Express', 'Apple Pay'];
+    const PAYMENT_METHODS = ['PayPal', 'Visa', 'Mastercard', 'American Express', 'Apple Pay', 'ShamCash'];
     if (!method || !PAYMENT_METHODS.includes(method)) {
       return res.status(400).json({
         success: false,
