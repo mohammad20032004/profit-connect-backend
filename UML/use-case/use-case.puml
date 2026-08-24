@@ -23,11 +23,13 @@ rectangle "منطقة عامة (Public)" {
     usecase "استعراض الوظائف المتاحة\nBrowse Jobs" as UC_BrowseJobs
     usecase "استعراض بيانات الرواتب\nBrowse Salaries" as UC_Salaries
     usecase "تصفح لوحة المتصدرين\nLeaderboard" as UC_Leaderboard
+    usecase "إعادة تعيين كلمة المرور\nReset Password" as UC_ResetPwd
     Guest --> UC_Register
     Guest --> UC_Login
     Guest --> UC_BrowseJobs
     Guest --> UC_Salaries
     Guest --> UC_Leaderboard
+    Guest --> UC_ResetPwd
 }
 
 rectangle "الملف الشخصي والمصادقة (Auth & Profile)" {
@@ -38,6 +40,8 @@ rectangle "الملف الشخصي والمصادقة (Auth & Profile)" {
     usecase "إدارة الإعدادات والتنبيهات\nManage Settings" as UC_Settings
     usecase "تجديد الجلسة / تسجيل الخروج\nRefresh / Logout" as UC_Session
     usecase "حساب درجة السمعة R-Score\nReputation Score" as UC_RScore
+    usecase "تأكيد البريد الإلكتروني\nVerify Email" as UC_VerifyEmail
+    usecase "إعادة إرسال كود التأكيد\nResend Verification" as UC_ResendVerify
 }
 
 rectangle "الشبكة والتواصل (Network)" {
@@ -55,6 +59,7 @@ rectangle "المحتوى (Content)" {
     usecase "حفظ منشور\nSave Post" as UC_Save
     usecase "تقييم جودة المحتوى بالذكاء الاصطناعي\nAI Moderation" as UC_AIMod
     usecase "كشف المحتوى المولد بالذكاء الاصطناعي\nAI Detection" as UC_AIDetect
+    usecase "الإبلاغ عن منشور\nReport Post" as UC_ReportPost
 }
 
 rectangle "الوظائف والشركات (Jobs & Companies)" {
@@ -85,6 +90,7 @@ rectangle "الإدارة (Admin)" {
     usecase "مراجعة طلبات السحب\nReview Withdrawals" as UC_WithRev
     usecase "التحكم بالدفعات (تحرير/استرجاع)\nEscrow Control" as UC_EscrowCtrl
     usecase "إعدادات المنصة (عمولة)\nPlatform Settings" as UC_Platform
+    usecase "مراجعة البلاغات\nReview Reports" as UC_ReviewReports
 }
 
 ' ============ علاقات الأدوار ============
@@ -95,6 +101,8 @@ JobSeeker -d-> UC_Export
 JobSeeker -d-> UC_Settings
 JobSeeker -d-> UC_Session
 JobSeeker -d-> UC_RScore
+JobSeeker -d-> UC_VerifyEmail
+JobSeeker -d-> UC_ResendVerify
 JobSeeker -d-> UC_Connect
 JobSeeker -d-> UC_AcceptConn
 JobSeeker -d-> UC_Follow
@@ -106,13 +114,17 @@ JobSeeker -d-> UC_Interact
 JobSeeker -d-> UC_Save
 JobSeeker -d-> UC_AIMod
 JobSeeker -d-> UC_AIDetect
+JobSeeker -d-> UC_ReportPost
 JobSeeker -d-> UC_JobApply
 
 Employer -d-> UC_Profile
 Employer -d-> UC_Session
+Employer -d-> UC_VerifyEmail
+Employer -d-> UC_ResendVerify
 Employer -d-> UC_Message
 Employer -d-> UC_Post
 Employer -d-> UC_Interact
+Employer -d-> UC_ReportPost
 Employer -d-> UC_CoCreate
 Employer -d-> UC_CoEmp
 Employer -d-> UC_CoRate
@@ -122,6 +134,8 @@ Employer -d-> UC_JobMng
 
 FClient -d-> UC_Profile
 FClient -d-> UC_Session
+FClient -d-> UC_VerifyEmail
+FClient -d-> UC_ResendVerify
 FClient -d-> UC_Message
 FClient -d-> UC_ProjCreate
 FClient -d-> UC_ProposalDec
@@ -130,6 +144,7 @@ FClient -d-> UC_Deposit
 FClient -d-> UC_Release
 FClient -d-> UC_Wallet
 FClient -d-> UC_Post
+FClient -d-> UC_ReportPost
 
 EmpEmployee -d-> UC_JobPost
 EmpEmployee -d-> UC_JobMng
@@ -143,10 +158,12 @@ Admin -d-> UC_WithRev
 Admin -d-> UC_EscrowCtrl
 Admin -d-> UC_Platform
 Admin -d-> UC_Release
+Admin -d-> UC_ReviewReports
 
 ' ============ التضمين (Include) ============
 UC_Login .> UC_Session : <<include>>\nيُنتج توكن وصول وتجديد
-UC_Register .> UC_Login : <<include>>
+UC_Register .> UC_VerifyEmail : <<include>>\nإرسال كود تأكيد تلقائياً
+UC_ResetPwd .> UC_VerifyEmail : <<extend>>\nيحتاج بريد مؤكد
 UC_CoCreate .> UC_CoApprove : <<extend>>\nيحتاج موافقة الإدارة
 UC_JobApply .> UC_JobMng : <<include>>
 UC_Deposit .> UC_ProposalDec : <<include>>\nالدفع لعرض مقبول
@@ -154,6 +171,7 @@ UC_Wallet .> UC_WithRev : <<extend>>\nالطلب يمر على الإدارة
 UC_Post .> UC_AIMod : <<include>>
 UC_Post .> UC_AIDetect : <<include>>
 UC_Proposal .> UC_Message : <<include>>
+UC_ReviewReports .> UC_PostMng : <<include>>\nمراجعة بلاغات المحتوى
 
 ' ============ التعميم (Generalization) ============
 Admin -d-|> JobSeeker

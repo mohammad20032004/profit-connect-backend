@@ -15,6 +15,7 @@ class User {
   - bannedUntil : Date
   - isActive : Boolean
   - isVerified : Boolean
+  - emailVerifiedAt : Date
   - warnings : Warning[]
   - profile : Profile
   - professional : Professional
@@ -30,6 +31,7 @@ class Profile {
   - firstName : String
   - lastName : String
   - fullname : String
+  - gender : Gender
   - headline : String
   - bio : String
   - avatar : String
@@ -40,7 +42,9 @@ class Profile {
   - followersCount : Number
   - followingCount : Number
   - postsCount : Number
+  - portfolioCount : Number
   - rScore : Number
+  - reportsCount : Number
 }
 
 class Wallet {
@@ -48,6 +52,7 @@ class Wallet {
   - holding : Number
   - totalEarned : Number
   - totalWithdrawn : Number
+  - currency : Currency
 }
 
 enum Role {
@@ -61,6 +66,15 @@ enum Role {
 enum Status {
   active
   banned
+}
+
+enum Gender {
+  male
+  female
+}
+
+enum Currency {
+  USD
 }
 
 class Company {
@@ -100,10 +114,18 @@ class Post {
   - image : String
   - video : String
   - visibility : String
+  - status : PostStatus
   - likes : ObjectId[]
   - comments : Comment[]
+  - reportsCount : Number
   - aiProbability : Number
   - aiDetails : AIDetails
+}
+
+enum PostStatus {
+  active
+  hidden
+  deleted
 }
 
 class AIDetails {
@@ -111,6 +133,33 @@ class AIDetails {
   - modelProbability : Number
   - layers : AILayers
   - signals : String[]
+}
+
+class PostReport {
+  - post : ObjectId
+  - reportedBy : ObjectId
+  - reason : ReportReason
+  - description : String
+  - status : ReportReviewStatus
+  - reviewedBy : ObjectId
+  - reviewedAt : Date
+  - adminNote : String
+}
+
+enum ReportReason {
+  spam
+  harassment
+  hate_speech
+  inappropriate_content
+  misinformation
+  copyright_violation
+  other
+}
+
+enum ReportReviewStatus {
+  pending
+  approved
+  rejected
 }
 
 class Job {
@@ -213,6 +262,7 @@ class PlatformPayment {
   - payee : ObjectId
   - proposal : ObjectId
   - amount : Number
+  - currency : Currency
   - method : PayMethod
   - fee : Number
   - netAmount : Number
@@ -231,6 +281,7 @@ enum PayStatus {
 class Withdrawal {
   - user : ObjectId
   - amount : Number
+  - currency : Currency
   - method : String
   - accountDetails : BankDetails
   - status : WithdrawStatus
@@ -249,6 +300,7 @@ class MoneyTransaction {
   - user : ObjectId
   - type : TxType
   - amount : Number
+  - currency : Currency
   - balanceAfter : Number
   - platformPayment : ObjectId
   - withdrawal : ObjectId
@@ -320,10 +372,28 @@ class RefreshToken {
   - expiresAt : Date
 }
 
+class PasswordReset {
+  - user : ObjectId
+  - code : String
+  - purpose : String
+  - verified : Boolean
+  - expiresAt : Date
+}
+
+class EmailVerification {
+  - user : ObjectId
+  - code : String
+  - verified : Boolean
+  - expiresAt : Date
+}
+
 ' ============ العلاقات ============
 User "1" *-- "1" Profile : profile
 User "1" *-- "1" Wallet : wallet
 User *-- "*" RefreshToken : has
+User *-- "*" PasswordReset : has
+User *-- "*" EmailVerification : has
+User "1" -- "*" PostReport : reports
 Company "1" o-- "*" User : owner/admins
 Company "1" o-- "*" Job : posts
 Job "1" -- "1..*" JobApplication : has
@@ -344,22 +414,32 @@ Connection "1" -- "1" User : recipient
 Conversation "1" -- "0..*" Message : contains
 Conversation "1" -- "1..*" User : participants
 Post "1" -- "1" User : author
+Post "1" -- "0..*" PostReport : has
+PostReport "1" -- "1" User : reporter
 Salary "1" -- "1" Company : benchmark
 ScoreHistory "1" -- "1" User : user
 
 ' ============ العلاقات الوراثية للتعدادات ============
 User --> Role
 User --> Status
+Profile --> Gender
+Wallet --> Currency
 Company --> CompanyStatus
+Post --> PostStatus
+PostReport --> ReportReason
+PostReport --> ReportReviewStatus
 Job --> JobStatus
 JobApplication --> AppStatus
 Project --> ProjectStatus
 Milestone --> MilestoneStatus
 Proposal --> ProposalStatus
 PlatformPayment --> PayStatus
+PlatformPayment --> Currency
 Withdrawal --> WithdrawStatus
-Connection --> ConnStatus
+Withdrawal --> Currency
 MoneyTransaction --> TxType
+MoneyTransaction --> Currency
+Connection --> ConnStatus
 
 note bottom of PlatformPayment
   حساب ضامن (Escrow):
@@ -367,12 +447,21 @@ note bottom of PlatformPayment
   held --> refunded (استرجاع)
   الانتقال حصري عبر findOneAndUpdate
   في services/moneyService.js
+  العملة: USD فقط
 end note
 
 note bottom of User
   أدوار النظام: Employer, JobSeeker,
   Admin, FreelanceClient, CompanyEmployee
+  التحقق: isVerified + emailVerifiedAt
   الوسم: #status #wallet #notifications
+end note
+
+note bottom of PostReport
+  الإبلاغ عن المنشورات:
+  عند 10 تبليغات → إخفاء تلقائي
+  عند 30 تبليغات → حظر المستخدم
+  rateLimiter: 3 طلبات/دقيقة
 end note
 
 @enduml

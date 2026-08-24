@@ -1,0 +1,74 @@
+@startuml email-verification-activity
+'=========================================================
+'  Activity — تدفق تأكيد البريد الإلكتروني
+'=========================================================
+skinparam activityDiamondFontSize 14
+skinparam shadowing false
+title **تأكيد البريد الإلكتروني** — Email Verification Activity
+
+start
+:المستخدم يسجّل حساب جديد;
+:POST /api/auth/signup
+
+:إنشاء المستخدم\nisVerified = false;
+:إنشاء RefreshToken;
+:إنشاء كود تأكيد 6 أرقام\nexpiresAt: now + 15 دقيقة;
+:إرسال الكود عبر EmailJS\nsendVerificationCode();
+
+if (تم الإرسال؟) then (لا)
+  :500 خطأ في الإرسال;
+  stop
+else (نعم)
+endif
+
+:إرجاع requiresEmailVerification = true;
+:عرض رسالة "تحقق من بريدك";
+
+fork
+  :المسار الأوتوماتيكي;\nالكود يُرسل تلقائياً;
+fork again
+  :المسار اليدوي;\nPOST /api/auth/send-verification\n{email} → إعادة الإرسال;
+end fork
+
+:المستخدم يفتح البريد ويأخذ الكود;
+:POST /api/auth/verify-email\n{email, code}
+
+:البحث عن الكود في EmailVerification\n(verified=false, expiresAt>now)
+
+if (الكود منتهي/غير موجود؟) then (نعم)
+  :400 لا يوجد كود صالح;
+  note right
+    يمكن للمستخدم
+    طلب كود جديد عبر
+    resend-verification
+  end note
+  stop
+else (لا)
+endif
+
+if (الكود صحيح؟) then (لا)
+  :400 الكود غير صحيح;
+  stop
+else (نعم)
+endif
+
+:تحديث المستخدم\nisVerified = true\nemailVerifiedAt = now;
+:حذف جميع أكواد التأكيد;
+
+:إرجاع رسالة نجاح;
+:الآن يمكن تسجيل الدخول;
+
+:POST /api/auth/login\n{email, password}
+
+if (isVerified؟) then (لا)
+  :403 البريد غير مؤكد;
+  stop
+else (نعم)
+endif
+
+:إنشاء توكن وصول + تحديث;
+:إرجاع بيانات المستخدم;
+
+stop
+
+@enduml

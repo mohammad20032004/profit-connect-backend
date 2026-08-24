@@ -55,8 +55,10 @@ package "src" as src {
     component [JobApplication, Salary]
     component [Project, Proposal, PlatformPayment]
     component [Conversation, Message, Connection]
-    component [Wallet-related: Withdrawal,\nMoneyTransaction, Setting]
+    component [Withdrawal, MoneyTransaction, Setting]
     component [ScoreHistory, RefreshToken]
+    component [PostReport]
+    component [PasswordReset, EmailVerification]
   }
 
   package "services" as services {
@@ -65,6 +67,7 @@ package "src" as src {
     component [moderationService]
     component [profileScoreService]
     component [rScoreService]
+    component [emailService\n(EmailJS)]
   }
 
   package "middleware" as middleware {
@@ -118,6 +121,15 @@ note bottom of services
   moneyService: سجل الحركات + العمولات
   aiEvaluationService: LM Studio + OpenAI
   moderationService: التحذيرات والحظر
+  emailService: إرسال البريد عبر EmailJS
+  (أكواد إعادة تعيين + تأكيد البريد)
+end note
+
+note bottom of models
+  النماذج الجديدة:
+  - PostReport: الإبلاغ عن المنشورات
+  - PasswordReset: أكواد إعادة التعيين
+  - EmailVerification: أكواد تأكيد البريد
 end note
 
 @enduml

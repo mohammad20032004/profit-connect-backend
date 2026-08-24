@@ -1,0 +1,72 @@
+@startuml email-verification-sequence
+'=========================================================
+'  Sequence — تأكيد البريد الإلكتروني عبر EmailJS
+'=========================================================
+skinparam sequenceMessageAlign center
+title **تأكيد البريد الإلكتروني** — Email Verification Flow
+
+actor "مستخدم جديد\nUser" as U
+participant "Client" as C
+participant "authRoutes" as RT
+control "authController" as AC
+entity "User Model" as UM
+entity "EmailVerification" as EV
+entity "emailService\n(EmailJS)" as EM
+entity "RefreshToken" as RTK
+
+== 1) التسجيل (إرسال الكود تلقائياً) ==
+U -> C : POST /api/auth/signup\n(البيانات + avatar)
+C -> RT : /api/auth/signup
+RT -> AC : signup()
+AC -> UM : User.create({...})
+AC -> UM : isVerified = false\nemailVerifiedAt = null
+AC -> RTK : RefreshToken.create(token)
+AC -> EV : EmailVerification.create({\n  user, code: 6 أرقام,\n  expiresAt: now+15min})
+AC -> EM : sendVerificationCode(email,\n  code, firstName)
+EM --> AC : true (تم الإرسال)
+AC --> C : 201 {\n  requiresEmailVerification: true,\n  message: 'تم إنشاء الحساب'\n}
+
+== 2) محاولة تسجيل الدخول (البريد غير مؤكد) ==
+U -> C : POST /api/auth/login\n{email, password}
+C -> RT : /api/auth/login
+RT -> AC : login()
+AC -> UM : User.findOne({email})\n.select('+password')
+AC -> UM : matchPassword(password)
+alt كلمة المرور صحيحة لكن البريد غير مؤكد
+  AC --> C : 403 {\n  requiresEmailVerification: true,\n  email: 'user@example.com'\n}
+end
+
+== 3) التحقق من الكود ==
+U -> C : POST /api/auth/verify-email\n{email, code}
+C -> RT : /api/auth/verify-email
+RT -> AC : verifyEmail()
+AC -> UM : User.findOne({email})
+alt البريد غير مسجل
+  AC --> C : 404 { البريد غير مسجل }
+else البريد مؤكد مسبقاً
+  AC --> C : 400 { البريد مؤكد بالفعل }
+else بريد غير مؤكد
+  AC -> EV : EmailVerification.findOne({\n  user, verified: false,\n  expiresAt: {$gt: now}})
+  alt لا يوجد كود صالح
+    AC --> C : 400 { لا يوجد كود صالح }
+  else الكود غير صحيح
+    AC --> C : 400 { الكود غير صحيح }
+  else الكود صحيح
+    AC -> UM : isVerified = true\nemailVerifiedAt = now\nsave()
+    AC -> EV : EmailVerification.deleteMany({user})
+    AC --> C : 200 { تم تأكيد البريد بنجاح }
+  end
+end
+
+== 4) إعادة الإرسال ==
+U -> C : POST /api/auth/resend-verification\n{email}
+C -> RT : /api/auth/resend-verification
+RT -> AC : resendVerification()
+AC -> UM : User.findOne({email})
+AC -> EV : EmailVerification.deleteMany({user})\nحذف القديم
+AC -> EV : EmailVerification.create({\n  user, code: جديد,\n  expiresAt: now+15min})
+AC -> EM : sendVerificationCode(email,\n  code, firstName)
+EM --> AC : true
+AC --> C : 200 { تم إعادة إرسال الكود }
+
+@enduml

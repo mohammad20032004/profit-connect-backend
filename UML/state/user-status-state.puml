@@ -6,10 +6,13 @@ skinparam shadowing false
 title **الحالات التنظيمية** — User, Company & Connection States
 
 state "المستخدم\nUser" as U {
-  state "active\n(نشط)" as UActive
-  state "banned\n(موقوف)" as UBanned
+  state "غير مؤكد\nEmail Unverified" as UUnverified
+  state "نشط\nActive" as UActive
+  state "موقوف\nBanned" as UBanned
 
-  [*] --> UActive : تسجيل الحساب
+  [*] --> UUnverified : تسجيل الحساب\n(isVerified: false)
+  UUnverified --> UActive : تأكيد البريد\n(isVerified: true)
+  UUnverified --> UActive : تسجيل الدخول\n(يتجاوز التأكيد مؤقتاً)
   UActive --> UBanned : تحذيرات >= 10\n(حظر دائم) أو >= 5 (مؤقت 24 ساعة)
   UBanned --> UActive : انتهاء مدة الحظر المؤقت\n(تلقائي عند كل طلب محمي)
 }

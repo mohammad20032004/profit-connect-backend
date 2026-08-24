@@ -14,8 +14,11 @@ entity "User" as user {
   username : string <<UQ>>
   role : enum
   status : enum
+  isVerified : boolean
+  emailVerifiedAt : date
   wallet.balance : number
   wallet.holding : number
+  wallet.currency : string
   savedPosts[] : ObjectId
   notifications[] : embedded
   warnings[] : embedded
@@ -28,6 +31,25 @@ entity "RefreshToken" as refreshtoken {
   user : ObjectId <<FK>>
   expiresAt : date
 }
+
+entity "PasswordReset" as passwordreset {
+  *_id : ObjectId <<PK>>
+  --
+  user : ObjectId <<FK>>
+  code : string
+  purpose : string
+  verified : boolean
+  expiresAt : date <<TTL>>
+} <<IX>> (user, purpose)
+
+entity "EmailVerification" as emailverification {
+  *_id : ObjectId <<PK>>
+  --
+  user : ObjectId <<FK>>
+  code : string
+  verified : boolean
+  expiresAt : date <<TTL>>
+} <<IX>> (user)
 
 entity "Company" as company {
   *_id : ObjectId <<PK>>
@@ -64,6 +86,7 @@ entity "Project" as project {
   category : string <<IX>>
   status : enum <<IX>>
   client : ObjectId <<FK>>
+  budget.currency : string
   team[] : embedded refs
   milestones[] : embedded
   payments[] : embedded
@@ -86,6 +109,7 @@ entity "PlatformPayment" as payment {
   payee : ObjectId <<FK>>
   proposal : ObjectId <<FK>>
   amount : number
+  currency : string
   fee : number
   status : enum <<IX>>
 }
@@ -95,6 +119,7 @@ entity "Withdrawal" as withdrawal {
   --
   user : ObjectId <<FK>>
   amount : number
+  currency : string
   status : enum <<IX>>
   accountDetails : embedded
 }
@@ -105,6 +130,7 @@ entity "MoneyTransaction" as tx {
   user : ObjectId <<FK>>
   type : enum
   amount : number
+  currency : string
   balanceAfter : number
   platformPayment : ObjectId <<FK>>
   withdrawal : ObjectId <<FK>>
@@ -140,10 +166,22 @@ entity "Post" as post {
   --
   user : ObjectId <<FK>>
   content : string
+  status : enum
+  reportsCount : number
   aiProbability : number
   likes[] : ObjectId
   comments[] : embedded
 }
+
+entity "PostReport" as postreport {
+  *_id : ObjectId <<PK>>
+  --
+  post : ObjectId <<FK>>
+  reportedBy : ObjectId <<FK>>
+  reason : enum
+  status : enum
+  reviewedBy : ObjectId <<FK>>
+  } <<UQ>> (post, reportedBy)
 
 entity "Salary" as salary {
   *_id : ObjectId <<PK>>
@@ -171,6 +209,8 @@ entity "Setting" as setting {
 
 ' ============ العلاقات ============
 user ||--o{ refreshtoken : "يحصل على"
+user ||--o{ passwordreset : "طلبات إعادة تعيين"
+user ||--o{ emailverification : "أكواد تأكيد"
 user ||--o{ company : "يملك (owner)"
 user }o--o{ company : "موظف/تابع"
 company ||--o{ job : "ينشر"
@@ -193,6 +233,8 @@ user ||--o{ conversation : "مشارك"
 conversation ||--o{ message : "يحتوي"
 user ||--o{ message : "مرسل"
 user ||--o{ post : "مؤلف"
+post ||--o{ postreport : "بلاغات"
+user ||--o{ postreport : "بلغ عن"
 user ||--o{ score : "يتراكم لديه"
 post ||--o{ user : "محفوظة لدى"
 
@@ -200,6 +242,18 @@ note bottom of payment
   العلاقة مع الحساب الضامن:
   held → released (تحرير + عمولة)
   held → refunded (استرجاع)
+  العملة: USD فقط
+end note
+
+note bottom of postreport
+  فهرس فريد (post, reportedBy)
+  يمنع التبليغ المزدوج
+  TTL على expiresAt لل磅اد التلقائي
+end note
+
+note bottom of passwordreset
+  TTL على expiresAt يحذف السجلات
+  المنتهية صلاحيتها تلقائياً
 end note
 
 note bottom of job

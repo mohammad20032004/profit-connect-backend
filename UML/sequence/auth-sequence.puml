@@ -14,6 +14,8 @@ control "authController" as AC
 entity "User Model" as UM
 entity "RefreshToken" as RTK
 entity "RScoreService" as RS
+entity "EmailVerification" as EV
+entity "emailService\n(EmailJS)" as EM
 
 == 1) التسجيل (Signup) ==
 U -> C : POST /api/auth/signup\n(البيانات + avatar)
@@ -23,13 +25,28 @@ RT -> RT : uploadAvatar.single('avatar')
 RT -> AC : signup()
 AC -> UM : User.create({...})
 AC <-- UM : مستخدم جديد (كلمة مرور مشفرة bcrypt)
+AC -> UM : isVerified = false
 AC -> RTK : RefreshToken.create(token)
 AC -> RS : applyScore('JOIN')\nنقاط الانضمام
-AC <-- RS : done
-AC --> C : 201 { user, accessToken, refreshToken }
-note over U,C : يتم تخزين التوكن في العميل
+AC -> EV : EmailVerification.create({\n  user, code: 6 أرقام,\n  expiresAt: now+15min})
+AC -> EM : sendVerificationCode(email, code, firstName)
+AC --> C : 201 {\n  requiresEmailVerification: true,\n  token, refreshToken, user}
+note over U,C : يجب تأكيد البريد أولاً
 
-== 2) تسجيل الدخول (Login) ==
+== 2) التحقق من البريد ==
+U -> C : POST /api/auth/verify-email\n{email, code}
+C -> GW : /api/auth/verify-email
+GW -> RT : /api/auth
+RT -> AC : verifyEmail()
+AC -> UM : User.findOne({email})
+AC -> EV : EmailVerification.findOne({\n  user, verified:false, expiresAt>now})
+alt الكود صحيح
+  AC -> UM : isVerified = true\nemailVerifiedAt = now\nsave()
+  AC -> EV : deleteMany({user})
+  AC --> C : 200 { تم تأكيد البريد }
+end
+
+== 3) تسجيل الدخول (Login) ==
 U -> C : POST /api/auth/login\n(email + password)
 C -> GW : HTTP Request
 GW -> RT : /api/auth
@@ -37,13 +54,17 @@ RT -> AC : login()
 AC -> UM : User.findOne({email}).select('+password')
 UM --> AC : user
 alt كلمة المرور صحيحة (matchPassword)
-  AC -> RTK : RefreshToken.create(token)
-  AC --> C : 200 { accessToken, refreshToken, user }
+  alt البريد غير مؤكد
+    AC --> C : 403 {\n  requiresEmailVerification: true,\n  email}
+  else البريد مؤكد
+    AC -> RTK : RefreshToken.create(token)
+    AC --> C : 200 { accessToken, refreshToken, user }
+  end
 else كلمة مرور خاطئة
   AC --> C : 401 { message: 'بيانات غير صحيحة' }
 end
 
-== 3) طلب محمي (Access Token) ==
+== 4) طلب محمي (Access Token) ==
 U -> C : GET /api/user/profile
 C -> GW : Authorization: Bearer <accessToken>
 GW -> MW : protect()
@@ -71,7 +92,13 @@ else توكن منتهي/غير صالح
   end
 end
 
-== 4) تسجيل الخروج (Logout) ==
+== 5) إعادة تعيين كلمة المرور ==
+note over U,C
+  المستخدم ينسى كلمة المرور
+  see password-reset-sequence.puml
+end note
+
+== 6) تسجيل الخروج (Logout) ==
 U -> C : POST /api/auth/logout
 C -> GW : Authorization: Bearer <refreshToken>
 GW -> RT : logout()

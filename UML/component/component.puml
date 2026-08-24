@@ -54,14 +54,17 @@ package "Application (Express — src/index.js)" {
     component [moderationService] as S_MOD
     component [profileScoreService] as S_PROF
     component [rScoreService] as S_RSCORE
+    component [emailService\n(EmailJS)] as S_EMAIL
   }
 
   package "Models (src/models)" {
     component [User / Company / Post / Job] as M_CORE
     component [Project / Proposal / PlatformPayment] as M_FREELANCE
     component [Conversation / Message / Connection] as M_SOCIAL
-    component [Wallet / Withdrawal / MoneyTransaction / Setting] as M_FIN
+    component [Withdrawal / MoneyTransaction / Setting] as M_FIN
     component [Salary / ScoreHistory / RefreshToken] as M_MISC
+    component [PostReport] as M_REPORT
+    component [PasswordReset / EmailVerification] as M_AUTH
   }
 
   package "Utils + Config (src/utils, src/config)" {
@@ -102,8 +105,12 @@ R_AI --> C_AI
 R_SAL --> C_SAL
 
 C_AUTH --> M_CORE
+C_AUTH --> M_AUTH
+C_AUTH --> S_EMAIL
 C_USER --> M_CORE
 C_POST --> M_CORE
+C_POST --> M_REPORT
+C_POST --> S_MOD
 C_COMP --> M_CORE
 C_JOB --> M_CORE
 C_PROJ --> M_FREELANCE
@@ -112,11 +119,11 @@ C_NET --> M_SOCIAL
 C_WALLET --> M_FIN
 C_PAY --> M_FREELANCE
 C_ADMIN --> M_FIN
+C_ADMIN --> M_REPORT
 C_EMP --> M_CORE
 C_SAL --> M_MISC
 
 C_POST --> S_AI
-C_POST --> S_MOD
 C_USER --> S_PROF
 C_PAY --> S_MONEY
 C_ADMIN --> S_MONEY
@@ -131,6 +138,8 @@ M_FREELANCE --> CFG_DB
 M_SOCIAL --> CFG_DB
 M_FIN --> CFG_DB
 M_MISC --> CFG_DB
+M_REPORT --> CFG_DB
+M_AUTH --> CFG_DB
 C_AUTH --> M_MISC
 C_AUTH --> U_UTILS
 R_AUTH --> MW_UPLOAD

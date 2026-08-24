@@ -16,7 +16,7 @@ state "دفعة الحساب الضامن\nPlatformPayment" as P {
   state "refunded\n(مسترجعة للدافع)" as Refunded
   state "cancelled\n(ملغاة)" as Cancelled
 
-  [*] --> Held : createDeposit\n(العميل يدفع)
+  [*] --> Held : createDeposit\n(العميل يدفع — USD)
   Held --> Released : moneyService.releasePayment\n(transition حصري held→released) [عمولة]
   Held --> Refunded : moneyService.refundPayment\n(transition حصري held→refunded)
   Held --> Cancelled : إلغاء يدوي/إداري
@@ -32,7 +32,7 @@ state "طلب السحب\nWithdrawal" as W {
   state "rejected\n(مرفوض)" as WRejected
   state "cancelled\n(ملغى)" as WCancelled
 
-  [*] --> WPending : requestWithdrawal\n(حجز المبلغ في holding)
+  [*] --> WPending : requestWithdrawal\n(حجز المبلغ في holding — USD)
   WPending --> WProcessed : مراجعة الإدارة — موافقة\n(خصم holding + totalWithdrawn)
   WPending --> WRejected : مراجعة الإدارة — رفض\n(إعادة المبلغ للرصيد)
   WPending --> WCancelled : إلغاء من المستخدم\n(إعادة المبلغ للرصيد)
@@ -45,6 +45,7 @@ note bottom of P
   الأمان: الانتقال يتم عبر
   findOneAndUpdate بشرط الحالة
   الحالية لمنع التحرير المزدوج
+  العملة: USD فقط
 end note
 
 note bottom of W
@@ -52,6 +53,7 @@ note bottom of W
   $inc {holding: -amount, balance: +amount}
   عند الموافقة:
   $inc {holding: -amount, totalWithdrawn: +amount}
+  العملة: USD فقط
 end note
 
 @enduml
