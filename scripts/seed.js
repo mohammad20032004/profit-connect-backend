@@ -536,7 +536,7 @@ async function seedProjects(users, count) {
       category: pick(CATEGORIES),
       skills: pickN(SKILLS, rand(3, 6)),
       budget: { min: budgetMin, max: budgetMin + rand(2000, 20000), currency: 'USD' },
-      deadline: randDate(new Date(), new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)),
+      deadline: Math.random() > 0.4 ? rand(1, 12) : null,
       status,
       client: client._id,
       assignedTo: status !== 'Open' ? pick(freelancers)._id : null,

@@ -250,7 +250,7 @@ exports.getCurrentUser = async (req, res) => {
 
     // دمج كل البيانات في استجابة واحدة
     const userProfile = {
-      ...formatUserResponse(user),
+      ...formatUserResponse(user, { includeFreelance: true }),
       posts: posts,
     };
 
@@ -274,6 +274,10 @@ exports.getCurrentUser = async (req, res) => {
         userProfile.company = company.toObject();
       }
     }
+
+    // ملخّص ارتباط المستخدم بالمشاريع (كمستقل متقدّم/مقبول، وكناشر مشروع)
+    const { getUserProjectSummary } = require('../services/freelanceService');
+    userProfile.freelance = await getUserProjectSummary(userId);
 
     res.status(200).json({
       success: true,

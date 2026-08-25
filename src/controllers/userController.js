@@ -5,6 +5,7 @@ const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
 const { formatUserResponse } = require('../utils/userResponse');
 const RScoreService = require('../services/rScoreService');
 const { evaluateProfileCompletion } = require('../services/profileScoreService');
+const { getUserProjectSummary } = require('../services/freelanceService');
 // @desc    الحصول على بيانات الملف الشخصي للمستخدم الحالي
 // @route   GET /api/user/profile
 // @access  Private (يحتاج توكن)
@@ -34,9 +35,12 @@ exports.getUserProfile = async (req, res) => {
       }
     }
 
+    // ملخّص حالة العمل الحر: هل قُبِل سابقاً ويعمل في مشروع؟ وما المشاريع التي تقدّم لها؟
+    userWithPosts.freelance = await getUserProjectSummary(user._id);
+
     res.status(200).json({
       success: true,
-      data: formatUserResponse(userWithPosts, { includePosts: true })
+      data: formatUserResponse(userWithPosts, { includePosts: true, includeFreelance: true })
     });
 
   } catch (error) {
@@ -351,9 +355,13 @@ exports.getUserById = async (req, res) => {
     // التحقق مما إذا كان المستخدم يعرض ملفه الشخصي أم ملف شخص آخر
     const isOwnProfile = req.user._id.toString() === user._id.toString();
 
+    // ملخّص حالة العمل الحر للمستخدم المطلوب (مقبول سابقاً/يعمل حالياً + المشاريع المتقدَّم لها)
+    const userWithFreelance = user.toObject();
+    userWithFreelance.freelance = await getUserProjectSummary(user._id);
+
     res.status(200).json({
       success: true,
-      data: formatUserResponse(user, { includeSettings: isOwnProfile })
+      data: formatUserResponse(userWithFreelance, { includeSettings: isOwnProfile, includeFreelance: true })
     });
   } catch (error) {
     console.error('Get User By Id Error:', error.message);

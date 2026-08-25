@@ -65,13 +65,17 @@ const projectSchema = new mongoose.Schema({
     required: [true, 'التصنيف مطلوب'],
     trim: true,
   },
-  skills: [String],
+  skills: { type: [String], default: [] },
   budget: {
     min: { type: Number, default: 0 },
     max: { type: Number, default: 0 },
     currency: { type: String, default: 'USD', enum: ['USD'] },
   },
-  deadline: Date,
+  deadline: {
+    type: Number,
+    min: [1, 'الحد الأدنى للمدة شهر واحد'],
+    default: null,
+  },
   status: {
     type: String,
     enum: ['Open', 'InProgress', 'Completed', 'Cancelled'],

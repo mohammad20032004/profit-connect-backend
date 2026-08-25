@@ -18,6 +18,7 @@ const {
   getRecentNotifications,
   markNotificationRead,
   getProjectOverview,
+  getProjectFullDetails,
   manageProject,
   getProjectTeam,
   addTeamMember,
@@ -50,6 +51,7 @@ router.put('/notifications/:notificationId/read', markNotificationRead);
 
 // ===== إدارة المشروع الشاملة =====
 router.get('/:id/overview', getProjectOverview);
+router.get('/:id/full', getProjectFullDetails);
 router.put('/:id/manage', manageProject);
 
 // الفريق

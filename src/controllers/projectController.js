@@ -563,6 +563,122 @@ exports.getProjectOverview = async (req, res) => {
   }
 };
 
+// @desc    جلب تفاصيل المشروع. صاحب المشروع يرى الكل، وعضو الفريق المقبول
+//         يرى فقط الدفعات المالية (متى دُفعت، لمن، والمبلغ/الحالة).
+// @route   GET /api/projects/:id/full
+// @access  Private (صاحب المشروع أو عضو الفريق المقبول)
+exports.getProjectFullDetails = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      .populate('client', 'profile.firstName profile.lastName profile.avatar profile.headline email')
+      .populate('assignedTo', 'profile.firstName profile.lastName profile.avatar profile.headline')
+      .populate('team.freelancer', 'profile.firstName profile.lastName profile.avatar profile.headline professional')
+      .populate('milestones.assignedTo', 'profile.firstName profile.lastName profile.avatar')
+      .lean();
+
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'المشروع غير موجود' });
+    }
+
+    const isOwner = project.client._id.toString() === req.user._id.toString();
+    const teamEntry = (project.team || []).find(
+      (m) => m.freelancer && m.freelancer._id && m.freelancer._id.toString() === req.user._id.toString()
+    );
+    const isTeamMember = Boolean(teamEntry);
+
+    if (!isOwner && !isTeamMember) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بعرض تفاصيل هذا المشروع' });
+    }
+
+    // ===== صاحب المشروع: كامل التفاصيل والإحصاءات =====
+    if (isOwner) {
+      const proposals = await Proposal.find({ project: project._id })
+        .sort({ createdAt: -1 })
+        .populate('freelancer', 'profile.firstName profile.lastName profile.avatar profile.headline professional')
+        .lean();
+
+      const payments = project.payments || [];
+      const total = payments.reduce((s, p) => s + (p.amount || 0), 0);
+      const paid = payments.filter((p) => p.status === 'Paid').reduce((s, p) => s + (p.amount || 0), 0);
+
+      const progress = computeProgress(project);
+      const durationDays = project.startDate && project.endDate
+        ? Math.max(0, Math.round((project.endDate - project.startDate) / 86400000))
+        : null;
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          role: 'owner',
+          project,
+          statistics: {
+            progress,
+            durationDays,
+            milestonesCount: (project.milestones || []).length,
+            teamCount: (project.team || []).length,
+            proposalsCount: proposals.length,
+            paymentsCount: payments.length,
+            paymentsSummary: { total, paid, pending: total - paid },
+          },
+          paymentsPaid: payments.filter((p) => p.status === 'Paid'),
+          paymentsPending: payments.filter((p) => p.status !== 'Paid'),
+          proposals,
+        },
+      });
+    }
+
+    // ===== عضو الفريق المقبول: يرى الدفعات المالية والمراحل وتفاصيلها =====
+    const payments = (project.payments || []).map((p) => ({
+      _id: p._id,
+      title: p.title,
+      amount: p.amount,
+      status: p.status,
+      dueDate: p.dueDate,
+      paidDate: p.paidDate,
+      method: p.method,
+      transactionRef: p.transactionRef,
+      note: p.note,
+    }));
+
+    const milestones = (project.milestones || []).map((m) => ({
+      _id: m._id,
+      title: m.title,
+      description: m.description,
+      status: m.status,
+      progress: m.progress,
+      startDate: m.startDate,
+      endDate: m.endDate,
+      assignedTo: m.assignedTo,
+    }));
+
+    const total = payments.reduce((s, p) => s + (p.amount || 0), 0);
+    const paid = payments.filter((p) => p.status === 'Paid').reduce((s, p) => s + (p.amount || 0), 0);
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        role: 'team_member',
+        project: {
+          _id: project._id,
+          title: project.title,
+          status: project.status,
+          client: project.client,
+        },
+        yourAssignment: {
+          role: teamEntry.role,
+          status: teamEntry.status,
+          joinedAt: teamEntry.joinedAt,
+        },
+        milestones,
+        payments,
+        paymentsSummary: { total, paid, pending: total - paid },
+      },
+    });
+  } catch (error) {
+    sendError(res, error, 'حدث خطأ أثناء جلب تفاصيل المشروع');
+  }
+};
+
 // @desc    تحديث بيانات إدارة المشروع (تواريخ، تقدم، إعدادات الدفع)
 // @route   PUT /api/projects/:id/manage
 // @access  Private (صاحب المشروع)

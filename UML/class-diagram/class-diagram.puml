@@ -204,7 +204,7 @@ class Project {
   - category : String
   - skills : String[]
   - budget : Budget
-  - deadline : Date
+  - deadline : Number
   - status : ProjectStatus
   - client : ObjectId
   - assignedTo : ObjectId
