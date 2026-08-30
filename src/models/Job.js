@@ -10,8 +10,23 @@ const jobSchema = new mongoose.Schema(
     workLevel: { type: String, enum: ['Entry', 'Mid', 'Senior', 'Director', 'VP'], default: 'Entry' },
     workPlace: { type: String, enum: ['On-site', 'Remote', 'Hybrid'], default: 'On-site' },
     salary: { min: Number, max: Number, currency: { type: String, default: 'USD', enum: ['USD'] } },
-    requirements: [String],
-    responsibilities: [String],
+    requirements: {
+      type: [String],
+      required: [true, 'متطلبات الوظيفة مطلوبة'],
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: 'يجب إدخال متطلب واحد على الأقل'
+      }
+    },
+    responsibilities: {
+      type: [String],
+      required: [true, 'مسؤوليات الوظيفة مطلوبة'],
+      validate: {
+        validator: (v) => Array.isArray(v) && v.length > 0,
+        message: 'يجب إدخال مسؤولية واحدة على الأقل'
+      }
+    },
+    skills: { type: [String], default: [] },
     status: { type: String, enum: ['Open', 'Closed'], default: 'Open' },
     postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
   },

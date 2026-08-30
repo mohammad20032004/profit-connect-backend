@@ -29,6 +29,10 @@ const portfolioCollectionSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    coverImage: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

@@ -41,11 +41,11 @@ const SCORE_RULES = {
   CREATE_COMPANY:         { points: 20, type: 'ONCE' },
 
   // ═══════════════════════════════════════════════════════════
-  //  المعرض (Portfolio)
+  //  المعرض (Portfolio) — معدلات محفّزة (معزولة عن باقي النظام)
   // ═══════════════════════════════════════════════════════════
-  ADD_PORTFOLIO_ITEM:         { points: 10, type: 'DAILY_LIMIT', maxDaily: 30 },
-  RECEIVE_PORTFOLIO_LIKE:     { points: 1, type: 'DAILY_LIMIT', maxDaily: 50 },
-  RECEIVE_PORTFOLIO_VIEW:     { points: 1, type: 'DAILY_LIMIT', maxDaily: 20 },
+  ADD_PORTFOLIO_ITEM:         { points: 100, type: 'DAILY_LIMIT', maxDaily: 100 },
+  RECEIVE_PORTFOLIO_LIKE:     { points: 50, type: 'DAILY_LIMIT', maxDaily: 500 },
+  RECEIVE_PORTFOLIO_VIEW:     { points: 20, type: 'DAILY_LIMIT', maxDaily: 200 },
   PORTFOLIO_ITEM_FEATURED:    { points: 15, type: 'DAILY_LIMIT', maxDaily: 30 },
   CREATE_PORTFOLIO_COLLECTION:{ points: 5, type: 'DAILY_LIMIT', maxDaily: 10 },
 

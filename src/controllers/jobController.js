@@ -3,6 +3,25 @@ const Company = require('../models/Company');
 const JobApplication = require('../models/JobApplication');
 const { buildResumeUrl, deleteResumeFile } = require('../utils/resumeStorage');
 const RScoreService = require('../services/rScoreService');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+const { getJobRecommendations } = require('../services/recommendationService');
+
+// محاولة التعرف على المستخدم من التوكن إن وُجد (اختياري — لا يمنع الزوار)
+async function resolveOptionalUser(req) {
+  const header = req.headers.authorization || '';
+  if (!header.startsWith('Bearer ')) return null;
+  try {
+    const token = header.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded || decoded.type === 'refresh' || !decoded.id) return null;
+    const user = await User.findById(decoded.id)
+      .select('status professional profile.location');
+    return user && user.status === 'active' ? user : null;
+  } catch {
+    return null;
+  }
+}
 
 // ==========================================
 // @desc    نشر وظيفة جديدة
@@ -49,15 +68,18 @@ exports.createJob = async (req, res) => {
     res.status(201).json({ success: true, data: job });
   } catch (error) {
     console.error('Create Job Error:', error.message);
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((e) => e.message);
+      return res.status(400).json({ success: false, message: messages.join('، ') });
+    }
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
 // ==========================================
-// @desc    جلب جميع الوظائف مع فلاتر البحث
+// @desc    جلب جميع الوظائف مع فلاتر البحث (ترتيب توصي للمستخدم المسجل)
 // @route   GET /api/jobs
-// @access  Public (متاح للجميع)
-// ==========================================
+// @access  Public (متاح للجميع — والتوصية تفعّل تلقائياً عند وجود توكن صحيح)
 exports.getJobs = async (req, res) => {
   try {
     // بناء نظام فلاتر للبحث المتقدم
@@ -83,7 +105,19 @@ exports.getJobs = async (req, res) => {
     // عدد النتائج المطلوبة (الافتراضي 10)
     const resultLimit = parseInt(limit) || 10;
 
-    // جلب الوظائف وترتيبها من الأحدث للأقدم
+    // محاولة التعرف على المستخدم — إن وُجد نرتب الوظائف حسب ملاءمتها له
+    const user = await resolveOptionalUser(req);
+    if (user) {
+      const jobs = await getJobRecommendations(user, { filters: query, limit: resultLimit });
+      return res.status(200).json({
+        success: true,
+        count: jobs.length,
+        data: jobs,
+        recommended: true
+      });
+    }
+
+    // للزوار (بدون توكن): الترتيب الزمني كما كان
     const jobs = await Job.find(query)
       .populate('company', 'name logo location') // جلب بيانات الشركة الأساسية مع الوظيفة
       .sort({ createdAt: -1 })
@@ -92,7 +126,8 @@ exports.getJobs = async (req, res) => {
     res.status(200).json({ 
       success: true, 
       count: jobs.length, 
-      data: jobs 
+      data: jobs,
+      recommended: false
     });
   } catch (error) {
     console.error('Get Jobs Error:', error.message);

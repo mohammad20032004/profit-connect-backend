@@ -15,6 +15,7 @@ const {
   getCollectionById,
   updateCollection,
   deleteCollection,
+  createItemInCollection,
   addItemToCollection,
   removeItemFromCollection,
 } = require('../controllers/portfolioController');
@@ -31,17 +32,27 @@ const portfolioMediaUpload = (req, res, next) => {
   });
 };
 
+const portfolioCoverUpload = (req, res, next) => {
+  uploadPortfolioMedia.single('cover')(req, res, (error) => {
+    if (error) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
+    next();
+  });
+};
+
 // جميع المسارات محمية (يتطلب تسجيل الدخول)
 router.use(protect);
 
 // ===== المجموعات (Collections) =====
 router.get('/collections', getMyCollections);
-router.post('/collections', createCollection);
+router.post('/collections', portfolioCoverUpload, createCollection);
 router.route('/collections/:id')
   .get(getCollectionById)
-  .put(updateCollection)
+  .put(portfolioCoverUpload, updateCollection)
   .delete(deleteCollection);
 router.post('/collections/:id/items/:itemId', addItemToCollection);
+router.post('/collections/:id/items', portfolioMediaUpload, createItemInCollection);
 router.delete('/collections/:id/items/:itemId', removeItemFromCollection);
 
 // ===== معارض المستخدمين العامة =====

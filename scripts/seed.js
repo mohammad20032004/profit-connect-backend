@@ -411,6 +411,7 @@ async function seedJobs(companies, users, count) {
         'العمل مع فريق التصميم', 'تحسين أداء التطبيقات', 'توثيق الكود',
         'المشاركة في اجتماعات Sprint', 'تدريب المطورين الجدد',
       ], rand(3, 5)),
+      skills: pickN(SKILLS, rand(2, 6)),
       status: pick(['Open', 'Open', 'Open', 'Closed']),
       postedBy: employer._id,
     });

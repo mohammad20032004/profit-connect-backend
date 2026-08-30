@@ -120,6 +120,13 @@ exports.getMyItems = async (req, res) => {
     if (req.query.tag) filter.tags = req.query.tag;
     if (req.query.featured === 'true') filter.isFeatured = true;
 
+    // الأعمال خارج أي مجموعة (غير المنسوبة لمجموعة)
+    if (req.query.uncollected === 'true') {
+      const collections = await PortfolioCollection.find({ user: req.user._id }).select('items');
+      const collectedIds = collections.flatMap((c) => c.items.map((id) => id.toString()));
+      filter._id = { $nin: collectedIds };
+    }
+
     const [items, total] = await Promise.all([
       PortfolioItem.find(filter)
         .sort({ createdAt: -1 })
@@ -158,6 +165,13 @@ exports.getUserItems = async (req, res) => {
     const filter = { user: req.params.userId };
     if (!isOwner) filter.visibility = 'public';
     if (req.query.category) filter.category = req.query.category;
+
+    // الأعمال خارج أي مجموعة (مسموح فقط لصاحب المعرض)
+    if (req.query.uncollected === 'true' && isOwner) {
+      const collections = await PortfolioCollection.find({ user: req.params.userId }).select('items');
+      const collectedIds = collections.flatMap((c) => c.items.map((id) => id.toString()));
+      filter._id = { $nin: collectedIds };
+    }
 
     const [items, total] = await Promise.all([
       PortfolioItem.find(filter)
@@ -391,11 +405,14 @@ exports.createCollection = async (req, res) => {
       return res.status(400).json({ success: false, message: 'اسم المجموعة مطلوب' });
     }
 
+    const coverImage = req.file ? buildPortfolioMediaUrl(req, req.file.filename) : null;
+
     const collection = await PortfolioCollection.create({
       user: req.user._id,
       name,
       description: description || '',
       isPublic: isPublic !== 'false' && isPublic !== false,
+      coverImage,
     });
 
     res.status(201).json({ success: true, message: 'تم إنشاء المجموعة', data: collection });
@@ -490,8 +507,23 @@ exports.updateCollection = async (req, res) => {
     if (req.body.description !== undefined) updateData.description = req.body.description;
     if (req.body.isPublic !== undefined) updateData.isPublic = req.body.isPublic === 'true' || req.body.isPublic === true;
 
+    // معالجة غلاف المجموعة (رفع ملف جديد أو إزالة صريحة)
+    let oldCover = null;
+    if (req.file) {
+      oldCover = collection.coverImage;
+      updateData.coverImage = buildPortfolioMediaUrl(req, req.file.filename);
+    } else if (req.body.coverImage !== undefined) {
+      oldCover = collection.coverImage;
+      updateData.coverImage = req.body.coverImage || null;
+    }
+
     const updated = await PortfolioCollection.findByIdAndUpdate(req.params.id, { $set: updateData }, { new: true, runValidators: true })
       .populate('items', 'title coverImage category visibility');
+
+    // حذف الغلاف القديم من التخزين بعد حفظ التحديث
+    if (oldCover) {
+      await deletePortfolioMedia(oldCover);
+    }
     res.status(200).json({ success: true, message: 'تم تعديل المجموعة', data: updated });
   } catch (error) {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء تعديل المجموعة' });
@@ -519,6 +551,105 @@ exports.deleteCollection = async (req, res) => {
     res.status(200).json({ success: true, message: 'تم حذف المجموعة' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'حدث خطأ أثناء حذف المجموعة' });
+  }
+};
+
+// @desc    إنشاء عمل جديد وإضافته مباشرةً لمجموعة
+// @route   POST /api/portfolio/collections/:id/items
+// @access  Private (مالك المجموعة فقط)
+exports.createItemInCollection = async (req, res) => {
+  try {
+    if (!isValidId(req.params.id)) {
+      return res.status(400).json({ success: false, message: 'معرّف المجموعة غير صالح' });
+    }
+
+    const collection = await PortfolioCollection.findById(req.params.id);
+    if (!collection) {
+      return res.status(404).json({ success: false, message: 'المجموعة غير موجودة' });
+    }
+    if (collection.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: 'غير مصرح لك بإضافة عمل لهذه المجموعة' });
+    }
+
+    const { title, category, description, tags, skills, client, duration, role, projectUrl, visibility, coverImage, linkedProject } = req.body;
+
+    if (!title || !category) {
+      return res.status(400).json({ success: false, message: 'عنوان العمل والتصنيف مطلوبان' });
+    }
+
+    const uploaded = req.files || [];
+    if (uploaded.length === 0) {
+      return res.status(400).json({ success: false, message: 'يجب رفع صورة أو فيديو واحد على الأقل للعمل' });
+    }
+
+    const media = uploaded.map((file, index) => ({
+      url: buildPortfolioMediaUrl(req, file.filename),
+      type: file.mimetype.startsWith('video/') ? 'video' : 'image',
+      order: index,
+    }));
+
+    let selectedCover = coverImage || null;
+    if (!selectedCover) {
+      const firstImage = media.find((m) => m.type === 'image');
+      if (firstImage) selectedCover = firstImage.url;
+    }
+
+    const sanitizedDescription = description ? sanitizePostContent(description) : '';
+
+    const newItem = await PortfolioItem.create({
+      user: req.user._id,
+      title: sanitizePostContent(title),
+      category,
+      description: sanitizedDescription,
+      tags: parseJsonField(tags, []),
+      skills: parseJsonField(skills, []),
+      client: client || '',
+      duration: duration || '',
+      role: role || '',
+      projectUrl: projectUrl || '',
+      visibility: visibility || (collection.isPublic ? 'public' : 'private'),
+      coverImage: selectedCover,
+      linkedProject: linkedProject && isValidId(linkedProject) ? linkedProject : null,
+      media,
+    });
+
+    // إضافة العمل للمجموعة مباشرةً
+    if (!collection.items.includes(newItem._id)) {
+      collection.items.push(newItem._id);
+      await collection.save();
+    }
+
+    // زيادة عداد أعمال المعرض
+    await User.findByIdAndUpdate(req.user._id, { $inc: { 'profile.portfolioCount': 1 } });
+
+    // منح نقاط لإضافة عمل للمعرض
+    await RScoreService.applyScore(req.user._id, 'ADD_PORTFOLIO_ITEM', `إضافة عمل جديد: ${title}`);
+
+    // تقييم الوصف بالذكاء في الخلفية
+    if (description) {
+      setImmediate(async () => {
+        try {
+          const score = await evaluateContent(description);
+          if (score === -1) {
+            await applyWarning(req.user._id, description, 'وصف عمل غير لائق في المعرض');
+          } else if (score > 0) {
+            await RScoreService.applyScore(req.user._id, 'ADD_PORTFOLIO_ITEM', `عمل معرض جديد: ${score} نقاط`, score);
+          }
+        } catch (e) {
+          console.error('[Portfolio AI Error]:', e.message);
+        }
+      });
+    }
+
+    const populated = await PortfolioItem.findById(newItem._id)
+      .populate('user', 'profile.firstName profile.lastName profile.avatar profile.headline')
+      .populate('linkedProject', 'title status category')
+      .lean();
+
+    res.status(201).json({ success: true, message: 'تمت إضافة العمل إلى المجموعة', data: populated });
+  } catch (error) {
+    console.error('Create Item In Collection Error:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ أثناء إضافة العمل للمجموعة' });
   }
 };
 
