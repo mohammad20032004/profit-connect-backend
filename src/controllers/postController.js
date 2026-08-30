@@ -7,6 +7,8 @@ const aiDetector = require('../middleware/aiDetector');
 const { applyWarning } = require('../services/moderationService');
 const { buildPostImageUrl, deletePostImage, buildPostVideoUrl, deletePostVideo } = require('../utils/postImageStorage');
 const { sanitizePostContent } = require('../utils/sanitizeContent');
+const { resolveOptionalUser } = require('../utils/optionalAuth');
+const { getPostRecommendations } = require('../services/recommendationService');
 
 // @desc    إنشاء منشور جديد
 // @route   POST /api/posts
@@ -70,7 +72,7 @@ exports.createPost = async (req, res) => {
   }
 };
 
-// @desc    الحصول على جميع المنشورات (مع دعم الصفحات Pagination)
+// @desc    الحصول على جميع المنشورات (ترتيب توصي للمستخدم المسجل — المجال، الشبكة، الأحدث)
 // @route   GET /api/posts
 // @access  Private
 exports.getPosts = async (req, res) => {
@@ -79,6 +81,23 @@ exports.getPosts = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
+
+    // المستخدم المسجل يحصل على ترتيب توصي حسب: المجال ← الشبكة ← الأحدث
+    const user = await resolveOptionalUser(req);
+    if (user) {
+      const result = await getPostRecommendations(user, { page, limit });
+      return res.status(200).json({
+        success: true,
+        data: result.data,
+        pagination: {
+          page,
+          limit,
+          total: result.total,
+          pages: result.pages
+        },
+        recommended: true
+      });
+    }
 
     // جلب المنشورات وترتيبها من الأحدث للأقدم (إخفاء المنشورات المحذوفة/المخفية)
     const activeFilter = { $or: [{ status: 'active' }, { status: { $exists: false } }, { status: null }] };
@@ -101,7 +120,8 @@ exports.getPosts = async (req, res) => {
         limit,
         total,
         pages: Math.ceil(total / limit)
-      }
+      },
+      recommended: false
     });
   } catch (error) {
     console.error('Get Posts Error:', error.message);

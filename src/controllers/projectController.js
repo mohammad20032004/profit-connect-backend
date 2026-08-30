@@ -2,6 +2,7 @@ const Project = require('../models/Project');
 const Proposal = require('../models/Proposal');
 const User = require('../models/User');
 const RScoreService = require('../services/rScoreService');
+const { getProjectRecommendations } = require('../services/recommendationService');
 
 exports.createProject = async (req, res) => {
   try {
@@ -65,6 +66,21 @@ exports.getProjects = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
+    // عند تصفح الفرص (وليس مشاريعي) ولمستخدم لديه ملف تقني: ترتيب توصي
+    const hasSignal = req.user.professional?.skills?.length > 0 || req.user.professional?.industry;
+    if (req.query.mine !== 'true' && hasSignal) {
+      const result = await getProjectRecommendations(req.user, { filters: filter, page, limit });
+      return res.status(200).json({
+        success: true,
+        count: result.data.length,
+        total: result.total,
+        page,
+        pages: result.pages,
+        data: result.data,
+        recommended: true,
+      });
+    }
+
     const projects = await Project.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
@@ -80,6 +96,7 @@ exports.getProjects = async (req, res) => {
       page,
       pages: Math.ceil(total / limit),
       data: projects,
+      recommended: false,
     });
   } catch (error) {
     console.error('Get Projects Error:', error.message);
