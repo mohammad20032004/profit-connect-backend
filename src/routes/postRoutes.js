@@ -17,7 +17,7 @@ const {
 } = require('../controllers/postController');
 
 const { protect } = require('../middleware/authMiddleware');
-const { uploadPostMedia } = require('../middleware/uploadMiddleware');
+const { uploadPostMedia, convertToWebP } = require('../middleware/uploadMiddleware');
 
 const postMediaUpload = (req, res, next) => {
   uploadPostMedia.fields([
@@ -35,7 +35,7 @@ router.use(protect);
 
 // مسار المنشورات العام
 router.route('/')
-  .post(postMediaUpload, createPost)
+  .post(postMediaUpload, convertToWebP, createPost)
   .get(getPosts);
 
 // مسار لوحة تحكم البلاغات (Admin) - قبل :postId لتجنب التعارض
@@ -44,7 +44,7 @@ router.get('/admin/reports', getAllReports);
 // مسار لمنشور محدد (عرض، تعديل، حذف)
 router.route('/:postId')
   .get(getPost)
-  .put(postMediaUpload, updatePost)
+  .put(postMediaUpload, convertToWebP, updatePost)
   .delete(deletePost);
 
 // مسار التفاعلات (الإعجاب والتعليق)

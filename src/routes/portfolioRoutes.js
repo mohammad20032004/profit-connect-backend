@@ -21,7 +21,7 @@ const {
 } = require('../controllers/portfolioController');
 
 const { protect } = require('../middleware/authMiddleware');
-const { uploadPortfolioMedia } = require('../middleware/uploadMiddleware');
+const { uploadPortfolioMedia, convertToWebP } = require('../middleware/uploadMiddleware');
 
 const portfolioMediaUpload = (req, res, next) => {
   uploadPortfolioMedia.array('media', 12)(req, res, (error) => {
@@ -46,13 +46,13 @@ router.use(protect);
 
 // ===== المجموعات (Collections) =====
 router.get('/collections', getMyCollections);
-router.post('/collections', portfolioCoverUpload, createCollection);
+router.post('/collections', portfolioCoverUpload, convertToWebP, createCollection);
 router.route('/collections/:id')
   .get(getCollectionById)
-  .put(portfolioCoverUpload, updateCollection)
+  .put(portfolioCoverUpload, convertToWebP, updateCollection)
   .delete(deleteCollection);
 router.post('/collections/:id/items/:itemId', addItemToCollection);
-router.post('/collections/:id/items', portfolioMediaUpload, createItemInCollection);
+router.post('/collections/:id/items', portfolioMediaUpload, convertToWebP, createItemInCollection);
 router.delete('/collections/:id/items/:itemId', removeItemFromCollection);
 
 // ===== معارض المستخدمين العامة =====
@@ -61,9 +61,9 @@ router.get('/users/:userId/collections', getUserCollections);
 
 // ===== الأعمال (Items) =====
 router.get('/items', getMyItems);
-router.post('/items', portfolioMediaUpload, createItem);
+router.post('/items', portfolioMediaUpload, convertToWebP, createItem);
 router.get('/items/:id', getItemById);
-router.put('/items/:id', portfolioMediaUpload, updateItem);
+router.put('/items/:id', portfolioMediaUpload, convertToWebP, updateItem);
 router.delete('/items/:id', deleteItem);
 router.post('/items/:id/like', toggleLike);
 

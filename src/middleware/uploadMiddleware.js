@@ -204,4 +204,5 @@ module.exports = {
   uploadCompanyMedia,
   uploadResume,
   uploadPortfolioMedia,
+  convertToWebP: require('./imageConverter'),
 };

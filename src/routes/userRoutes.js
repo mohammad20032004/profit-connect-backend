@@ -23,7 +23,7 @@ const {
 
 // 2. استدعاء حارس البوابة
 const { protect } = require('../middleware/authMiddleware');
-const { uploadAvatar } = require('../middleware/uploadMiddleware');
+const { uploadAvatar, convertToWebP } = require('../middleware/uploadMiddleware');
 
 const avatarUploadHandler = (req, res, next) => {
   uploadAvatar.single('avatar')(req, res, (error) => {
@@ -42,7 +42,7 @@ const avatarUploadHandler = (req, res, next) => {
 router.get('/profile', protect, getUserProfile);
 router.put('/profile', protect, updateUserProfile);
 router.delete('/profile', protect, deleteUserProfile);
-router.put('/profile/avatar', protect, avatarUploadHandler, updateUserAvatar);
+router.put('/profile/avatar', protect, avatarUploadHandler, convertToWebP, updateUserAvatar);
 router.put('/change-password', protect, changePassword);
 router.get('/export-data', protect, exportData);
 router.get('/settings', protect, getSettings);

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const { uploadAvatar } = require('../middleware/uploadMiddleware');
+const { uploadAvatar, convertToWebP } = require('../middleware/uploadMiddleware');
 // استدعاء دوال المصادقة
 const { signup, login, getCurrentUser, refresh, logout, forgotPassword, verifyResetCode, resetPassword, sendVerification, verifyEmail, resendVerification } = require('../controllers/authController');
 
@@ -19,7 +19,7 @@ const signupAvatarUploadHandler = (req, res, next) => {
 };
 
 // مسار التسجيل: POST /api/auth/signup
-router.post('/signup', signupAvatarUploadHandler, signup);
+router.post('/signup', signupAvatarUploadHandler, convertToWebP, signup);
 
 // مسار تسجيل الدخول: POST /api/auth/login
 router.post('/login', login);

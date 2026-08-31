@@ -25,7 +25,7 @@ const {
 } = require('../controllers/employeeController');
 
 const { protect, employerOnly } = require('../middleware/authMiddleware');
-const { uploadCompanyDocs, uploadCompanyMedia } = require('../middleware/uploadMiddleware');
+const { uploadCompanyDocs, uploadCompanyMedia, convertToWebP } = require('../middleware/uploadMiddleware');
 
 // تطبيق الحماية
 router.use(protect);
@@ -43,7 +43,7 @@ router.route('/:id')
   .put(uploadCompanyMedia.fields([
     { name: 'logo', maxCount: 1 },
     { name: 'coverPhoto', maxCount: 1 }
-  ]), updateCompany)
+  ]), convertToWebP, updateCompany)
   .delete(deleteCompany);
 
 router.get('/:id/stats', getCompanyStats);
