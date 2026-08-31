@@ -5,7 +5,7 @@ const RScoreService = require('../services/rScoreService');
 const { processDynamicScoring, evaluateContent } = require('../services/aiEvaluationService');
 const aiDetector = require('../middleware/aiDetector');
 const { applyWarning } = require('../services/moderationService');
-const { buildPostImageUrl, deletePostImage, buildPostVideoUrl, deletePostVideo } = require('../utils/postImageStorage');
+const { buildPostImageUrl, deletePostImage, buildPostVideoUrl, buildPostVideoPosterUrl, deletePostVideo } = require('../utils/postImageStorage');
 const { sanitizePostContent } = require('../utils/sanitizeContent');
 const { resolveOptionalUser } = require('../utils/optionalAuth');
 const { getPostRecommendations } = require('../services/recommendationService');
@@ -19,8 +19,10 @@ exports.createPost = async (req, res) => {
     const sanitizedContent = sanitizePostContent(content);
     const files = req.files || {};
     const image = files.image?.[0] ? buildPostImageUrl(req, files.image[0].filename) : null;
-    const video = files.video?.[0] ? buildPostVideoUrl(req, files.video[0].filename) : null;
-    const newPost = await Post.create({ user: req.user._id, content: sanitizedContent, image, video, visibility });
+    const videoFile = files.video?.[0];
+    const video = videoFile ? buildPostVideoUrl(req, videoFile.filename) : null;
+    const videoPoster = videoFile ? buildPostVideoPosterUrl(req, videoFile.filename) : null;
+    const newPost = await Post.create({ user: req.user._id, content: sanitizedContent, image, video, videoPoster, visibility });
 
     // زيادة عداد المنشورات للمستخدم
     await User.findByIdAndUpdate(req.user._id, { $inc: { 'profile.postsCount': 1 } });
@@ -274,20 +276,22 @@ exports.updatePost = async (req, res) => {
     }
 
     const files = req.files || {};
+    const videoFile = files.video?.[0];
 
     if (files.image?.[0]) {
       await deletePostImage(post.image);
     }
-    if (files.video?.[0]) {
+    if (videoFile) {
       await deletePostVideo(post.video);
     }
 
     const image = files.image?.[0] ? buildPostImageUrl(req, files.image[0].filename) : req.body.image;
-    const video = files.video?.[0] ? buildPostVideoUrl(req, files.video[0].filename) : req.body.video;
+    const video = videoFile ? buildPostVideoUrl(req, videoFile.filename) : req.body.video;
+    const videoPoster = videoFile ? buildPostVideoPosterUrl(req, videoFile.filename) : (req.body.videoPoster ?? post.videoPoster);
     const sanitizedContent = sanitizePostContent(req.body.content);
     post = await Post.findByIdAndUpdate(
       req.params.postId,
-      { $set: { content: sanitizedContent, image, video, visibility: req.body.visibility } },
+      { $set: { content: sanitizedContent, image, video, videoPoster, visibility: req.body.visibility } },
       { new: true, runValidators: true }
     ).populate('user', 'profile.firstName profile.lastName profile.avatar profile.gender');
 

@@ -45,6 +45,14 @@ const buildPostVideoUrl = (req, filename) => {
   return `${req.protocol}://${req.get('host')}/uploads/posts/videos/${filename}`;
 };
 
+// بناء عنوان صورة مصغرة (poster) لفيديو HLS محوّل
+// يُتوقع أن يكون العنوان الأساسي بالشكل: .../posts/videos/{name}/index.m3u8
+const buildPostVideoPosterUrl = (req, hlsFilename) => {
+  if (!hlsFilename || !hlsFilename.endsWith('index.m3u8')) return null;
+  const poster = hlsFilename.replace('index.m3u8', 'poster.webp');
+  return `${req.protocol}://${req.get('host')}/uploads/posts/videos/${poster}`;
+};
+
 const isLocalPostVideo = (videoUrl) => {
   return typeof videoUrl === 'string' && videoUrl.includes('/uploads/posts/videos/');
 };
@@ -54,13 +62,21 @@ const extractPostVideoFilename = (videoUrl) => {
   return videoUrl.split('/uploads/posts/videos/').pop();
 };
 
+// حذف فيديو: ملف HLS يُخزَّن في مجلد فرعي باسم القاعدة — نحذف المجلد كاملًا
+// ما عدا ذلك (مباشر) نحذف الملف.
 const deletePostVideo = async (videoUrl) => {
   const filename = extractPostVideoFilename(videoUrl);
   if (!filename) return;
 
   const filePath = path.join(videosDir, filename);
   try {
-    await fs.promises.unlink(filePath);
+    // HLS: filename يشبه "basename/index.m3u8" — احذف مجلد basename
+    const topFolder = filename.split('/')[0];
+    if (filename.includes('/')) {
+      await fs.promises.rm(path.join(videosDir, topFolder), { recursive: true, force: true });
+    } else {
+      await fs.promises.unlink(filePath);
+    }
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
@@ -74,5 +90,6 @@ module.exports = {
   buildPostImageUrl,
   deletePostImage,
   buildPostVideoUrl,
+  buildPostVideoPosterUrl,
   deletePostVideo,
 };

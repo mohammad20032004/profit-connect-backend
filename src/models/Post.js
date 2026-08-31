@@ -21,6 +21,11 @@ const postSchema = new mongoose.Schema(
       type: String,
       default: null
     },
+    // صورة مصغرة (Poster) لفيديو HLS المُحوّل — تُعرض قبل/أثناء التشغيل
+    videoPoster: {
+      type: String,
+      default: null
+    },
     visibility: {
       type: String,
       enum: ['public', 'private'],

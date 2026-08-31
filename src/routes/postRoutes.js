@@ -18,6 +18,7 @@ const {
 
 const { protect } = require('../middleware/authMiddleware');
 const { uploadPostMedia, convertToWebP } = require('../middleware/uploadMiddleware');
+const convertVideoToHls = require('../middleware/videoHlsMiddleware');
 
 const postMediaUpload = (req, res, next) => {
   uploadPostMedia.fields([
@@ -35,7 +36,7 @@ router.use(protect);
 
 // مسار المنشورات العام
 router.route('/')
-  .post(postMediaUpload, convertToWebP, createPost)
+  .post(postMediaUpload, convertToWebP, convertVideoToHls, createPost)
   .get(getPosts);
 
 // مسار لوحة تحكم البلاغات (Admin) - قبل :postId لتجنب التعارض
@@ -44,7 +45,7 @@ router.get('/admin/reports', getAllReports);
 // مسار لمنشور محدد (عرض، تعديل، حذف)
 router.route('/:postId')
   .get(getPost)
-  .put(postMediaUpload, convertToWebP, updatePost)
+  .put(postMediaUpload, convertToWebP, convertVideoToHls, updatePost)
   .delete(deletePost);
 
 // مسار التفاعلات (الإعجاب والتعليق)
