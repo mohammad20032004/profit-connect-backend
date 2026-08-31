@@ -10,6 +10,18 @@ const { sendResetCode, sendVerificationCode } = require('../services/emailServic
 const { buildAvatarUrl, deleteAvatarFile } = require('../utils/avatarStorage');
 const { formatUserResponse } = require('../utils/userResponse');
 
+// دالة مساعدة لإرجاع بيانات المستخدم مع منشوراته (الأحدث أولاً)
+async function formatUserWithPosts(user) {
+  const userWithPosts = user.toObject ? user.toObject() : user;
+  const posts = await Post.find({ user: userWithPosts._id })
+    .sort({ createdAt: -1 })
+    .populate('user', 'profile.firstName profile.lastName profile.headline profile.avatar')
+    .populate({ path: 'comments.user', select: 'profile.firstName profile.lastName profile.avatar' })
+    .lean();
+  userWithPosts.posts = posts;
+  return formatUserResponse(userWithPosts, { includePosts: true });
+}
+
 // دالة مساعدة لإنشاء التوكن
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -155,7 +167,7 @@ exports.signup = async (req, res) => {
       refreshToken,
       requiresEmailVerification: true,
       message: 'تم إنشاء الحساب بنجاح. يرجى التحقق من بريدك الإلكتروني لإكمال التسجيل.',
-      user: formatUserResponse(user)
+      user: await formatUserWithPosts(user)
     });
 
   } catch (error) {
@@ -221,7 +233,7 @@ exports.login = async (req, res) => {
       success: true,
       token,
       refreshToken,
-      user: formatUserResponse(user)
+      user: await formatUserWithPosts(user)
     });
 
   } catch (error) {
@@ -333,7 +345,7 @@ exports.refresh = async (req, res) => {
       success: true,
       token,
       refreshToken: newRefreshToken,
-      user: formatUserResponse(user),
+      user: await formatUserWithPosts(user),
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
